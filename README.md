@@ -7,4 +7,4 @@ STUDY corpus under the STRICT clean room (LX §4): GPL source is never copied in
 - spec/EXPECT.json and EXPECT.paths: the kept set measured independently from the GitHub tree API (gate A4).
 - tools/lx_acquire.sh: BT-LX-01. DEV-LX-1: ls-files records only the checked-out (H) entries of the sparse index.
 - rcu-free-v3@5495317/meta/: PROVENANCE, ls-files, SHA256SUMS, MANIFEST.jsonl, GATES.json.
-  A0, A1, A2, A4 and A5 PASS; A3 lists 627 files without SPDX, pending the operator's exemption list.
+  A0, A1, A2, A4 and A5 PASS. A3 PASS by ruling (tools/lx_a3.py, meta/A3.json): files without SPDX inherit the root COPYING licence (GPL-2.0 WITH Linux-syscall-note); LICENSES/* are licence texts; all lx files are Z-STUDY STRICT.
