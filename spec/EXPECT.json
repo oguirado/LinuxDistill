@@ -1,0 +1,11 @@
+{
+ "bytes": 89370484,
+ "files": 8182,
+ "irqchip_h": [
+  "irq-gic-common.h",
+  "irq-gic-its-msi-parent.h"
+ ],
+ "paths_sha256": "fa883a0efa1d464a64b52a48ab9db7c0e606c37cbbcdc907ad95c68aa393717f",
+ "source": "gh api git/trees per subtree",
+ "tree": "e56d24e86147e65a8ade3cfe69dee2bfdac279fa"
+}

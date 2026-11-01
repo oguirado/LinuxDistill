@@ -1,0 +1,12 @@
+{
+ "commit": "549531755d329ec48439e3263535351ba1c5acd5",
+ "committer_date": "2026-10-13T04:01:32-07:00",
+ "git_version": "git version 2.43.0",
+ "patterns_sha256": "0c6c936d4721393e58ccb2a4e92c646366534f05a4a5ba76708e500822b8ab8c",
+ "pin_commit": "549531755d329ec48439e3263535351ba1c5acd5",
+ "pin_tree": "e56d24e86147e65a8ade3cfe69dee2bfdac279fa",
+ "repo": "https://github.com/torvalds/linux.git",
+ "schema": "lx.provenance.v1",
+ "subject": "mm: count the runs of the expedite work",
+ "tree": "e56d24e86147e65a8ade3cfe69dee2bfdac279fa"
+}
