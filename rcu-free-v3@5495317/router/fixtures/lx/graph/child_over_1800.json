@@ -1,0 +1,1 @@
+{"children":[["demo/a.c::f","demo/a.c::f#b1",0,1801],["demo/a.c::f","demo/a.c::f#b2",1801,3601]],"note":"synthetic spans only","parents":[{"end":3601,"path":"demo/a.c","sid":"demo/a.c::f","start":0}]}

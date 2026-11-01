@@ -1,0 +1,1 @@
+{"note":"pointer only: flip one bit of one src byte in memory, recompute its SHA256SUMS line and the g_lx_fresh ID","path":"kernel/sched/core.c","byte_offset":4096,"xor":1}

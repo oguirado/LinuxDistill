@@ -1,0 +1,1 @@
+{"columns":["from","inc","to","arch","how"],"edges":[["demo/a.c","generated/autoconf.h","include/generated/autoconf.h","both","path"],["demo/a.c","linux/demo.h","include/linux/demo.h","both","path"]],"evidence":"DERIVED lexical","pin":"549531755d329ec48439e3263535351ba1c5acd5","schema":"lx.includes.v1"}

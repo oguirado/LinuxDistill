@@ -1,0 +1,1 @@
+DEFINE_PER_CPU_READ_MOSTLY(int, demo_define_per_cpu_read_mostly);

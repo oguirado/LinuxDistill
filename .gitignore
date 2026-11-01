@@ -1,3 +1,11 @@
 */src/
 CURRENT
 __pycache__/
+# derived lx router outputs, reproducible byte-identical by router/build.sh
+*/router/closure/
+*/router/graph/
+*/router/hb/
+*/router/index/
+*/router/nodes/
+*/router/routes/
+*/router/dist/router/*.tar.zst

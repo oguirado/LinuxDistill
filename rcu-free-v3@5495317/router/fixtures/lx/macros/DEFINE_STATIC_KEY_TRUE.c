@@ -1,0 +1,1 @@
+DEFINE_STATIC_KEY_TRUE(demo_define_static_key_true);

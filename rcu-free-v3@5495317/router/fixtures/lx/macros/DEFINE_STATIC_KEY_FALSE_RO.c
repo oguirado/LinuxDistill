@@ -1,0 +1,1 @@
+DEFINE_STATIC_KEY_FALSE_RO(demo_define_static_key_false_ro);

@@ -1,0 +1,2 @@
+# synthetic must-FAIL Makefile (written by us): the object has no source file in the pool
+obj-$(CONFIG_LX_DEMO_UNKNOWN) += lx_demo_missing.o

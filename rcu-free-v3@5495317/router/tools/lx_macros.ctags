@@ -1,0 +1,35 @@
+# lx_macros.ctags - BT-LXR-01 pinned macro table for Universal Ctags 5.9.0 (LX section 5.3).
+# One option per line; read with --options=<this file>. -D NAME(args)=expansion projects a macro, -D NAME= erases an attribute.
+# TRACE_EVENT / DECLARE_* bodies get no line: lx_symbols.py keeps an unexpanded invocation as a lookup row only.
+-DSYSCALL_DEFINE0(n)=long sys_##n(void)
+-DSYSCALL_DEFINE1(n,t1,a1)=long sys_##n(t1 a1)
+-DSYSCALL_DEFINE2(n,t1,a1,t2,a2)=long sys_##n(t1 a1,t2 a2)
+-DSYSCALL_DEFINE3(n,t1,a1,t2,a2,t3,a3)=long sys_##n(t1 a1,t2 a2,t3 a3)
+-DSYSCALL_DEFINE4(n,t1,a1,t2,a2,t3,a3,t4,a4)=long sys_##n(t1 a1,t2 a2,t3 a3,t4 a4)
+-DSYSCALL_DEFINE5(n,t1,a1,t2,a2,t3,a3,t4,a4,t5,a5)=long sys_##n(t1 a1,t2 a2,t3 a3,t4 a4,t5 a5)
+-DSYSCALL_DEFINE6(n,t1,a1,t2,a2,t3,a3,t4,a4,t5,a5,t6,a6)=long sys_##n(t1 a1,t2 a2,t3 a3,t4 a4,t5 a5,t6 a6)
+-DCOMPAT_SYSCALL_DEFINE0(n)=long compat_sys_##n(void)
+-DCOMPAT_SYSCALL_DEFINE1(n,t1,a1)=long compat_sys_##n(t1 a1)
+-DCOMPAT_SYSCALL_DEFINE2(n,t1,a1,t2,a2)=long compat_sys_##n(t1 a1,t2 a2)
+-DCOMPAT_SYSCALL_DEFINE3(n,t1,a1,t2,a2,t3,a3)=long compat_sys_##n(t1 a1,t2 a2,t3 a3)
+-DCOMPAT_SYSCALL_DEFINE4(n,t1,a1,t2,a2,t3,a3,t4,a4)=long compat_sys_##n(t1 a1,t2 a2,t3 a3,t4 a4)
+-DCOMPAT_SYSCALL_DEFINE5(n,t1,a1,t2,a2,t3,a3,t4,a4,t5,a5)=long compat_sys_##n(t1 a1,t2 a2,t3 a3,t4 a4,t5 a5)
+-DCOMPAT_SYSCALL_DEFINE6(n,t1,a1,t2,a2,t3,a3,t4,a4,t5,a5,t6,a6)=long compat_sys_##n(t1 a1,t2 a2,t3 a3,t4 a4,t5 a5,t6 a6)
+-DDEFINE_PER_CPU(t,n)=t n
+-DDEFINE_PER_CPU_READ_MOSTLY(t,n)=t n
+-DDEFINE_SPINLOCK(n)=spinlock_t n
+-DDEFINE_MUTEX(n)=struct mutex n
+-DDEFINE_RWLOCK(n)=rwlock_t n
+-DDEFINE_STATIC_KEY_FALSE(n)=struct static_key_false n
+-DDEFINE_STATIC_KEY_TRUE(n)=struct static_key_true n
+-DDEFINE_STATIC_KEY_FALSE_RO(n)=struct static_key_false n
+-DDEFINE_STATIC_KEY_TRUE_RO(n)=struct static_key_true n
+-D__init=
+-D__exit=
+-D__sched=
+-D__always_inline=
+-Dnotrace=
+-D__cold=
+-D__maybe_unused=
+-D__visible=
+-Dasmlinkage=

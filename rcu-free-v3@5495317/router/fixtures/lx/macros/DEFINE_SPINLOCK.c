@@ -1,0 +1,1 @@
+DEFINE_SPINLOCK(demo_define_spinlock);

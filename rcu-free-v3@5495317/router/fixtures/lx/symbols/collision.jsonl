@@ -1,0 +1,3 @@
+{"path":"demo/b,c.h","qual":"h","start_byte":10}
+{"path":"demo/b_c.h","qual":"h","start_byte":20}
+{"path":"demo/a.c","qual":"f","start_byte":100}
