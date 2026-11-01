@@ -1,0 +1,928 @@
+{
+ "dossier": "D07",
+ "entry_points": [
+  {
+   "sids": [
+    "virt/kvm/kvm_main.c::kvm_flush_remote_tlbs",
+    "virt/kvm/kvm_main.c::kvm_make_all_cpus_request",
+    "virt/kvm/kvm_main.c::kvm_make_vcpu_request",
+    "arch/x86/kvm/x86.c::__x86_set_memory_region",
+    "virt/kvm/kvm_main.c::kvm_set_internal_memslot",
+    "virt/kvm/kvm_main.c::kvm_commit_memory_region",
+    "arch/x86/kvm/mmu/page_track.c::kvm_page_track_create_memslot"
+   ],
+   "text": "TLB flush and requests walk online vCPUs, publish and kick; slot install validates create/move/update/delete, commit notifies trackers."
+  },
+  {
+   "sids": [
+    "arch/x86/kvm/lapic.c::__pv_send_ipi",
+    "arch/x86/kvm/lapic.c::apic_mmio_write",
+    "arch/x86/kvm/x86.c::kvm_vcpu_reset",
+    "arch/x86/kvm/mmu/mmu.c::kvm_handle_page_fault",
+    "arch/x86/kvm/x86.c::x86_decode_emulated_instruction",
+    "arch/x86/kvm/mmu/mmu.c::kvm_mmu_invlpg"
+   ],
+   "text": "PV IPI fans out bitmaps, MMIO filters, reset exits nesting; faults try fast then TDP/legacy with emulation, invlpg manages roots."
+  },
+  {
+   "sids": [
+    "arch/x86/kvm/svm/svm.c::pf_interception",
+    "arch/x86/kvm/svm/svm.c::cr_interception",
+    "arch/x86/kvm/svm/svm.c::dr_interception"
+   ],
+   "text": "Fault exits forward address/code; CR needs assist and validity; debug gated on encrypt/idle."
+  },
+  {
+   "sids": [
+    "arch/x86/kvm/xen.c::kvm_xen_hypercall",
+    "arch/x86/kvm/xen.c::kvm_xen_hcall_sched_op",
+    "arch/x86/kvm/xen.c::kvm_xen_hcall_evtchn_send"
+   ],
+   "text": "Xen entry gathers width args, tries poll/yield/timer/send, else queues userspace exit."
+  },
+  {
+   "sids": [
+    "arch/x86/kvm/svm/svm.c::vmrun_interception",
+    "arch/x86/kvm/svm/svm.c::vmload_interception",
+    "arch/x86/kvm/svm/svm.c::vmsave_interception",
+    "arch/x86/kvm/svm/svm.c::vmmcall_interception"
+   ],
+   "text": "Nested VM ops check perms, map blocks, advance RIP, copy by direction; hypercall faults unless assist."
+  },
+  {
+   "sids": [
+    "arch/x86/kvm/vmx/main.c::vt_init",
+    "arch/x86/kvm/vmx/vmx.c::vmx_handle_exit_irqoff",
+    "arch/x86/kvm/x86.c::kvm_emulate_rdpmc",
+    "arch/x86/kvm/x86.c::compute_guest_tsc"
+   ],
+   "text": "VT bringup and exit triage with IRQ-off path, sensitive-op emulation, TSC computation and PMU access."
+  },
+  {
+   "sids": [
+    "arch/x86/kvm/x86.c::kvm_arch_vcpu_ioctl",
+    "arch/x86/kvm/x86.c::kvm_arch_vm_ioctl",
+    "arch/x86/kvm/x86.c::kvm_arch_vcpu_ioctl_run",
+    "arch/x86/kvm/xen.c::kvm_xen_vcpu_set_attr"
+   ],
+   "text": "Arch VM and vCPU ioctls multiplex regs, events, clock and Xen; run ioctl drives guest entry loop."
+  },
+  {
+   "sids": [
+    "include/uapi/linux/kvm.h::KVM_CREATE_VCPU",
+    "include/uapi/linux/kvm.h::KVM_RUN",
+    "include/uapi/linux/kvm.h::KVM_ENABLE_CAP",
+    "include/uapi/linux/kvm.h::KVM_GET_ONE_REG"
+   ],
+   "text": "User ioctls split by descriptor: VM creates vCPUs and devices; vCPU runs and accesses regs and caps."
+  },
+  {
+   "sids": [
+    "virt/kvm/kvm_main.c::kvm_vm_ioctl",
+    "virt/kvm/kvm_main.c::kvm_vcpu_ioctl",
+    "virt/kvm/kvm_main.c::kvm_device_ioctl",
+    "virt/kvm/guest_memfd.c::kvm_gmem_mmap"
+   ],
+   "text": "Top VM, vCPU and device dispatch with memory, dirty and attribute control plus gmem mapping."
+  }
+ ],
+ "exports": [
+  {
+   "sids": [
+    "arch/x86/kvm/cpuid.c::kvm_init_xstate_sizes",
+    "arch/x86/kvm/cpuid.c::xstate_required_size",
+    "arch/x86/kvm/cpuid.c::kvm_cpuid",
+    "arch/x86/kvm/cpuid.c::kvm_emulate_cpuid",
+    "arch/x86/kvm/cpuid.c::kvm_dev_ioctl_get_cpuid",
+    "arch/x86/kvm/cpuid.c::kvm_vcpu_ioctl_set_cpuid2",
+    "arch/x86/kvm/cpuid.c::kvm_vcpu_ioctl_get_cpuid2",
+    "arch/x86/kvm/cpuid.c::kvm_initialize_cpu_caps",
+    "arch/x86/kvm/cpuid.c::cpuid_query_maxphyaddr",
+    "arch/x86/kvm/cpuid.c::kvm_vcpu_reserved_gpa_bits_raw"
+   ],
+   "text": "CPUID and xstate services size tables, query widths, enumerate and install leaves, and emulate guest queries."
+  },
+  {
+   "sids": [
+    "virt/kvm/kvm_main.c::kvm_get_kvm_safe",
+    "virt/kvm/kvm_main.c::kvm_put_kvm",
+    "virt/kvm/kvm_main.c::kvm_destroy_vm",
+    "include/linux/kvm_host.h::__kvm_memslots",
+    "include/linux/kvm_host.h::id_to_memslot",
+    "arch/x86/kvm/mmu.h::kvm_mmu_slot_lpages",
+    "virt/kvm/kvm_main.c::kvm_io_bus_unregister_dev",
+    "arch/x86/kvm/mmu/tdp_iter.h::kvm_tdp_mmu_read_spte",
+    "arch/x86/kvm/mmu/tdp_mmu.c::tdp_mmu_set_spte"
+   ],
+   "text": "VM refs gate teardown; slots indexed per space with lpage counts; bus and TDP SPTE helpers publish safely."
+  },
+  {
+   "sids": [
+    "arch/x86/kvm/lapic.c::kvm_apic_after_set_mcg_cap",
+    "arch/x86/kvm/lapic.c::kvm_apic_update_irr",
+    "arch/x86/kvm/lapic.c::__pv_send_ipi",
+    "arch/x86/kvm/hyperv.c::kvm_hv_hypercall",
+    "arch/x86/kvm/hyperv.c::kvm_hv_init_vm",
+    "arch/x86/kvm/hyperv.c::kvm_get_hv_cpuid"
+   ],
+   "text": "LAPIC syncs MCG and IRR with PV IPI; hypercalls gate privilege then dispatch or exit; HV CPUID fills fixed leaves."
+  },
+  {
+   "sids": [
+    "arch/x86/kvm/mmu/tdp_mmu.c::kvm_tdp_mmu_zap_all",
+    "arch/x86/kvm/mmu/mmu.c::kvm_arch_flush_shadow_all"
+   ],
+   "text": "Full zap clears direct/invalid roots skipping mirrors, tolerates racers, skips flush in teardown."
+  },
+  {
+   "sids": [
+    "arch/x86/kvm/mmu/spte.c::kvm_mmu_set_me_spte_mask",
+    "arch/x86/kvm/mmu/spte.c::kvm_mmu_set_ept_masks"
+   ],
+   "text": "ME value must subset mask; EPT publishes user/dirty/exec/present views plus MMIO."
+  },
+  {
+   "sids": [
+    "arch/x86/kvm/x86.c::handle_ud",
+    "arch/x86/kvm/x86.c::kvm_emulate_hypercall",
+    "arch/x86/kvm/x86.c::kvm_requeue_exception",
+    "arch/x86/kvm/x86.c::kvm_service_local_tlb_flush_requests"
+   ],
+   "text": "Shared helpers dispatch UD, prefer Xen then Hyper-V hypercalls, requeue only if empty, drain flushes."
+  },
+  {
+   "sids": [
+    "arch/x86/kvm/svm/avic.c::avic_vcpu_precreate",
+    "arch/x86/kvm/svm/avic.c::avic_init_vmcb",
+    "arch/x86/kvm/svm/avic.c::avic_ring_doorbell",
+    "arch/x86/kvm/svm/avic.c::avic_kick_target_vcpus",
+    "arch/x86/kvm/svm/avic.c::avic_incomplete_ipi_interception",
+    "arch/x86/kvm/svm/svm.c::svm_complete_interrupt_delivery"
+   ],
+   "text": "AVIC provisions IDs/tables/controls, rings doorbells, kicks phys/logical targets, handles incomplete exits."
+  },
+  {
+   "sids": [
+    "arch/x86/kvm/vmx/vmx.c::vmx_set_cr0",
+    "arch/x86/kvm/vmx/vmx.c::vmx_set_cr4",
+    "arch/x86/kvm/vmx/vmx.c::vmx_get_segment",
+    "arch/x86/kvm/vmx/vmx.c::vmx_set_efer"
+   ],
+   "text": "VMX helpers build forced CR0/CR4, read segments via cache, record EFER with mode refresh."
+  },
+  {
+   "sids": [
+    "arch/x86/kvm/vmx/vmx.c::vmx_set_apic_access_page_addr",
+    "arch/x86/kvm/vmx/vmx.c::vmx_refresh_apicv_exec_ctrl",
+    "arch/x86/kvm/vmx/vmx.c::vmx_set_tss_addr",
+    "arch/x86/kvm/vmx/vmx.c::vmx_set_hv_timer"
+   ],
+   "text": "VMX manages APIC access and APICv refresh, TSS address, TSC offset and host timer arming."
+  },
+  {
+   "sids": [
+    "arch/x86/kvm/vmx/tdx.c::tdx_vm_ioctl",
+    "arch/x86/kvm/vmx/tdx.c::tdx_vcpu_ioctl",
+    "arch/x86/kvm/vmx/vmcs12.c::kvm_supported_vmcs12_field_offsets"
+   ],
+   "text": "TDX handles VM and vCPU commands; nested layer publishes supported VMCS12 field offsets."
+  },
+  {
+   "sids": [
+    "arch/x86/kvm/x86.c::kvm_arch_vcpu_ioctl_run",
+    "arch/x86/kvm/x86.c::kvm_arch_vcpu_create",
+    "arch/x86/kvm/x86.c::emulate_ops",
+    "arch/x86/kvm/xen.c::kvm_xen_hvm_config"
+   ],
+   "text": "Arch run, create, emulation table and Xen config provide lifecycle, emulation and enlightenments."
+  },
+  {
+   "sids": [
+    "virt/kvm/coalesced_mmio.c::kvm_vm_ioctl_register_coalesced_mmio",
+    "virt/kvm/dirty_ring.c::kvm_dirty_ring_alloc",
+    "virt/kvm/guest_memfd.c::kvm_gmem_create",
+    "virt/kvm/irqchip.c::kvm_init_irq_routing"
+   ],
+   "text": "Generic KVM registers coalesced zones, allocates dirty rings, creates guest memfds, publishes routing."
+  }
+ ],
+ "extracts": [
+  "00340fe8e1680cb8115471b6a1376350a6470d69b64e27c5628a2e3e93a01c5d",
+  "040f123487ac6bd7e85f035575ffb759b65e96299ac4a07e0da22ff865c35936",
+  "06584abe2f3f02baa4475f520b9c9c4c0b64b3569c3346881d59b455b25bcbd7",
+  "08c6780c0de37efcb935c4706d40a1912af6befe19b144ba999d3861ae1ee4eb",
+  "094ee8ecb49c5c401240597ee8d8bb94f9aa434e057987f073697e7d1e83a6c3",
+  "0a537b7592fc00264768b352d6e51d7cc3f06f2f406e98ef6cf04bd481d9427a",
+  "0bda905388ba9afcf260d795181784ba5c55098e67022eba4726b781191d24d3",
+  "0c988713be9d2e8e46aeb334c5274c3f9dc5b4901222735e5c3fc4f8cc117b57",
+  "0d170c6a0664b3e921e0712a7d1dd1b2ceacea1a4e65e8d2452af770b3b0eaca",
+  "0d7a7a4e991b6a2a6ffbe82c13ef5ac724257bc998f2f41da1c072908c50ff86",
+  "1019677c4f835bd2f94f052035e82c3b4a1c75b515ba827dc3094cb0cbea72c1",
+  "1198cea6dc55f269e1c966795da61862927ad79926e68debbe578bcf99ded299",
+  "12ae3d1ab1fa4c9504985ea8f1ebb79e5b522e83cbe6533e607f2fe2bd8630bb",
+  "14ebaac3236f7fdf6d2d09cc32cb30eb6286fd4545d4ce3f1895fdece04040fb",
+  "168d17d807e535406ab5409709c50c0f6ff90f3b4c69105255e9abba56441429",
+  "180f92ae22076e7ef0cbc512a55efd3b893c8ec8901ebb0b72b3931921f7a896",
+  "185de12f33a1ca1f7a8fb86ef9ca06097ac2fd29794e25f97b5ce70ad69b7bce",
+  "199924ce6f75750e2c82c727b15104c14b69b687efda8e54cbd497f90731b79c",
+  "1f478a6175a36a2f46b956247ba99d8324a1eb1af034ee1e9289e1a360c52800",
+  "1f62d3fa71e3260f0f4688d7dbcab7e38a294ddf4b59186f329e24362c3f066e",
+  "217ea0ed03f10799b5e30bb3caf70a8a23afef2bc3b2c90faf579b3e76b5be9c",
+  "246195ad361aa7fd066ae570f2b227d9a09fb9f668fd6ce3830b0fbdfe8998d6",
+  "27f371a9b7e495405a40f500ef02c0dde095960395974bb8cda976f14ca9c488",
+  "2858f28a8ce7bd750b5f0f839346f8392a9b8d149ef365de7e65dfb32e9e4930",
+  "2985351a9e214ab30395a7ada36074add078dcff9daf59bacc70551d7ec82710",
+  "2a1420f0af682db8942867699a20ed4d3af3d409501ed8699c1c034a28a28428",
+  "2bf1e5b9cfd5610297c0034f60a4a2373351c374d4050d4a1de5dc3dc6d3831e",
+  "2d114ba421dea4a4d6059b6f13b5bc9f19f8b551c1722b7f533dadb4d8bfa92d",
+  "2ef3a20b93ac9a5047462a4f71aa354e41eae2d176698a6550a66ffe1f2fdc1b",
+  "35571eaf6de8cafaccf2becc0512f261ab67fa90c744db2f09a3ea85bac8d573",
+  "39fc26acf22efb7b25c4a08d4c12863dd8c03a5011f1c6adc37af931ff9f7639",
+  "3aa96beebd8427f0207d94ddcf35e1f36e1ff79f75e40d29ec8d8956f50dea3e",
+  "3ac8fffda078b1de3004f0e3c5d7f9e51cbf498df66e296888ae52a05e414707",
+  "3afcbabf49f177cbc5fc68104abea3fcdf3be5debbe69d01dcc417b59b9fb76e",
+  "3db3fc9eefd1565a4c807f9e5e401757209ed9ae87126c002e5ff09478b5f9fd",
+  "41cc2a96ec152d181edd6faf29fd57720ed8e62bed64c1fb63b5eeb22e15508b",
+  "43b3c8c5b6b05e41d760ff0c79f4362359bf782c7e219cf75bf064e03d54efbb",
+  "4a3a28973136a0c45bb6a3de199f7e740d586672d6d0fe997515f781a1e8bc97",
+  "4d542753579c4976ddd4efab012e8110d3bae476b8a7b7755a3e248d7d797628",
+  "4faab1a5d838d6e8872200531bd945f139b3ca610bb9ac5c25593ee755dc95bc",
+  "503d3d5c8a8c92f6cf1ae6994b7aaebdf9e714c4c4119a5eb986f858365fc428",
+  "53526ba6ad7dc383664ddae0260fcb1c8182b8b929b243c73074671d65ecd680",
+  "54b2093a17b2528508426e4a086c86fc80d0a420d44481163fc0b4808dfa46ca",
+  "5544a5c144e3063f190934d72d1c21bf6725b34f5ac8a18b5ec12962b1587034",
+  "55607d54537d2e6ee4c90e17aec854c6dd3f280e10e7ea93531631de459871e1",
+  "56002e7f03a3a33c699c6e08836d5e8fbad7eda52bebea5902e3c45c4708aaff",
+  "570f2881702658c0f1088b3e0da574058b377ab81a228f64226ee47e6042a78b",
+  "57c32775fab8f0875880abcbf4222139e11662d5e021ef019dc1807dce90047e",
+  "58d482c7b3262094a485474e5a336632d8f85e7eebf93d3990cd4cdb6880d4bd",
+  "5c318dbc9829c86cd462082fced77dc2c39c1cf9599483da42191d228283dd8b",
+  "5c7d9bebadb94b68685832ce13473635e0be10bfcab6c0745dbbc653c6ea2794",
+  "5d0ad12aaf16ebcadc53dbba1ee37e833936c62666855f35fb9dccc08b9c669c",
+  "5e534118b34d6e82a5f27e2ca627a80aadf03572d07dc240503a079274ec5e1b",
+  "605d6755b53dbd750169fdf49bb4f22a1f18e064ad0967cd40ed73d3aec42668",
+  "61e9a2ce0d71be5a425b3dcd4e96df7bb786c89985959e696186f2779550b846",
+  "6783c0191f6c30a67c6f189b3f4d3b72a289bfd4c0916d32f0077805ec640536",
+  "69a5068e26918a4331348a4f02c777e400ce46cd18bc947092d24c4cd60d0f68",
+  "6ad3b68d1daa5402f2fd29cc8231c8f63f3cd39670696a27ee4a81fb92f4a5ba",
+  "6bebf0209b575138b707c6791c71935262b0af6d4e1a7bdfd8638df6880bbd21",
+  "6c16bb893b41337e44cfc2b55c48cd841751a817c2757ac5bc154c2d1b2f272c",
+  "6da3ae38cdf2ad191345404029143e2171cfde3efa0fbff68836aec84d7f4529",
+  "6e116962d3f2a3e3dca4cf2a792f8e8cb38e2e9cebb4f4bdca50cbd6467f226d",
+  "741b318d796344832abf2719378e2575ad82fcbd07b835e02418d0fb348d8be7",
+  "7ade2427f9ad54dc632b4930076cd2c45a18c0832b866230abb62902f94dad48",
+  "7c41ee1af71bec466b71c0695267d1d6ac967556b0ce9e315e38be61bcfdfd7d",
+  "7ed39222f4721d46675cd6dd405771c3803040960782a7e32780ae51e1cc47cc",
+  "7f878a16ae7b8d374fe1a8d2c3fc9601ad726fabbf336b1252f21cfb68feee16",
+  "80797a2639b67c47b8fe994a359016e59ff21f2a02e33acf2a3de93377cabdbc",
+  "80ae2342e4df225f855acc545ac342a8806ac5e0f906892ea2f01b8c44cba3af",
+  "8104ffbb859f894d0bf032f10546d4747847d9640765079b4b6a8554f2781eb4",
+  "82f9c6114f6af0bcda404a7338ecadae8c081a886c9788b4de483cc3e27768a7",
+  "8335e7c87d0e7f0d39902a501d901009bb0f7f79c1281cd63bf9bfb81837b126",
+  "83f313aea13fff02707b28b72583882ade8b4a46bd1de4243ef8085efdec0c92",
+  "858891e80fdc608760d763105d949e442f24fac49648c196aa0aeb2722f276a7",
+  "86dca076a270491ecb85e69e2d598d53d5dace91e0000b2b2fdaa5d406802948",
+  "891d14740bda18d4263b4bd472f84c68047cc5f9a8ea57fbea85dd14934177df",
+  "8976e38323234c62c9177af3b4f3b53e37f0ab97937f0c4dd03d1f9865085a15",
+  "8adb46de70387f44bb0a56400682000e0e758459eba019a6fbced91528656ce1",
+  "8bf7e6cf94ba67be8fe9faa5fa23166663997eced6b67de1ae5257171e396810",
+  "8f88eb976d5487577991d4340ef717f47d605d274284650ad893b411651c222c",
+  "90a3c92370071390d3002e3686991b8406cae388571ebb59e2485927e587a19e",
+  "94ded165f2664a27e2f496097aea528cffbceff461dc6467d35ac894e26cdac6",
+  "9692602b800c63b46c840d8b9ffa4bc6b9e697bc10bc9ead45e0a55f811c14fd",
+  "99df030825335ed38bb6965fac5850c465a56e605398ecfdc8622ca8803a5065",
+  "9f4842782753c5993a9755275457b659fa0c9ead067eedb1174722c99db058eb",
+  "9fdbc4c000e413067313c9dbe86b8c075d8af399e871669759e269e1b5657d02",
+  "9fee27d4278a75fb7b701469a70966bd522e2dda22083fa4e33463a7d4d4c137",
+  "a143bb1c36d4468360a0280d9034d617b8f2219fca54c905be5f03943b154196",
+  "a28dd92cb74271afa1fd0fbdf06686aaf0de299d944b3fdc4d27ec230850fa47",
+  "a3954da26b8cda7183e5974002b91e33d4ec413cbc403953e6bf66824537ef4e",
+  "a4504dfe07157d684f3113abbf35771d3e4ae48d29e43737fbeb50d030c68f42",
+  "a6324ab36c744bc2b54338e9b7ef30fa50709aa38331992bd1ff4a9065847c3e",
+  "a87ada410426e82ab4533d864af26c47250e76c92ca535ad77366a09a4b19c71",
+  "acb642d87e92728bd72e5d9d2440a34ed0d8f025861df29e92c3de01b50b74fe",
+  "ae743deac6e66d5ef61ef33e50e25c9d2c514b27d7f23401d50def82a2555d8c",
+  "b01fb365bbdf0b8b6d179148390fa5ec1d4687f01c03f7862f6eab45a7c436f1",
+  "b039e8f330bed9825e696a97da904b6bb14c1625111c2bcfc22a4600d578a3bc",
+  "b054df4695be33c9bd42c180fa9eae56614ad20a3812ff490f1448d50cff02fd",
+  "b123b5631eb16cf4abdf5773bdbeb3e8dd642e77fe24a348a8b3a545a5ceb3cc",
+  "b1433b989ce74eda14d8e95d4427946bfe2097f959a16f73ebe16254efa01c21",
+  "b6883ffa770d833396baaef64ba81135b6c06d5a1596b302026c97fc1ff70e85",
+  "b70d51f28e54cc96d831658aaeecdd9d9def233acb0f260520091b741867c0e0",
+  "ba8dc777e59869a9261b7c17d27f68a442e0697c981c224bc854798a3fdc4c3c",
+  "bb4d02ea740789bd2704d8ed3efafd9779aa403afb31c740430788ece92244f0",
+  "bd280949721fe646e8a2dda60b79fc8e05e84040e6b0ebd1927ad970cc326b77",
+  "bd59651129c01a615ae4bcbad6ed62cf44f7f85a9baf8f7a9aa25ab9d0ae126c",
+  "bdfb7f8e75c2ab1e8220d6b1e0bfcd3ffd3e27343ebf9235cc73f9b255d4b0e6",
+  "bf71503e73f1ecdc367931f86fdb3e4ae2c3e9a75ccf495e752c0d7f974bb897",
+  "bfabb4b442e7d569ff94e90f74202cd97b48c9e85e1206cb9a212000e8d5c1b8",
+  "c3c0845ea50736cdcf34e2c71a787f9a2f9f803ff3d23568a734936088c6e2c4",
+  "c59794935562f83581163690a034cfa4cfd7555392505150298d15860e353310",
+  "c5996ba4ca5490c04f95d72bbe9d19753ccff561ea1acbcb014cb6cc1ad5a33d",
+  "c5f5d35211bf2e3da860de5db454da7873460f8ffa40d3e8a1c11f715d895ca4",
+  "c5f778838d994d1c3e0615d460e6a449092d072119b515c36d9e3b46c78267a5",
+  "c9297f21c21c14664502d9bce5d70be878e2c5c0ab61bb4ac627b62745ab3ecc",
+  "cdb383403d14df53fcb8c1164fa8aad7524603f77d681757d2cd0336859b75da",
+  "cded45a351679145ffed468528f8474f06baed9a9777915475c1da350de68c2c",
+  "cf303c59b15eeae9747f8e4dfe5e6b4d1463aaa332e6783a0941ebe08ad5b6d1",
+  "d2e7892e551cf69fa7517dfce59922c22797e0618fe7c99c4fddddaaf91b7c4a",
+  "d31ed31b1f2d336b136708091256db9752ce9c7f08d16c18c7cdf772adceaafe",
+  "d3d5e214a8b5b2e0febccb26dff886cf130c1ea1a7b19cd0bb2abb74308aaf38",
+  "d5e706ff3556dbf3661cda93093d41f39fef62462eee19f25fe232f55d2a41c5",
+  "d8890468dbc6443337e993277a3a23ee91bee3c7e25d03945ec396029f8d31d5",
+  "da33550ab1e5a7fe3b6d4ef68c371f35f07f92ce37be477a7554a1e12a43ee42",
+  "da664be0f851bb98fce46f3eafc1ae08333945d3b170f04c7e8b21c05e7ab985",
+  "dbb5e59bea7ac62bb03747cd89b00dbea280f9e619d7631ea9668522ee9df42d",
+  "dbdd1074674e3e56ad26c2d02c505074ac1383c1cec08d52ef072df073c80f6e",
+  "dc959871ec1e7a4311ca5eebbbc7a6202fe4eabe30b4687d194d91ceb9d12645",
+  "dcbe310bc5fd233517af63a1f9ee777e42744bb7792a6003f9d04fe5cfa241c2",
+  "dd6445735efeb12419271b418553ecd95ed334119d503061806a3f2779805fc3",
+  "df6d6c073d2e211af2bc0b4d5d60251158125ed266a153c240828a9709f6a2f4",
+  "dfbc2a1f713dd0432057925b6c1d6754d553c141c935301f1560b3435e485c49",
+  "e5952ea8a419ffaca75c589bd29fdf987e0ee7bd0cdb86c77a89145d3632befc",
+  "e8cd36b9b758087f5c3094a8c0a73e22c7999578105791d587b14aa180086365",
+  "ea2ea51b394d86537a4c940f22b899f6452ac90fc9cc73a8565b31f68227e9b7",
+  "eef2326e84469ea5470c0eac084d9a83ecee9a3ddfee296cbbfef37e01efb041",
+  "f1fad95404449f6577c2c081e5413b36485751faaed0410462a0eb8202ea3531",
+  "f61d352ee3d987d223391fb272fb09e50d20177e434870b347ff236571666c11",
+  "fbe67df331f32c58a605c0f811460636175a732507e1d6558431ee1ea9ff115e",
+  "fccee56d619d3b393dc784f7d0b93c725f7109cc793618476a2419e27d4ce8ed",
+  "ffe23a65059431a581c50e6e3f82235f37c0ce8b3e7157bbe50e5e21912c7a7a"
+ ],
+ "gpl_spec": "PASS",
+ "hazards": [
+  {
+   "sids": [
+    "include/linux/kvm_host.h::kvm_slot_dirty_track_enabled",
+    "arch/x86/kvm/mmu/tdp_mmu.h::kvm_gfn_range_filter_to_root_types",
+    "include/linux/kvm_host.h::is_error_noslot_pfn",
+    "virt/kvm/kvm_main.c::kvm_uevent_notify_change"
+   ],
+   "text": "ABI fixes slot flags, error sentinel, root classes, filters and uevent keys."
+  },
+  {
+   "sids": [
+    "arch/x86/kvm/mmu/tdp_iter.h::kvm_tdp_mmu_spte_need_atomic_update",
+    "arch/x86/kvm/mmu/tdp_mmu.c::__tdp_mmu_set_spte_atomic",
+    "arch/x86/kvm/mmu/spte.h::is_access_track_spte",
+    "arch/x86/kvm/mmu/spte.c::mark_spte_for_access_track",
+    "arch/x86/kvm/mmu/tdp_mmu.c::__handle_changed_spte",
+    "arch/x86/kvm/mmu/tdp_mmu.c::tdp_mmu_split_huge_page",
+    "arch/x86/kvm/mmu/tdp_mmu.c::tdp_mmu_alloc_sp_for_split",
+    "arch/x86/kvm/mmu/mmu.c::pte_list_remove",
+    "include/linux/kvm_host.h::KVM_BUG_ON_DATA_CORRUPTION"
+   ],
+   "text": "TDP touched leaves need atomic install, frozen/yielded warns, busy retries; present frame change is fatal, split OOM aborts, corrupt rmaps trap."
+  },
+  {
+   "sids": [
+    "virt/kvm/kvm_main.c::__kvm_mmu_topup_memory_cache",
+    "arch/x86/kvm/mmu/mmu.c::split_spte",
+    "arch/x86/kvm/mmu/mmu.c::page_fault_can_be_fast"
+   ],
+   "text": "Cache and role misuse warn; splits order halves; torn reads retry."
+  },
+  {
+   "sids": [
+    "arch/x86/kvm/mmu/page_track.c::kvm_enable_external_write_tracking"
+   ],
+   "text": "Write tracking rejects confidential guests, serializes first enable, keeps partial alloc on fail."
+  },
+  {
+   "sids": [
+    "arch/x86/kvm/svm/svm.c::svm_init_erratum_383",
+    "arch/x86/kvm/svm/svm.c::shutdown_interception",
+    "arch/x86/kvm/svm/svm.c::svm_enter_smm"
+   ],
+   "text": "TLB erratum touches config only if present; encrypted guests skip shutdown reinit and SMM."
+  },
+  {
+   "sids": [
+    "arch/x86/kvm/vmx/vmx.c::vmread_error",
+    "arch/x86/kvm/x86.c::kvm_spurious_fault",
+    "arch/x86/kvm/vmx/nested.c::nested_vmx_abort"
+   ],
+   "text": "VMCS failures log rate-limited; spurious fault asserts reboot; nested abort triple-faults."
+  },
+  {
+   "sids": [
+    "arch/x86/kvm/svm/sev.c::sev_launch_update_data",
+    "arch/x86/kvm/svm/sev.c::sev_dbg_crypt",
+    "arch/x86/kvm/svm/sev.c::sev_gmem_post_populate",
+    "arch/x86/kvm/svm/sev.c::sev_flush_encrypted_page",
+    "arch/x86/kvm/svm/sev.c::sev_send_update_data",
+    "arch/x86/kvm/svm/sev.c::sev_launch_secret"
+   ],
+   "text": "SEV launch staging uses flushes, busy reject and span checks; secret needs contiguous range."
+  },
+  {
+   "sids": [
+    "arch/x86/kvm/vmx/vmx.c::vmx_set_apic_access_page_addr",
+    "arch/x86/kvm/vmx/vmx.c::setup_vmcs_config",
+    "arch/x86/kvm/vmx/tdx.c::tdx_td_init",
+    "arch/x86/kvm/vmx/tdx.c::__TDX_BUG_ON"
+   ],
+   "text": "Missing APIC slot defers quietly; bad VMCS pairing warns; TDX rejects flags and sizes; seam failure latches bugged."
+  },
+  {
+   "sids": [
+    "arch/x86/kvm/x86.c::kvm_arch_vcpu_ioctl",
+    "arch/x86/kvm/x86.c::kvm_vcpu_ioctl_x86_set_mce",
+    "arch/x86/kvm/xen.c::kvm_xen_eventfd_assign",
+    "arch/x86/kvm/x86.c::kvm_arch_vcpu_ioctl_run"
+   ],
+   "text": "User faults, bad masks and oversize fail without entry; busy MCE triple-faults; port exhaustion reports exists."
+  },
+  {
+   "sids": [
+    "arch/x86/kvm/vmx/nested.c::get_vmx_mem_address",
+    "arch/x86/kvm/vmx/nested.c::vmx_set_nested_state",
+    "arch/x86/kvm/x86.c::set_tsc_khz",
+    "arch/x86/kvm/vmx/vmx.c::skip_emulated_instruction"
+   ],
+   "text": "Bad nested decode, restore or TSC rate fails safely; steal aborts silently; skip length untrusted."
+  },
+  {
+   "sids": [
+    "include/uapi/linux/kvm.h::KVM_IRQ_ROUTING_IRQCHIP",
+    "include/uapi/linux/kvm.h::KVM_DIRTY_GFN_F_DIRTY",
+    "virt/kvm/guest_memfd.c::kvm_gmem_get_file",
+    "virt/kvm/kvm_mm.h::kvm_follow_pfn"
+   ],
+   "text": "Validate routing, dirty-bit and privacy constants; missed puts leak; unbalanced invalidations stall; reuse warns."
+  }
+ ],
+ "invariants": [
+  {
+   "sids": [
+    "arch/x86/kvm/cpuid.c::kvm_find_cpuid_entry2",
+    "arch/x86/kvm/cpuid.h::kvm_find_cpuid_entry",
+    "arch/x86/kvm/cpuid.c::kvm_check_cpuid",
+    "arch/x86/kvm/cpuid.c::kvm_cpuid_check_equal",
+    "arch/x86/kvm/cpuid.c::kvm_set_cpuid",
+    "arch/x86/kvm/cpuid.c::do_host_cpuid",
+    "arch/x86/kvm/cpuid.c::__do_cpuid_func",
+    "arch/x86/kvm/cpuid.c::sanity_check_entries",
+    "arch/x86/kvm/x86.h::kvm_can_set_cpuid_and_feature_msrs",
+    "arch/x86/kvm/cpuid.h::kvm_vcpu_is_legal_gpa"
+   ],
+   "text": "Find first matching leaf, validate widths and equality, stage then commit CPUID, host-fill and clamp leaves."
+  },
+  {
+   "sids": [
+    "arch/x86/kvm/x86.c::kvm_vcpu_reset",
+    "arch/x86/kvm/regs.c::kvm_set_rflags",
+    "arch/x86/kvm/msrs.c::__kvm_set_msr",
+    "virt/kvm/kvm_main.c::__kvm_mmu_topup_memory_cache",
+    "arch/x86/kvm/mmu/mmu.c::mmu_alloc_direct_roots",
+    "arch/x86/kvm/mmu/mmu.c::kvm_mmu_find_shadow_page",
+    "arch/x86/kvm/mmu/mmu.c::rmap_write_protect",
+    "arch/x86/kvm/mmu/mmu.c::mmu_spte_set",
+    "arch/x86/kvm/mmu/spte.c::make_mmio_spte"
+   ],
+   "text": "Reset clears GPRs, reloads controls with canonical checks; caches refill once, roots match role; write-protect clears writability, MMIO preserves gen."
+  },
+  {
+   "sids": [
+    "arch/x86/kvm/mmu/mmu.c::host_pfn_mapping_level",
+    "include/linux/kvm_host.h::__gfn_to_hva_memslot",
+    "arch/x86/kvm/mmu/mmu.c::kvm_gmem_max_mapping_level",
+    "include/linux/kvm_host.h::kvm_memslot_is_gmem_only"
+   ],
+   "text": "Host size from slot plus host walk; gmem uses fault frame with ceiling; exclusivity is flag test."
+  },
+  {
+   "sids": [
+    "arch/x86/kvm/mmu/mmu.c::kvm_recover_nx_huge_pages",
+    "arch/x86/kvm/mmu/mmu.c::kvm_mmu_sp_dirty_logging_enabled"
+   ],
+   "text": "NX recovery quota-bounded skipping dirty; scans hold MMU lock with RCU and yield."
+  },
+  {
+   "sids": [
+    "arch/x86/kvm/svm/svm.c::svm_flush_tlb_asid",
+    "arch/x86/kvm/svm/svm.c::svm_flush_tlb_all",
+    "arch/x86/kvm/svm/svm.c::svm_flush_tlb_gva"
+   ],
+   "text": "TLB retires generations or HW flush, purges enlightened first, GVA direct only for shadow."
+  },
+  {
+   "sids": [
+    "arch/x86/kvm/svm/avic.c::avic_get_logical_id_entry",
+    "arch/x86/kvm/svm/avic.c::avic_ldr_write",
+    "arch/x86/kvm/svm/avic.c::avic_invalidate_logical_id_entry",
+    "arch/x86/kvm/svm/avic.c::avic_kick_vcpu_by_physical_id",
+    "arch/x86/kvm/svm/avic.c::avic_kick_vcpu_by_logical_id",
+    "arch/x86/kvm/x86.c::kvm_vcpu_apicv_activated"
+   ],
+   "text": "Logical AVIC needs single-bit in-range mask with prior invalidate; APICV needs uninhibited."
+  },
+  {
+   "sids": [
+    "arch/x86/kvm/vmx/nested.c::nested_vmx_store_msr",
+    "arch/x86/kvm/vmx/nested.c::nested_vmx_load_msr",
+    "arch/x86/kvm/vmx/nested.c::nested_vmx_load_cr3"
+   ],
+   "text": "Nested MSR lists bounded with index-tagged failure, reject reserved/SMM; CR3 rebuilds MMU."
+  },
+  {
+   "sids": [
+    "arch/x86/kvm/svm/svm.c::svm_recalc_msr_intercepts",
+    "arch/x86/kvm/svm/svm.c::svm_get_msr",
+    "arch/x86/kvm/svm/svm.c::svm_set_msr",
+    "arch/x86/kvm/svm/svm.c::svm_update_exception_bitmap"
+   ],
+   "text": "MSR policy allows common direct, mediates perf/encrypt, strips VME, programs fixed plus dynamic bits."
+  },
+  {
+   "sids": [
+    "arch/x86/kvm/vmx/vmx.c::vmx_refresh_apicv_exec_ctrl",
+    "arch/x86/kvm/vmx/vmx.c::vmx_set_tss_addr",
+    "arch/x86/kvm/vmx/vmx.c::vmx_set_hv_timer"
+   ],
+   "text": "APIC needs enablement and valid slot with defer on contention; TSS skipped when unrestricted; timer bounds delta."
+  },
+  {
+   "sids": [
+    "arch/x86/kvm/vmx/vmx.c::setup_vmcs_config",
+    "arch/x86/kvm/vmx/vmx.c::adjust_vmx_controls",
+    "arch/x86/kvm/vmx/tdx.c::tdx_td_init",
+    "arch/x86/kvm/vmx/tdx.c::setup_tdparams"
+   ],
+   "text": "VMCS controls derive from hardware masks with pairing checks; TDX init needs clean state and in-mask attrs."
+  },
+  {
+   "sids": [
+    "arch/x86/kvm/x86.c::kvm_check_and_inject_events",
+    "arch/x86/kvm/x86.c::kvm_vcpu_ioctl_x86_set_mce",
+    "arch/x86/kvm/x86.c::kvm_vcpu_ioctl_x86_set_xsave",
+    "arch/x86/kvm/x86.c::kvm_vm_ioctl_set_clock"
+   ],
+   "text": "Events validate and order SMI NMI IRQ; MCE checks banks; XSAVE strips disabled; clock avoids stepping back."
+  },
+  {
+   "sids": [
+    "arch/x86/kvm/xen.c::kvm_xen_vcpu_set_attr",
+    "arch/x86/kvm/xen.c::kvm_xen_hvm_config",
+    "arch/x86/kvm/x86.c::kvm_vm_ioctl_enable_cap",
+    "arch/x86/kvm/x86.c::kvm_vm_ioctl_set_tss_addr"
+   ],
+   "text": "Xen enforces runstate monotonicity and timer priority; caps reject flags and need no vCPUs; TSS early only."
+  },
+  {
+   "sids": [
+    "arch/x86/kvm/vmx/nested.c::nested_ept_root_matches",
+    "arch/x86/kvm/vmx/nested.c::nested_vmx_merge_msr_bitmaps",
+    "arch/x86/kvm/vmx/pmu_intel.c::intel_is_valid_msr",
+    "arch/x86/kvm/vmx/sgx.c::sgx_gva_to_gpa"
+   ],
+   "text": "EPT roots match on masked base; MSR intercept ORs host and L1; PMU and enclave validate version and leaf."
+  },
+  {
+   "sids": [
+    "virt/kvm/coalesced_mmio.c::coalesced_mmio_in_range",
+    "virt/kvm/guest_memfd.c::kvm_gmem_allocate",
+    "virt/kvm/kvm_main.c::kvm_create_vm",
+    "virt/kvm/kvm_main.c::kvm_handle_hva_range"
+   ],
+   "text": "Coalesced commits inside ranges; gmem allocate walks to size; VM seeds generations; host walks clip overlaps."
+  }
+ ],
+ "locks": [
+  {
+   "sids": [
+    "arch/x86/kvm/mmu/mmu.c::__kvm_rmap_lock",
+    "arch/x86/kvm/mmu/mmu.c::__kvm_rmap_unlock",
+    "arch/x86/kvm/mmu/mmu.c::mmu_free_root_page",
+    "arch/x86/kvm/mmu/tdp_mmu.c::tdp_mmu_set_spte_atomic",
+    "include/linux/kvm_host.h::kvm_lockdep_assert_vcpu_is_locked_or_unreachable",
+    "arch/x86/kvm/mmu/tdp_mmu.c::kvm_tdp_mmu_clear_dirty_slot",
+    "arch/x86/kvm/mmu/tdp_mmu.c::tdp_mmu_zap_leafs",
+    "arch/x86/kvm/mmu/mmu.c::kvm_zap_gfn_range",
+    "virt/kvm/kvm_main.c::kvm_swap_active_memslots",
+    "virt/kvm/kvm_main.c::kvm_invalidate_memslot"
+   ],
+   "text": "RMAP holds mem write with preempt off, vCPU locked; TDP dirty takes read, zap takes write with flush; publish uses spinlock, RCU and SRCU."
+  },
+  {
+   "sids": [
+    "arch/x86/kvm/mmu/tdp_mmu.c::kvm_tdp_mmu_alloc_root",
+    "arch/x86/kvm/mmu/mmu.c::kvm_rmap_lock_readonly",
+    "arch/x86/kvm/mmu/tdp_mmu.h::kvm_tdp_mmu_walk_lockless_begin"
+   ],
+   "text": "TDP lookup shares then creates locked; rmap snapshots; TDP walks under RCU."
+  },
+  {
+   "sids": [
+    "arch/x86/kvm/mmu/tdp_mmu.c::tdp_mmu_next_root",
+    "arch/x86/kvm/mmu/tdp_mmu.c::__for_each_tdp_mmu_root",
+    "arch/x86/kvm/msrs.c::kvm_msr_allowed"
+   ],
+   "text": "Root scan needs MMU lock plus RCU; MSR filter under SRCU, default allow, skips x2APIC."
+  },
+  {
+   "sids": [
+    "arch/x86/kvm/svm/avic.c::avic_ga_log_notifier",
+    "arch/x86/kvm/svm/avic.c::avic_add_vm_to_ga_log_list",
+    "arch/x86/kvm/svm/avic.c::__avic_vcpu_load",
+    "arch/x86/kvm/svm/avic.c::__avic_vcpu_put",
+    "arch/x86/kvm/x86.c::__kvm_vcpu_update_apicv"
+   ],
+   "text": "GA hash under irqsave spinlock; placement under remap lock with preempt off; APICV needs VM read."
+  },
+  {
+   "sids": [
+    "arch/x86/kvm/svm/svm.c::osvw_lock",
+    "arch/x86/kvm/svm/svm.c::vmcb_dump_mutex",
+    "arch/x86/kvm/svm/svm.c::srso_lock"
+   ],
+   "text": "OSVW under spinlock; VMCB dumps under mutex; branch mitigation first-create last-destroy."
+  },
+  {
+   "sids": [
+    "arch/x86/kvm/vmx/vmx.c::vmx_set_apic_access_page_addr",
+    "arch/x86/kvm/vmx/nested.c::copy_shadow_to_vmcs12",
+    "arch/x86/kvm/vmx/vmx.c::vmx_vpid_lock",
+    "arch/x86/kvm/vmx/posted_intr.c::wakeup_vcpus_on_cpu_lock"
+   ],
+   "text": "vCPU control lock around APIC publish; preemption off for shadow; per-CPU lists for wakeup and VPID."
+  },
+  {
+   "sids": [
+    "arch/x86/kvm/vmx/tdx.c::tdx_lock",
+    "arch/x86/kvm/vmx/tdx.c::tdx_acquire_vm_state_locks",
+    "arch/x86/kvm/x86.c::kvm_arch_vm_ioctl",
+    "arch/x86/kvm/x86.c::kvm_arch_vcpu_ioctl_run"
+   ],
+   "text": "TDX global mutex plus ordered VM, vCPU and slot cover; VM lock guards config; sleepable read spans run."
+  },
+  {
+   "sids": [
+    "virt/kvm/kvm_mm.h::KVM_MMU_LOCK.alt_1",
+    "virt/kvm/guest_memfd.c::kvm_gmem_invalidate_start",
+    "virt/kvm/kvm_main.c::kvm_io_bus_get_dev",
+    "virt/lib/irqbypass.c::irq_bypass_register_producer"
+   ],
+   "text": "MMU lock with write and spin forms; gmem filemap cover; bus lookup under SRCU; one bypass mutex."
+  }
+ ],
+ "pass": 1,
+ "phase_map": [
+  {
+   "anchor": "HB-KPAPER-001/hb-s5.p04",
+   "crown": "A",
+   "phase": "F2"
+  }
+ ],
+ "schema": "lx.dossier.v1",
+ "state_machines": [
+  {
+   "sids": [
+    "virt/kvm/kvm_main.c::kvm_swap_active_memslots",
+    "virt/kvm/kvm_main.c::kvm_create_memslot",
+    "virt/kvm/kvm_main.c::kvm_delete_memslot",
+    "virt/kvm/kvm_main.c::kvm_move_memslot",
+    "arch/x86/kvm/x86.c::kvm_arch_vcpu_destroy",
+    "virt/kvm/kvm_main.c::kvm_destroy_vcpus",
+    "virt/kvm/async_pf.c::kvm_clear_async_pf_completion_queue",
+    "virt/kvm/kvm_main.c::kvm_disable_virtualization.alt_1"
+   ],
+   "text": "Slots go flagged to visible to settled via RCU/SRCU; teardown drains async, unloads paging; virt setup on first user, teardown on last."
+  },
+  {
+   "sids": [
+    "arch/x86/kvm/kvm_emulate.h::x86emul_mode",
+    "arch/x86/kvm/lapic.c::kvm_apic_accept_events",
+    "arch/x86/kvm/lapic.c::kvm_lapic_switch_to_hv_timer",
+    "arch/x86/kvm/mmu/mmu.c::shadow_walk_next",
+    "arch/x86/kvm/mmu/mmu.c::mmu_set_spte",
+    "arch/x86/kvm/mmu/mmu.c::shadow_mmu_try_split_huge_page"
+   ],
+   "text": "Emulation modes gate retry, INIT/SIPI drive MP, timers swap HV/SW; shadow walks descend, install handles MMIO, splits divide huge."
+  },
+  {
+   "sids": [
+    "arch/x86/kvm/mmu/mmu.c::kvm_mmu_post_init_vm",
+    "arch/x86/kvm/mmu/mmu.c::kvm_mmu_start_lpage_recovery",
+    "arch/x86/kvm/mmu/mmu.c::kvm_nx_huge_page_recovery_worker",
+    "arch/x86/kvm/mmu/mmu.c::kvm_mmu_pre_destroy_vm",
+    "arch/x86/kvm/mmu/mmu.c::kvm_nx_huge_page_recovery_worker_kill"
+   ],
+   "text": "Recovery absent until first VM, created once, sleeps/wakes by timer, stopped at teardown."
+  },
+  {
+   "sids": [
+    "arch/x86/kvm/svm/nested.c::nested_svm_vmrun",
+    "arch/x86/kvm/svm/nested.c::enter_svm_guest_mode",
+    "arch/x86/kvm/svm/nested.c::nested_svm_vmexit",
+    "arch/x86/kvm/svm/nested.c::nested_svm_intercept",
+    "arch/x86/kvm/svm/nested.c::nested_svm_merge_msrpm",
+    "arch/x86/kvm/svm/nested.c::nested_sync_control_from_vmcb02"
+   ],
+   "text": "VMRUN validates/maps/caches then enters L2; exits consult intercepts; MSR merge publishes base."
+  },
+  {
+   "sids": [
+    "virt/kvm/kvm_main.c::kvm_vcpu_halt",
+    "virt/kvm/kvm_main.c::kvm_vcpu_block",
+    "virt/kvm/kvm_main.c::grow_halt_poll_ns"
+   ],
+   "text": "Halt spin-polls while abort passes then sleeps; invalid wakeups shrink interval, short halts grow."
+  },
+  {
+   "sids": [
+    "arch/x86/kvm/vmx/tdx.c::tdx_td_init",
+    "arch/x86/kvm/vmx/tdx.c::tdx_td_finalize",
+    "arch/x86/kvm/vmx/tdx.c::tdx_vcpu_init",
+    "arch/x86/kvm/vmx/tdx.h::kvm_tdx_state"
+   ],
+   "text": "Domain unassigned to assigned to runnable; vCPU uninit to init to runnable."
+  },
+  {
+   "sids": [
+    "arch/x86/kvm/x86.c::vcpu_run",
+    "arch/x86/kvm/x86.c::vcpu_enter_guest",
+    "arch/x86/kvm/vmx/vmx.c::kvm_vmx_exit_handlers",
+    "arch/x86/kvm/vmx/nested.c::nested_vmx_run"
+   ],
+   "text": "Run loop enters when runnable else blocks, drains requests, dispatches exits to reenter or userspace."
+  },
+  {
+   "sids": [
+    "arch/x86/kvm/x86.c::kvm_arch_vcpu_ioctl_set_mpstate",
+    "arch/x86/kvm/x86.c::process_nmi",
+    "arch/x86/kvm/x86.c::kvm_check_and_inject_events"
+   ],
+   "text": "MP cycles runnable, halted and hold states; NMI folds queued into bounded pending with priority order."
+  },
+  {
+   "sids": [
+    "arch/x86/kvm/x86.c::emulator_read_write",
+    "arch/x86/kvm/x86.c::complete_emulated_mmio",
+    "arch/x86/kvm/x86.c::____kvm_emulate_hypercall",
+    "arch/x86/kvm/vmx/nested.c::handle_vmxon"
+   ],
+   "text": "Emulation tries direct then kernel then userspace; MMIO rearms; VMX toggles off to on."
+  },
+  {
+   "sids": [
+    "virt/kvm/dirty_ring.c::kvm_dirty_ring_reset",
+    "virt/kvm/eventfd.c::kvm_irqfd_assign",
+    "virt/kvm/eventfd.c::kvm_assign_ioeventfd_idx",
+    "virt/kvm/kvm_main.c::kvm_vm_ioctl_create_vcpu"
+   ],
+   "text": "Dirty harvest invalidates under slot mutex; IRQFD inactive to active; IOEventFD assigns per bus; create publishes."
+  }
+ ],
+ "structs": [
+  {
+   "sids": [
+    "arch/x86/kvm/hyperv.h::KVM_HV_TLB_FLUSH_FIFO_SIZE",
+    "arch/x86/kvm/hyperv.h::HYPERV_CPUID_SIGNATURE_EAX",
+    "arch/x86/kvm/hyperv.h::HV_X64_MSR_SYNDBG_CONTROL",
+    "arch/x86/kvm/i8254.h::KVM_PIT_BASE_ADDRESS",
+    "arch/x86/kvm/i8254.h::KVM_PIT_FREQ",
+    "arch/x86/kvm/ioapic.h::IOAPIC_NUM_PINS",
+    "arch/x86/kvm/ioapic.h::IOAPIC_VERSION_ID",
+    "arch/x86/kvm/ioapic.h::IOAPIC_DEFAULT_BASE_ADDRESS",
+    "arch/x86/kvm/lapic.c::APIC_VERSION",
+    "arch/x86/kvm/mmu.h::KVM_MMU_HASH_SHIFT",
+    "arch/x86/kvm/mmu.h::ACC_ALL"
+   ],
+   "text": "Flush depth 16, sig 0x31237648, dbg 0x400000F1, PIT base 64 freq 1193181, IOAPIC 0xFEC00000 ver 0x11; APIC ver and MMU hash/levels fixed."
+  },
+  {
+   "sids": [
+    "virt/kvm/kvm_main.c::kvm_replace_memslot",
+    "include/linux/kvm_host.h::__gfn_to_hva_memslot",
+    "virt/kvm/dirty_ring.c::kvm_dirty_ring_push",
+    "virt/kvm/dirty_ring.c::kvm_dirty_ring_full"
+   ],
+   "text": "Slots pair active/inactive with trees, base/pages/flags; dirty rings hold capacity and producer/consumer."
+  },
+  {
+   "sids": [
+    "arch/x86/kvm/svm/svm.c::svm_data",
+    "arch/x86/kvm/svm/svm.h::IOPM_SIZE",
+    "arch/x86/kvm/svm/svm.h::MSRPM_SIZE",
+    "arch/x86/kvm/svm/svm.h::VMCB_ALL_CLEAN_MASK"
+   ],
+   "text": "Per-CPU SVM holds TSC and save area; IOPM 3 pages, MSRPM 2 pages, clean mask low bits."
+  },
+  {
+   "sids": [
+    "arch/x86/kvm/svm/svm.h::vmcb_set_intercept",
+    "arch/x86/kvm/svm/svm.h::__vmcb_set_intercept",
+    "arch/x86/kvm/svm/svm.h::svm_set_intercept",
+    "arch/x86/kvm/svm/nested.c::__nested_copy_vmcb_control_to_cache",
+    "arch/x86/kvm/svm/nested.c::nested_copy_vmcb_cache_to_control"
+   ],
+   "text": "Intercepts are fixed word arrays; cached control/save carry ASID, bases, IRQ, regs, tables."
+  },
+  {
+   "sids": [
+    "arch/x86/kvm/vmx/hyperv_evmcs.h::evmcs_field_offset",
+    "arch/x86/kvm/vmx/hyperv_evmcs.h::KVM_EVMCS_VERSION",
+    "arch/x86/kvm/vmx/hyperv.h::EVMPTR_INVALID"
+   ],
+   "text": "EVMCS translation rotates encodings to slots; version one; all-bits-set means invalid."
+  },
+  {
+   "sids": [
+    "arch/x86/kvm/vmx/tdx.c::setup_tdparams",
+    "arch/x86/kvm/vmx/tdx.h::kvm_tdx.alt_1",
+    "arch/x86/kvm/vmx/tdx.h::vcpu_tdx.alt_1",
+    "arch/x86/kvm/vmx/tdx_arch.h::td_params"
+   ],
+   "text": "TD params carry counts, attrs, TSC, EPT and CPUID tail; domain and vCPU hold key, state and cursors."
+  },
+  {
+   "sids": [
+    "arch/x86/kvm/vmx/main.c::vt_op.alt_1",
+    "arch/x86/kvm/vmx/vmcs12.h::vmcs12",
+    "arch/x86/kvm/vmx/vmcs.h::loaded_vmcs",
+    "arch/x86/kvm/vmx/vmx.h::nested_vmx"
+   ],
+   "text": "Op tables select VT or TDX handlers; packed VMCS12 image with revision; loaded VMCS tracks CPU."
+  },
+  {
+   "sids": [
+    "include/linux/kvm_host.h::kvm_vcpu",
+    "include/linux/kvm_host.h::kvm_memory_slot",
+    "include/uapi/linux/kvm.h::kvm_run",
+    "include/uapi/linux/kvm.h::KVM_EXIT_MMIO"
+   ],
+   "text": "VCPU links VM and run state; slot maps GPA to host; run block carries reason, regs and exit payloads."
+  },
+  {
+   "sids": [
+    "include/uapi/linux/kvm.h::kvm_irq_routing_entry",
+    "include/uapi/linux/kvm.h::kvm_irqfd",
+    "include/linux/kvm_host.h::kvm_kernel_irq_routing_entry",
+    "include/linux/kvm_host.h::kvm_device"
+   ],
+   "text": "Routing maps numbers to chip pin or MSI; IRQFD links VM and routing; device carries type and attrs."
+  },
+  {
+   "sids": [
+    "arch/x86/kvm/vmx/vmx.h::KVM_REQUIRED_VMX_SECONDARY_VM_EXEC_CONTROL",
+    "arch/x86/kvm/x86.c::KVM_SUPPORTED_XCR0",
+    "include/uapi/linux/kvm.h::kvm_dirty_gfn",
+    "include/uapi/linux/kvm.h::kvm_stats_desc"
+   ],
+   "text": "ABI fixes required VMX controls, XCR0 cover, dirty markers and stats descriptors."
+  }
+ ],
+ "stubs": [
+  {
+   "sid": "include/linux/rcupdate.h::rcu_read_lock",
+   "state": "stub",
+   "target_dossier": "D02"
+  },
+  {
+   "sid": "include/linux/srcu.h::srcu_read_lock",
+   "state": "stub",
+   "target_dossier": "D03"
+  },
+  {
+   "sid": "include/linux/spinlock.h::spin_lock",
+   "state": "stub",
+   "target_dossier": "D03"
+  },
+  {
+   "sid": "include/linux/mutex.h::mutex_lock",
+   "state": "stub",
+   "target_dossier": "D03"
+  },
+  {
+   "sid": "include/linux/preempt.h::preempt_disable.alt_1",
+   "state": "stub",
+   "target_dossier": "D01"
+  },
+  {
+   "sid": "include/linux/mm.h::offset_in_page",
+   "state": "stub",
+   "target_dossier": "D06"
+  },
+  {
+   "sid": "include/linux/slab.h::kzalloc",
+   "state": "stub",
+   "target_dossier": "D05"
+  },
+  {
+   "sid": "include/linux/cpumask.h::for_each_online_cpu.alt_1",
+   "state": "stub",
+   "target_dossier": "D12"
+  },
+  {
+   "sid": "include/linux/irqflags.h::local_irq_save.alt_1",
+   "state": "stub",
+   "target_dossier": "D04"
+  },
+  {
+   "sid": "arch/arm64/kvm/mmu.c::kvm_arch_free_memslot",
+   "state": "stub",
+   "target_dossier": "D08"
+  }
+ ]
+}

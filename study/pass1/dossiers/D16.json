@@ -1,0 +1,557 @@
+{
+ "dossier": "D16",
+ "entry_points": [
+  {
+   "sids": [
+    "drivers/block/virtio_blk.c::virtblk_setup_cmd",
+    "drivers/char/virtio_console.c::port_fops_read",
+    "drivers/net/virtio_net.c::virtnet_poll",
+    "drivers/net/virtio_net.c::start_xmit"
+   ],
+   "text": "Block maps ops with trailer and kicks on failure; console reads freezably; net uses NAPI receive and queued transmit."
+  },
+  {
+   "sids": [
+    "drivers/net/virtio_net.c::virtio_net_driver_init",
+    "drivers/tty/hvc/hvc_console.c::hvc_console_setup",
+    "drivers/tty/hvc/hvc_opal.c::hvc_opal_probe",
+    "drivers/tty/hvc/hvcs.c::hvcs_probe",
+    "drivers/tty/serial/amba-pl011.c::pl011_init",
+    "drivers/virtio/virtio.c::virtio_init"
+   ],
+   "text": "Net registers hotplug and probes pairs; HVC wires console; HVCS claims indexes; PL011 probes options; virtio registers bus."
+  },
+  {
+   "sids": [
+    "drivers/virtio/virtio_balloon.c::virtballoon_probe",
+    "drivers/virtio/virtio_mem.c::virtio_mem_init",
+    "drivers/virtio/virtio_mmio.c::virtio_mmio_probe",
+    "drivers/virtio/virtio_pci_modern.c::virtio_pci_modern_probe"
+   ],
+   "text": "Balloon builds queues toward target; mem branches capture versus hotplug; MMIO and PCI discover queues."
+  },
+  {
+   "sids": [
+    "drivers/virtio/virtio_pci_modern_dev.c::vp_modern_get_driver_extended_features",
+    "drivers/virtio/virtio_ring.c::packed_ops.alt_2",
+    "drivers/virtio/virtio_rtc_class.c::viortc_class_read_time",
+    "drivers/virtio/virtio_rtc_driver.c::viortc_cb_requestq",
+    "drivers/virtio/virtio_rtc_driver.c::virtio_rtc_drv",
+    "drivers/virtio/virtio_vdpa.c::virtio_vdpa_driver",
+    "include/linux/console.h::console_sysfs_notify",
+    "include/linux/serial_core.h::serial_port_in",
+    "include/linux/serial_core.h::uart_cts_enabled",
+    "include/linux/tty.h::tty_kref_get",
+    "include/linux/tty_flip.h::tty_insert_flip_string_flags"
+   ],
+   "text": "Features rebuild; packed obtain/poll; RTC read/cb; vDPA binds; UART in/CTS; TTY safe; flip forwards."
+  }
+ ],
+ "exports": [
+  {
+   "sids": [
+    "drivers/virtio/virtio_ring.c::virtqueue_add_sgs",
+    "drivers/virtio/virtio_ring.c::virtqueue_get_buf",
+    "drivers/virtio/virtio_ring.c::virtqueue_kick",
+    "include/linux/virtio_config.h::virtio_cread",
+    "include/linux/virtio_config.h::virtio_find_vqs",
+    "drivers/tty/hvc/hvc_console.c::hvc_alloc"
+   ],
+   "text": "Virtqueue submits scatter and inbound buffers, reaps completions and kicks; config reads gated by features and marks ready."
+  },
+  {
+   "sids": [
+    "drivers/net/virtio_net.c::virtio_net_driver",
+    "drivers/tty/hvc/hvc_console.c::hvc_console",
+    "drivers/tty/hvc/hvsi_lib.c::hvsilib_open",
+    "drivers/tty/hvc/hvsi.c::hvsi_ops"
+   ],
+   "text": "Net binds virtio id with datapath and ethtool ops; console offers tty ops; packet backends gate on presence."
+  },
+  {
+   "sids": [
+    "drivers/virtio/virtio.c::register_virtio_device",
+    "drivers/virtio/virtio_ring.c::vring_create_virtqueue",
+    "drivers/virtio/virtio_pci_admin_legacy_io.c::virtio_pci_admin_has_legacy_io",
+    "drivers/virtio/virtio_dma_buf.c::virtio_dma_buf_export"
+   ],
+   "text": "Virtio bus registers devices and drivers; ring builds split or packed queues; PCI maps notify; DMA helpers validate."
+  },
+  {
+   "sids": [
+    "drivers/virtio/virtio_pci_modern_dev.c::vp_modern_set_extended_features",
+    "drivers/virtio/virtio_pci_modern_dev.c::vp_modern_get_status",
+    "drivers/virtio/virtio_pci_modern_dev.c::vp_modern_set_queue_enable",
+    "drivers/virtio/virtio_pci_modern_dev.c::vp_modern_set_queue_reset",
+    "drivers/virtio/virtio_pci_modern_dev.c::vp_modern_config_vector",
+    "drivers/virtio/virtio_ring.c::__virtqueue_break",
+    "drivers/virtio/virtio_ring.c::__virtqueue_unbreak",
+    "drivers/virtio/virtio_pci_modern.c::virtio_pci_admin_dev_parts_set",
+    "drivers/virtio/virtio_ring.c::vring_create_virtqueue_map",
+    "drivers/virtio/virtio_ring.c::vring_new_virtqueue",
+    "drivers/virtio/virtio_ring.c::__virtio_unbreak_device",
+    "drivers/virtio/virtio_rtc_driver.c::viortc_read",
+    "drivers/virtio/virtio_rtc_driver.c::viortc_read_alarm",
+    "drivers/virtio/virtio_rtc_driver.c::viortc_set_alarm",
+    "drivers/virtio/virtio_rtc_class.c::viortc_class_register",
+    "drivers/virtio/virtio_rtc_ptp.c::viortc_ptp_register",
+    "include/uapi/linux/virtio_pci.h::virtio_pci_common_cfg",
+    "include/uapi/linux/virtio_ring.h::vring_desc",
+    "include/uapi/linux/virtio_rtc.h::virtio_rtc_req_head",
+    "include/uapi/linux/virtio_types.h::__virtio16"
+   ],
+   "text": "PCI features/status/queues/admin; break; rings split/packed; RTC time/alarm/PTP; UAPI only."
+  }
+ ],
+ "extracts": [
+  "020085665d22af9ce641abd4313a8928616cc8e7b04349de76584083328471e9",
+  "02a47e4c57dac00daf34ead5618fffc4b435b1834150fa2358d12bb38b990aae",
+  "087e15376b1d82b04716180577b70d1aac283a383ec494ad56b9a84c682ad9ac",
+  "0c8d250de19ed026c0860ea40dccbf8ae03ff855e192b83b429bcbc2978e7e1b",
+  "0d655f8b941b0e1ad7338c7bdc60c545fe0fcc2c2aac9b258855c37af2d88a43",
+  "0f527212b34b1d4eb3785b4edb77c8738bdc2683256fc5cf8931acfdb6433684",
+  "0f9ad4ae18019c645f34bb18cda2076723f1b9f58258e4e1dcdcc0505b2c06a0",
+  "16281377ec56a6c473f291b537eae6b4c6dae04e4f1632148f3d5d3fbc24ebc0",
+  "19e24b80c6e180506382c9338c61d6ccc47fd203b916959dc1e301fc0987bd32",
+  "1a7791c10c68f99bde0c9063b4d9662eea1ea2d822e5f8d31f4273874085ade7",
+  "2458235dcf4ee9d4b36e0678d93354780a586326f7b688f418beec7a94460dbc",
+  "380cb86627226631933b0e319d31d0138d40fda37ce9c3ad046fc8100f40c6b7",
+  "3c2f03214fb939b964348ae4c0f9a0246cf49bd4899ca35951225cfa7c762f4c",
+  "457c6b977576806dbcc54793f6def4283f46807904626a80daf94204d36a8090",
+  "46c6983c848811e83fdae5bef3a861b6cfee85c3209f6df2e207a59f2ef2ee74",
+  "47b6bf1e30078f7ad6d2248374fc523d7e4947b24fc18abac0c6ba5362e17011",
+  "49766c9a5488162b2460fa543aab2e9db482c97f9da7c8a38131b4cb2b3a8fb5",
+  "5361cc36115f0039a6ce013abcbf3c87a606558c17b4debbf39342b3381650da",
+  "5c17de7c3e5dbc319c5e9a95544f1758d37f3d6bf2e4f3ad0f790bd236982774",
+  "67117383e0d1b2f5b817eea39b397ff4f4944d5430b3622406f6b731c7698f2a",
+  "6ec0587176f0439e7b7c31453a8d0eee98dbce63d9112adc514dfb173ded21c8",
+  "725c4d8b771891a6e97bce1a3fe4c89b69985441f790a4e492ac1912ad56726c",
+  "765312059ab762c8c3f4dd975e135b73f91fbed28f1e05425e61af9ba0001ca9",
+  "76693fd2a62629d8b5cd79d7aa8bfb4f027ee6383512c6c1a50dd79aa9bc4ae4",
+  "77c45a8da36cb013ab763f78fc2a094bcd3b58399e1f245ae1beb383b0373bc1",
+  "7aab90114ba5c948d9522aadeaa3f4165096f7c14f03442ffe94c243ce95648c",
+  "7e1c52820438a456b3ad393c33d6ee90d9dcb21f619df20dd1d76d9c2653dbd4",
+  "85cfb3743fed59b3fa1b61e0242c2ded626cd3b429aeb5ddd0fbe09d4a399de8",
+  "868fc235c04dc05ce9f220f9f493672fd8d2a887e387cb600ed27b0b04296408",
+  "8c338734a639572948cf7e70cf2bef575c58e9c0599c96e4db20e58fac5b3b8e",
+  "8cd8f4b05f68c9898e6e144a0d44ec2780e332f5429c86035920ad69f3234a38",
+  "96c8e6d974aa3d1c787038aba777a40930974ebbb3fffb2e9ca7cbe6a1f6f35a",
+  "a70d58dcab67be1a6dbcb158c7cb3aa211f3d5278a794ea0545acd6cae1d0210",
+  "a77206ec649d6a24a36648dafa109dde5c05b61bf0f39f6bf5e3f264e49c6cce",
+  "abe80419acb3b4d074d91a64fc299abd72fca82e6645f60934109e0ecbc25a46",
+  "add9c13101b843ccddea0320ebf8b85f199f074e41ef953b36f40605998b164f",
+  "b05629a76542b6b915145225023f6cae628ba95bec13e172f07a6764e812578b",
+  "bca5b32134c02d662239b6e82b3427d270516c5b42fe9f8849b82da98ef40030",
+  "bddc35ff4ee03c31d711c1e75ec943ee65362670fc8fc0539e2d68e72aae3d00",
+  "bdf621d69b99d4765d4d8284dfe5c8c2539f6afe6fe1b0567cbe1060e8b3efec",
+  "c5582d0fb892f6440706c0682a7c95cff530ecc09ca7ec1a07780ea29b388448",
+  "c85d492da04102d2c253b56fa96665190dabd73d5e157c70bee13145f8eaf066",
+  "cb094838307ca6b9a7d605cd943195b2af22ff6acaf6ce31093db1de8dd4fbb7",
+  "cbde0998f212780cc95a848980d28082685d6755228247555697439b467888af",
+  "dc99cca548918b69d0d35086417a8f1e94813b2dc1a11f7df61424f4d32819d4",
+  "dcc5f8a236656eb1e57d37b863ce74c9cd6b0050cf7362a9e7300bc796c95f66",
+  "e6590c6ba42e3bde73ff313f2ebfa708b13a22fa8b6b8d3871848066e7417c61",
+  "e70c4ee46bb158e13557f70a49bc4de50effc1a7715b7ce812f29b66316b35bb",
+  "edfa58141194f6ddb59495ef9e152d9d2d3f0dcca23b1b4fc07833c2c7c6d04b",
+  "ee205ac36c481ade66a2e35f879ae53820357f00c726ec88e6786e9e12902361",
+  "eec60cd2cd130bcc2c84776bcfceecc5cb4ff3a16bfb7c6c44aefe9c5c20c291",
+  "ef9f78dac7d0888112307fb0339da6bce1854a851b0d1e911166e02be94fc5ec",
+  "f3b42bd0695368a5a6bcac312f2e3e7ff0722c67db8c98849fb2139259894fed",
+  "fd94e79834ef63937e79816795a7da24ed3a85588498f62cefdfd2ca85551a15"
+ ],
+ "gpl_spec": "PASS",
+ "hazards": [
+  {
+   "sids": [
+    "drivers/virtio/virtio_ring.c::virtqueue_notify",
+    "drivers/char/virtio_console.c::handle_control_message",
+    "drivers/net/virtio_net.c::check_mergeable_len",
+    "drivers/virtio/virtio_ring.c::virtqueue_resize"
+   ],
+   "text": "Space exhaustion stops queue, memory shortage does not; broken suppresses notify; unknown ids create nothing; bad frames drop."
+  },
+  {
+   "sids": [
+    "drivers/net/virtio_net.c::virtnet_set_affinity",
+    "drivers/tty/hvc/hvc_console.c::hvc_write",
+    "drivers/tty/hvc/hvc_dcc.c::hvc_dcc_check",
+    "drivers/tty/hvc/hvcs.c::hvcs_partner_free",
+    "drivers/virtio/virtio.c::virtio_check_driver_offered_feature",
+    "drivers/tty/serial/amba-pl011.c::pl011_quiesce_irqs"
+   ],
+   "text": "Affinity runs without hints on failure; HVC counts race; partner release retries unbounded; missing feature aborts; poll spins."
+  },
+  {
+   "sids": [
+    "drivers/virtio/virtio_input.c::virtinput_send_status",
+    "drivers/virtio/virtio_mem.c::virtio_mem_bbm_unplug_request",
+    "drivers/virtio/virtio_mmio.c::vm_set_status",
+    "drivers/virtio/virtio_pci_common.c::virtio_pci_sriov_configure"
+   ],
+   "text": "Status send can exhaust atomically; shrink cannot revoke RAM; zero status refused; notify overrun warns; reset needs flush."
+  },
+  {
+   "sids": [
+    "drivers/virtio/virtio_ring.c::BAD_RING.alt_1",
+    "drivers/virtio/virtio_ring.c::BAD_RING.alt_2",
+    "drivers/virtio/virtio_ring.c::virtqueue_detach_unused_buf_packed",
+    "drivers/virtio/virtio_rtc_driver.c::viortc_msg_xfer",
+    "drivers/virtio/virtio_rtc_driver.c::viortc_get_resp_errno",
+    "include/linux/amba/serial.h::UART01x_DR",
+    "include/linux/amba/serial.h::UART01x_RSR",
+    "include/linux/amba/serial.h::UART010_LCRH",
+    "include/linux/serial_core.h::uart_fifo_out",
+    "include/linux/tty_buffer.h::tty_buffer"
+   ],
+   "text": "Corruption traps/marks broken; detach asserts; RTC fails clean. UART aliases; Tx needs lock; flip lags."
+  },
+  {
+   "sids": [
+    "include/uapi/linux/virtio_config.h::VIRTIO_CONFIG_S_ACKNOWLEDGE",
+    "include/uapi/linux/virtio_config.h::VIRTIO_CONFIG_S_DRIVER",
+    "include/uapi/linux/virtio_config.h::VIRTIO_CONFIG_S_DRIVER_OK",
+    "include/uapi/linux/virtio_config.h::VIRTIO_CONFIG_S_FEATURES_OK",
+    "include/uapi/linux/virtio_config.h::VIRTIO_CONFIG_S_NEEDS_RESET",
+    "include/uapi/linux/virtio_config.h::VIRTIO_CONFIG_S_FAILED",
+    "include/uapi/linux/virtio_config.h::VIRTIO_TRANSPORT_F_START",
+    "include/uapi/linux/virtio_config.h::VIRTIO_TRANSPORT_F_END",
+    "include/uapi/linux/virtio_config.h::VIRTIO_F_NOTIFY_ON_EMPTY",
+    "include/uapi/linux/virtio_config.h::VIRTIO_F_ANY_LAYOUT",
+    "include/uapi/linux/virtio_config.h::VIRTIO_F_VERSION_1",
+    "include/uapi/linux/virtio_config.h::VIRTIO_F_ACCESS_PLATFORM",
+    "include/uapi/linux/virtio_config.h::VIRTIO_F_IOMMU_PLATFORM",
+    "include/uapi/linux/virtio_config.h::VIRTIO_F_RING_PACKED",
+    "include/uapi/linux/virtio_config.h::VIRTIO_F_IN_ORDER",
+    "include/uapi/linux/virtio_config.h::VIRTIO_F_ORDER_PLATFORM",
+    "include/uapi/linux/virtio_config.h::VIRTIO_F_SR_IOV",
+    "include/uapi/linux/virtio_config.h::VIRTIO_F_NOTIFICATION_DATA",
+    "include/uapi/linux/virtio_config.h::VIRTIO_F_NOTIF_CONFIG_DATA",
+    "include/uapi/linux/virtio_config.h::VIRTIO_F_RING_RESET",
+    "include/uapi/linux/virtio_config.h::VIRTIO_F_ADMIN_VQ",
+    "include/uapi/linux/virtio_console.h::VIRTIO_CONSOLE_DEVICE_READY",
+    "include/uapi/linux/virtio_console.h::VIRTIO_CONSOLE_PORT_ADD",
+    "include/uapi/linux/virtio_console.h::VIRTIO_CONSOLE_PORT_REMOVE",
+    "include/uapi/linux/virtio_console.h::VIRTIO_CONSOLE_PORT_READY",
+    "include/uapi/linux/virtio_console.h::VIRTIO_CONSOLE_CONSOLE_PORT",
+    "include/uapi/linux/virtio_console.h::VIRTIO_CONSOLE_RESIZE",
+    "include/uapi/linux/virtio_console.h::VIRTIO_CONSOLE_PORT_OPEN",
+    "include/uapi/linux/virtio_console.h::VIRTIO_CONSOLE_PORT_NAME"
+   ],
+   "text": "Status 1/2/4/8/64/128; win 28-42; feats 24/27/32-41. Console 0-7: ready/add/remove/resize/open/name."
+  }
+ ],
+ "invariants": [
+  {
+   "sids": [
+    "drivers/block/virtio_blk.c::virtblk_result",
+    "drivers/block/virtio_blk.c::virtblk_add_req",
+    "include/linux/virtio_config.h::virtio_has_feature",
+    "drivers/block/virtio_blk.c::virtblk_get_cache_mode"
+   ],
+   "text": "Block maps status to ok, unsupported, zone-resource or error; header, payload and trailer submit in order."
+  },
+  {
+   "sids": [
+    "drivers/char/virtio_console.c::find_port_by_id",
+    "drivers/char/virtio_console.c::send_control_msg",
+    "drivers/net/virtio_net.c::vq2txq",
+    "drivers/net/virtio_net.c::try_fill_recv"
+   ],
+   "text": "Host-id port lookup stays unreferenced, device lookup takes reference; transmit reclaims then marks full; even queues receive."
+  },
+  {
+   "sids": [
+    "drivers/net/virtio_net.c::virtnet_validate",
+    "drivers/net/virtio_net.c::virtnet_init_default_rss",
+    "drivers/net/virtio_net.c::virtnet_set_coalesce",
+    "include/linux/virtio_config.h::__virtio_cread_many"
+   ],
+   "text": "Net needs control queue for multiqueue and offloads; steering uses masked table and key; coalescing caches; config samples generation."
+  },
+  {
+   "sids": [
+    "drivers/tty/hvc/hvc_console.c::hvc_get_by_index",
+    "drivers/tty/hvc/hvcs.c::hvcs_get_index",
+    "drivers/virtio/virtio.c::virtio_features_ok",
+    "drivers/virtio/virtio_balloon.c::towards_target",
+    "drivers/virtio/virtio_mem.c::virtio_mem_send_request"
+   ],
+   "text": "HVC walks under global mutex; HVCS scans lowest free index; virtio intersects features; balloon rounds; mem ids derive from address."
+  },
+  {
+   "sids": [
+    "drivers/virtio/virtio_pci_modern.c::vp_get",
+    "drivers/virtio/virtio_pci_modern.c::vp_set",
+    "drivers/virtio/virtio_pci_modern.c::vp_generation",
+    "drivers/virtio/virtio_pci_modern.c::vp_get_status",
+    "include/linux/virtio_config.h::virtio_get_shm_region",
+    "include/linux/virtio_config.h::virtio_cread_le_feature",
+    "include/linux/virtio_config.h::virtio_cwrite32",
+    "include/linux/virtio_pci_modern.h::vp_modern_get_features",
+    "drivers/virtio/virtio_ring.c::vring_read_packed_desc_flags",
+    "include/linux/virtio_ring.h::virtio_wmb",
+    "include/linux/virtio_ring.h::virtio_rmb",
+    "include/uapi/linux/virtio_ring.h::vring_need_event",
+    "drivers/virtio/virtio_ring.c::virtqueue_use_indirect",
+    "drivers/virtio/virtio_ring.c::vring_unmap_one_split",
+    "drivers/virtio/virtio_ring.c::detach_buf_split",
+    "drivers/virtio/virtio_ring.c::virtqueue_reset_split",
+    "drivers/virtio/virtio_ring.c::virtqueue_enable_cb_prepare_packed",
+    "drivers/virtio/virtio_ring.c::virtqueue_reset_packed"
+   ],
+   "text": "Config 1/2/4/8B LE, gen/status, feat ok; SHM fails. Rings atomic/barrier; indirect host; reset clears."
+  },
+  {
+   "sids": [
+    "include/uapi/linux/tty.h::NR_LDISCS",
+    "include/uapi/linux/tty_flags.h::ASYNC_FLAGS",
+    "include/uapi/linux/tty_flags.h::ASYNC_DEPRECATED",
+    "include/uapi/linux/tty_flags.h::ASYNC_USR_MASK",
+    "include/uapi/linux/tty_flags.h::ASYNC_SPD_CUST",
+    "include/uapi/linux/tty_flags.h::ASYNC_SPD_WARP",
+    "include/uapi/linux/tty_flags.h::ASYNC_SPD_MASK",
+    "include/uapi/linux/tty_flags.h::ASYNC_INTERNAL_FLAGS",
+    "include/uapi/linux/tty_flags.h::ASYNCB_FIRST_KERNEL",
+    "include/uapi/linux/virtio_pci.h::virtio_pci_common_cfg",
+    "include/uapi/linux/virtio_pci.h::virtio_pci_modern_common_cfg",
+    "include/uapi/linux/virtio_pci.h::VIRTIO_PCI_CAP_VNDR"
+   ],
+   "text": "Ldisc 31; ASYNC user low, kernel from 22. PCI select-access; selector/addrs/size before enable; recheck gen."
+  }
+ ],
+ "locks": [
+  {
+   "sids": [
+    "drivers/block/virtio_blk.c::virtio_blk.alt_1",
+    "drivers/char/virtio_console.c::port_has_data",
+    "drivers/net/virtio_net.c::virtnet_send_command_reply",
+    "drivers/tty/hvc/hvc_console.c::hvc_structs_mutex",
+    "drivers/tty/hvc/hvcs.c::hvcs_structs_lock",
+    "drivers/virtio/virtio.c::virtio_config_core_disable"
+   ],
+   "text": "Device mutex guards removal with per-queue spinlocks; console guards cached data; net serializes control; HVC covers drain."
+  },
+  {
+   "sids": [
+    "drivers/virtio/virtio_mem.c::virtio_mem_mutex",
+    "drivers/virtio/virtio_ring.c::vring_del_virtqueue",
+    "drivers/virtio/virtio_pci_modern.c::virtqueue_exec_admin_cmd",
+    "drivers/tty/hvc/hvc_iucv.c::hvc_iucv_put_chars",
+    "drivers/virtio/virtio.c::virtio_config_changed"
+   ],
+   "text": "Mem mutex guards counts and bitmaps; queue and callback sync use spinlocks; admin lock covers exec; per-line guards staging."
+  },
+  {
+   "sids": [
+    "drivers/virtio/virtio_ring.c::START_USE.alt_1",
+    "drivers/virtio/virtio_ring.c::END_USE.alt_1",
+    "drivers/virtio/virtio_ring.c::START_USE.alt_2",
+    "drivers/virtio/virtio_ring.c::END_USE.alt_2",
+    "drivers/virtio/virtio_rtc_driver.c::viortc_do_cb",
+    "drivers/virtio/virtio_rtc_class.c::viortc_class_stop",
+    "include/linux/amba/bus.h::amba_device",
+    "include/linux/console.h::console",
+    "include/linux/console.h::for_each_console_srcu",
+    "include/linux/serial_core.h::uart_port_trylock",
+    "include/linux/serial_core.h::__uart_port_nbcon_try_acquire",
+    "include/linux/tty_buffer.h::tty_bufhead",
+    "include/linux/tty_port.h::tty_port"
+   ],
+   "text": "Queue debug exclusive. RTC/class locks. AMBA mutex; console SRCU; UART mutex+spin/nbcon; flip/port locks."
+  }
+ ],
+ "pass": 1,
+ "phase_map": [
+  {
+   "anchor": "HB-KPAPER-001/hb-s5.p14",
+   "crown": "A",
+   "phase": "F0"
+  },
+  {
+   "anchor": "HB-KPAPER-001/hb-s5.p04",
+   "crown": "A",
+   "phase": "F2"
+  }
+ ],
+ "schema": "lx.dossier.v1",
+ "state_machines": [
+  {
+   "sids": [
+    "drivers/block/virtio_blk.c::virtio_queue_rq",
+    "drivers/char/virtio_console.c::port_fops_open",
+    "drivers/net/virtio_net.c::receive_mergeable",
+    "drivers/net/virtio_net.c::virtnet_close"
+   ],
+   "text": "Block enqueues locked then notifies and drains; console opens, primes and unplugs; net validates then recycles."
+  },
+  {
+   "sids": [
+    "drivers/net/virtio_net.c::virtnet_remove",
+    "drivers/net/virtio_net.c::virtnet_xdp_set",
+    "drivers/tty/hvc/hvc_console.c::hvc_open",
+    "drivers/tty/hvc/hvsi.c::hvsi_handshake",
+    "drivers/tty/hvc/hvcs.c::khvcsd",
+    "drivers/virtio/virtio.c::virtio_dev_probe"
+   ],
+   "text": "Net teardown resets and deletes queues; XDP swaps paused; HVC binds on first open; HVSI handshakes to established."
+  },
+  {
+   "sids": [
+    "drivers/virtio/virtio_balloon.c::towards_target",
+    "drivers/virtio/virtio_mem.c::virtio_mem_run_wq",
+    "drivers/virtio/virtio_mmio.c::vm_interrupt",
+    "drivers/virtio/virtio_pci_modern.c::vp_modern_admin_cmd_exec"
+   ],
+   "text": "Balloon converges to aligned target; mem validates online transitions; MMIO acks then dispatches; PCI gates commands."
+  },
+  {
+   "sids": [
+    "drivers/virtio/virtio_pci_modern.c::vp_set_status",
+    "drivers/virtio/virtio_pci_modern.c::vp_reset",
+    "drivers/virtio/virtio_pci_modern.c::vp_modern_find_vqs",
+    "drivers/virtio/virtio_pci_modern.c::vp_modern_disable_vq_and_reset",
+    "drivers/virtio/virtio_pci_modern.c::vp_modern_enable_vq_after_reset",
+    "drivers/virtio/virtio_pci_modern.c::vp_notify_with_data",
+    "drivers/virtio/virtio_rtc_driver.c::viortc_msg_release",
+    "drivers/virtio/virtio_rtc_driver.c::viortc_requestq_hdlr",
+    "drivers/virtio/virtio_rtc_driver.c::viortc_alarmq_hdlr",
+    "drivers/virtio/virtio_rtc_driver.c::viortc_probe",
+    "drivers/virtio/virtio_vdpa.c::virtio_vdpa_probe",
+    "include/linux/serial_core.h::uart_port_tx",
+    "include/uapi/linux/virtio_pci.h::virtio_pci_common_cfg",
+    "include/uapi/linux/virtio_pci.h::virtio_pci_modern_common_cfg",
+    "include/uapi/linux/virtio_pci.h::VIRTIO_ADMIN_CMD_CAP_ID_LIST_QUERY",
+    "include/uapi/linux/virtio_rtc.h::virtio_rtc_req_cfg",
+    "include/uapi/linux/virtio_rtc.h::virtio_rtc_req_set_alarm_enabled"
+   ],
+   "text": "PCI reset/find/disable/enable. RTC queue-notify-validate-release; probe/vDPA/UART Tx. Discover/negotiate/enable."
+  },
+  {
+   "sids": [
+    "drivers/virtio/virtio_ring.c::virtqueue_add_split",
+    "drivers/virtio/virtio_ring.c::virtqueue_kick_prepare_split",
+    "drivers/virtio/virtio_ring.c::virtqueue_poll_split",
+    "drivers/virtio/virtio_ring.c::virtqueue_get_buf_ctx_split",
+    "drivers/virtio/virtio_ring.c::virtqueue_enable_cb_prepare_split",
+    "drivers/virtio/virtio_ring.c::virtqueue_resize_split",
+    "drivers/virtio/virtio_ring.c::virtqueue_add_packed_in_order",
+    "drivers/virtio/virtio_ring.c::alloc_indirect_packed"
+   ],
+   "text": "Split add publishes; kick event-index; poll/get/enable/resize; packed inverts."
+  }
+ ],
+ "structs": [
+  {
+   "sids": [
+    "drivers/block/virtio_blk.c::virtio_blk_vq",
+    "drivers/char/virtio_console.c::ports_device",
+    "drivers/net/virtio_net.c::send_queue",
+    "drivers/net/virtio_net.c::receive_queue",
+    "drivers/tty/hvc/hvc_console.h::hvc_struct"
+   ],
+   "text": "Block pairs queue handle with lock; console links device, ports and buffers; net pairs queues with stats."
+  },
+  {
+   "sids": [
+    "drivers/tty/hvc/hvcs.c::hvcs_struct",
+    "drivers/tty/hvc/hvsi.c::hvsi_struct",
+    "drivers/virtio/virtio_balloon.c::virtio_balloon",
+    "drivers/virtio/virtio_mem.c::virtio_mem",
+    "include/uapi/linux/virtio_ring.h::vring_init"
+   ],
+   "text": "HVCS, HVSI, balloon, mem and transports embed ports, queues, workers and bitmaps; ring places descriptors."
+  },
+  {
+   "sids": [
+    "include/linux/virtio.h::virtqueue",
+    "include/linux/virtio.h::virtio_device",
+    "include/linux/virtio.h::virtio_driver",
+    "include/linux/virtio_config.h::virtio_config_ops",
+    "include/linux/virtio_config.h::virtio_shm_region",
+    "include/linux/virtio.h::virtio_admin_cmd",
+    "include/linux/virtio_pci_modern.h::virtio_pci_modern_device",
+    "drivers/virtio/virtio_rtc_driver.c::viortc_dev",
+    "drivers/virtio/virtio_rtc_driver.c::viortc_msg",
+    "drivers/virtio/virtio_rtc_driver.c::viortc_vq",
+    "include/linux/serial_core.h::uart_state",
+    "include/linux/serial_core.h::uart_driver",
+    "include/linux/tty.h::tty_struct",
+    "include/uapi/linux/serial.h::serial_rs485",
+    "include/uapi/linux/serial.h::serial_iso7816"
+   ],
+   "text": "Virtio queue/device/driver/SHM/admin/PCI; RTC dev/queue/msg. UART/TTY/RS485/ISO7816 models."
+  },
+  {
+   "sids": [
+    "include/uapi/linux/virtio_console.h::VIRTIO_CONSOLE_F_SIZE",
+    "include/uapi/linux/virtio_console.h::VIRTIO_CONSOLE_F_MULTIPORT",
+    "include/uapi/linux/virtio_console.h::VIRTIO_CONSOLE_F_EMERG_WRITE",
+    "include/uapi/linux/virtio_console.h::VIRTIO_CONSOLE_BAD_ID",
+    "include/uapi/linux/virtio_console.h::virtio_console_config",
+    "include/uapi/linux/virtio_console.h::virtio_console_control",
+    "include/uapi/linux/virtio_fs.h::virtio_fs_config",
+    "include/uapi/linux/virtio_fs.h::VIRTIO_FS_SHMCAP_ID_CACHE",
+    "include/uapi/linux/virtio_pci.h::virtio_pci_common_cfg",
+    "include/uapi/linux/virtio_pci.h::virtio_pci_modern_common_cfg",
+    "include/uapi/linux/virtio_pci.h::virtio_pci_cfg_cap",
+    "include/uapi/linux/virtio_pci.h::virtio_pci_cap",
+    "include/uapi/linux/virtio_pci.h::virtio_pci_vndr_data",
+    "include/uapi/linux/virtio_pci.h::virtio_pci_cap64",
+    "include/uapi/linux/virtio_pci.h::virtio_pci_notify_cap"
+   ],
+   "text": "Console feats/geometry/ports/control; fs tag/queues. PCI common/per-queue; modern reset/admin/notify."
+  }
+ ],
+ "stubs": [
+  {
+   "sid": "include/linux/spinlock.h::spin_lock_irqsave",
+   "state": "stub",
+   "target_dossier": "D03"
+  },
+  {
+   "sid": "include/linux/spinlock.h::spin_unlock_irqrestore",
+   "state": "stub",
+   "target_dossier": "D03"
+  },
+  {
+   "sid": "include/linux/mutex.h::mutex_lock",
+   "state": "stub",
+   "target_dossier": "D03"
+  },
+  {
+   "sid": "include/linux/container_of.h::container_of",
+   "state": "stub",
+   "target_dossier": "D17"
+  },
+  {
+   "sid": "include/linux/wait.h::wait_event_freezable",
+   "state": "stub",
+   "target_dossier": "D01"
+  },
+  {
+   "sid": "include/linux/workqueue.h::queue_work",
+   "state": "stub",
+   "target_dossier": "D12"
+  },
+  {
+   "sid": "include/linux/slab.h::kzalloc_obj",
+   "state": "stub",
+   "target_dossier": "D05"
+  },
+  {
+   "sid": "include/linux/rcupdate.h::rcu_read_lock",
+   "state": "stub",
+   "target_dossier": "D02"
+  },
+  {
+   "sid": "include/linux/list.h::list_add_tail",
+   "state": "stub",
+   "target_dossier": "D14"
+  },
+  {
+   "sid": "include/linux/printk.h::printk",
+   "state": "stub",
+   "target_dossier": "D13"
+  }
+ ]
+}

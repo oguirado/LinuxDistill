@@ -1,0 +1,1181 @@
+{
+ "dossier": "D15",
+ "entry_points": [
+  {
+   "sids": [
+    "fs/aio.c::sys_io_setup",
+    "fs/aio.c::sys_io_submit",
+    "fs/aio.c::sys_io_getevents"
+   ],
+   "text": "Async syscalls setup, submit, cancel and reap with bounds, compat narrow and drain-before-destroy."
+  },
+  {
+   "sids": [
+    "fs/binfmt_elf.c::load_elf_binary",
+    "fs/exec.c::begin_new_exec",
+    "fs/namei.c::do_file_open"
+   ],
+   "text": "Exec validates ELF, collapses threads, replaces image, maps segments and builds arg stack."
+  },
+  {
+   "sids": [
+    "fs/namespace.c::init_mount_tree",
+    "init/do_mounts.c::init_rootfs",
+    "fs/open.c::filp_open"
+   ],
+   "text": "Boot builds mounts and root; open converts user path; getcwd samples and copies; DAX table init."
+  },
+  {
+   "sids": [
+    "fs/buffer.c::bdev_getblk",
+    "fs/buffer.c::block_read_full_folio",
+    "fs/dax.c::dax_iomap_fault"
+   ],
+   "text": "Block obtains, reads and writes with boundaries; DAX faults by order and writebacks entries."
+  },
+  {
+   "sids": [
+    "fs/eventfd.c::do_eventfd",
+    "fs/eventpoll.c::do_epoll_create",
+    "fs/namei.c::filename_unlinkat",
+    "fs/binfmt_flat.c::load_flat_binary"
+   ],
+   "text": "Eventfd and epoll create, control and wait; unlink removes with retry; flat and misc load."
+  },
+  {
+   "sids": [
+    "fs/exec.c::init_fs_exec_sysctls",
+    "fs/init.c::init_chdir",
+    "fs/namespace.c::sys_mount",
+    "fs/proc/array.c::proc_tid_stat"
+   ],
+   "text": "Boot sets tunables and cwd; mount validates flags; proc binds views."
+  },
+  {
+   "sids": [
+    "fs/proc/proc_sysctl.c::proc_sys_read",
+    "fs/proc/proc_sysctl.c::proc_sys_write",
+    "fs/proc/proc_sysctl.c::proc_sys_open",
+    "fs/proc/proc_sysctl.c::proc_sys_poll",
+    "fs/proc/proc_tty.c::t_start",
+    "fs/proc/proc_tty.c::show_tty_driver"
+   ],
+   "text": "Sysctl shares open poll vectored IO; tty listing holds mutex and emits driver ranges."
+  },
+  {
+   "sids": [
+    "fs/read_write.c::sys_preadv",
+    "fs/read_write.c::sys_pwritev",
+    "fs/read_write.c::sys_preadv2",
+    "fs/read_write.c::sys_pwritev2",
+    "fs/readdir.c::sys_old_readdir",
+    "fs/readdir.c::sys_getdents",
+    "fs/readdir.c::sys_getdents64",
+    "fs/readdir.c::compat_sys_getdents"
+   ],
+   "text": "Vectored IO takes fd vector len offset; listings take fd buf cap, iterate and report."
+  },
+  {
+   "sids": [
+    "include/linux/init.h::early_initcall",
+    "include/linux/init.h::pure_initcall",
+    "include/linux/init.h::core_initcall",
+    "include/linux/init.h::postcore_initcall",
+    "include/linux/init.h::arch_initcall",
+    "include/linux/init.h::subsys_initcall",
+    "include/linux/init.h::fs_initcall",
+    "include/linux/init.h::rootfs_initcall",
+    "include/linux/init.h::device_initcall",
+    "include/linux/init.h::late_initcall",
+    "include/linux/init.h::__initcall",
+    "include/linux/init.h::__exitcall",
+    "include/linux/init.h::console_initcall"
+   ],
+   "text": "Init orders early pure core postcore arch subsys fs rootfs device late, plus exit console."
+  },
+  {
+   "sids": [
+    "init/do_mounts.c::prepare_namespace",
+    "init/do_mounts.h::initrd_load",
+    "init/do_mounts_initrd.c::initrd_load"
+   ],
+   "text": "Stage namespace: settle, assemble, resolve root, load ramdisk, mount, pivot."
+  },
+  {
+   "sids": [
+    "init/initramfs.c::populate_rootfs",
+    "init/initramfs.c::do_populate_rootfs",
+    "init/initramfs.c::unpack_initramfs",
+    "init/main.c::setup_command_line",
+    "init/main.c::xbc_make_cmdline",
+    "init/main.c::setup_boot_config.alt_1",
+    "init/main.c::setup_boot_config.alt_2"
+   ],
+   "text": "Async rootfs unpack with security notify; command line and bootconfig setup."
+  },
+  {
+   "sids": [
+    "init/main.c::start_kernel",
+    "init/main.c::do_one_initcall",
+    "init/main.c::do_basic_setup"
+   ],
+   "text": "Boot bring-up never returns, orders sched/timers/rand; guarded initcall; basic setup."
+  },
+  {
+   "sids": [
+    "init/main.c::free_initmem",
+    "init/noinitramfs.c::default_rootfs",
+    "init/main.c::console_on_rootfs"
+   ],
+   "text": "Releases init memory; early device dir, console node and attach."
+  }
+ ],
+ "exports": [
+  {
+   "sids": [
+    "fs/file_table.c::alloc_file",
+    "fs/dcache.c::dput",
+    "fs/inode.c::iput",
+    "fs/open.c::dentry_open"
+   ],
+   "text": "File, dentry and inode lifecycle: create, bind, refcount, predicates, release and shrink handling."
+  },
+  {
+   "sids": [
+    "fs/namespace.c::kern_mount",
+    "fs/super.c::vfs_get_tree",
+    "fs/super.c::deactivate_super",
+    "fs/super.c::generic_shutdown_super"
+   ],
+   "text": "Mount and superblock lifecycle: contexts, ids, trees, internal mounts, teardown and destroy."
+  },
+  {
+   "sids": [
+    "fs/aio.c::aio_setup",
+    "fs/anon_inodes.c::anon_inode_getfd",
+    "fs/eventfd.c::eventfd_ctx_fdget",
+    "fs/eventpoll.c::do_epoll_ctl"
+   ],
+   "text": "Async, anon and event lifecycle: setup, teardown, secure files, fd install and epoll control."
+  },
+  {
+   "sids": [
+    "fs/namei.c::inode_permission",
+    "fs/read_write.c::vfs_read",
+    "fs/exec.c::setup_new_exec",
+    "fs/buffer.c::bdev_getblk",
+    "fs/dax.c::dax_iomap_rw"
+   ],
+   "text": "IO, access, exec and block services: permission, vector IO, sync, ELF setup and buffer IO."
+  },
+  {
+   "sids": [
+    "fs/exec.c::__register_binfmt",
+    "fs/file.c::ksys_dup3",
+    "fs/namespace.c::copy_mnt_ns",
+    "fs/inode.c::iget_locked"
+   ],
+   "text": "Register exec formats; dup validates; clone mount ns; dedup inodes."
+  },
+  {
+   "sids": [
+    "fs/namei.c::vfs_create",
+    "fs/open.c::vfs_truncate",
+    "fs/super.c::freeze_super",
+    "fs/proc/generic.c::proc_mkdir"
+   ],
+   "text": "Validate creates; truncate delegates; freeze drains; proc makes dirs."
+  },
+  {
+   "sids": [
+    "init/calibrate.c::lpj_setup",
+    "init/calibrate.c::cpu_loops_per_jiffy",
+    "init/do_mounts.c::root_mountflags",
+    "init/do_mounts.c::saved_root_name",
+    "init/do_mounts.c::ROOT_DEV",
+    "init/do_mounts.c::root_wait",
+    "fs/proc/root.c::proc_root_init",
+    "fs/proc/self.c::proc_self_init",
+    "fs/proc/proc_tty.c::proc_tty_init",
+    "fs/proc/proc_sysctl.c::proc_sys_init",
+    "fs/proc/proc_sysctl.c::unregister_sysctl_table",
+    "fs/proc/proc_sysctl.c::do_sysctl_args"
+   ],
+   "text": "Boot calibrates delay, stores root flags, builds proc trees, unregisters and parses args."
+  },
+  {
+   "sids": [
+    "fs/splice.c::do_splice_direct",
+    "fs/splice.c::do_tee",
+    "fs/read_write.c::vfs_copy_file_range",
+    "fs/select.c::core_sys_select",
+    "fs/stat.c::vfs_fstat",
+    "fs/stat.c::vfs_statx",
+    "fs/stat.c::do_statx",
+    "fs/super.c::user_get_super",
+    "fs/statfs.c::statfs_by_dentry",
+    "fs/sync.c::ksys_sync",
+    "fs/super.c::get_tree_bdev",
+    "fs/super.c::kill_block_super"
+   ],
+   "text": "Splice copy select stat super and block mount move data, query state and manage mounts."
+  },
+  {
+   "sids": [
+    "fs/ramfs/inode.c::ramfs_get_inode",
+    "fs/ramfs/inode.c::init_ramfs_fs",
+    "fs/read_write.c::vfs_write",
+    "fs/read_write.c::ksys_read",
+    "fs/proc/vmcore.c::read_from_oldmem",
+    "fs/proc/vmcore.c::vmcore_add_device_dump",
+    "include/linux/file.h::fdput",
+    "include/linux/file.h::fdput_pos",
+    "include/linux/file.h::take_fd",
+    "include/linux/file.h::__FD_PREPARE_INIT",
+    "include/linux/file.h::__FD_ADD",
+    "fs/sysfs/group.c::sysfs_create_group",
+    "fs/sysfs/symlink.c::sysfs_create_link",
+    "fs/sysfs/file.c::sysfs_emit"
+   ],
+   "text": "Ramfs inodes, fd release reserve, sysfs groups links emits, generic IO and vmcore."
+  },
+  {
+   "sids": [
+    "init/do_mounts.c::rootfs_fs_type",
+    "init/initramfs.c::unpack_to_rootfs",
+    "init/initramfs.c::free_initrd_mem",
+    "init/initramfs.c::wait_for_initramfs",
+    "init/initramfs.c::initramfs_cookie"
+   ],
+   "text": "Early root type; archive unpack to rootfs; initrd release and population gate."
+  },
+  {
+   "sids": [
+    "init/initramfs_test.c::initramfs_test_cases",
+    "init/initramfs_test.c::initramfs_test_init",
+    "init/initramfs_test.c::initramfs_suite_init",
+    "init/initramfs_test.c::initramfs_test_suite",
+    "init/initramfs_test.c::initramfs_test_exit",
+    "init/main.c::parse_early_param",
+    "init/main.c::arch_post_acpi_subsys_init",
+    "init/main.c::smp_setup_processor_id",
+    "init/main.c::smp_prepare_boot_cpu",
+    "init/main.c::setup_nr_cpu_ids",
+    "init/main.c::smp_prepare_cpus",
+    "init/main.c::thread_stack_cache_init",
+    "init/main.c::poking_init",
+    "init/main.c::pgtable_cache_init",
+    "init/main.c::trap_init",
+    "init/main.c::initcall_debug_enable.alt_1",
+    "init/main.c::initcall_debug",
+    "init/version-timestamp.c::init_uts_ns",
+    "init/version-timestamp.c::linux_banner",
+    "init/version.c::linux_proc_banner"
+   ],
+   "text": "Test suite; weak early hooks; UTS/banners visible as weak placeholders."
+  }
+ ],
+ "extracts": [
+  "00316062e8eb9fefc63a4ab0f6083bf37dc7d0f01d5821194d02772a3a96714e",
+  "014c30aed018b980ab43c65c331f3aef264233589eb56d13024ee91132ec5fa7",
+  "0221ceb146d76a2b5a85b14d900b73b646ecf7ac7a69b3f52926e44b8c13dd8d",
+  "03b4688608f1d1107920865eeae33cd412c75bb3ad82d4514f7d260580f9d41e",
+  "040ded1585669ccb2caf73599baa5757b1e5e02703de683587171ce0da89c405",
+  "0a671c64e1d384ad14a51c4403ccb35a60fd439ba4ca707fd3b894b2d83dfccb",
+  "0af11fee4c8e847d002a5bd83562caf16ac37295bb57dbc8d7a5dfaf383eff49",
+  "0b0b3b54efe822bfa5f683baa18465eba09853ca5a644dfc629eb137c9d5299e",
+  "0bb58729ca460d6b7be55ea1626985ebd6327570d0cd1355c915407e3d231e9c",
+  "0c5254c6ac3987f826570f837f6c50f7ce1948bea3a2c9f8f806bb9487e0d65d",
+  "0d845d6642fa43b9c65e50757cd985c57ea57840d06745cc1313361185003156",
+  "10e9c336a856d1f8afb83f8d6507279393d2340200685e09d2eb58f8a2e25349",
+  "14509f506f4104d101d96d39ac064cef329ba391634e1ed48982bcb67da19048",
+  "16192d48ea0c940a3fb123bc52a688f2cbe1c289bc48d9051aa9203e7150212b",
+  "1994cc28c34d2d801d96f85a537c706e803e16b7d870a166b629f9a39d2ce84f",
+  "1bb731ff07571de5e6f331c8ee9e6af8a05fe13d25623880e5052d0adcd42771",
+  "2415f2d1bc5c022a0d7e75fc955a0cc0e6491a6ca029065b8c7ebf167de5cc32",
+  "27fa6b95ae8272402ad6c2ab96ecf75f878461692d16b6c631f05fce1697ebf4",
+  "2bcca9e6c46f138af30605a555d33a262f365f6fb3ef155ca885e3304885c8e4",
+  "2c1c041a0397822993ce59bf748c50b036502b91051e4238c62cbff6d025fc73",
+  "2d9b37566693690d06367adea89159206316c3cc3571493b965a40b214bf1529",
+  "318754c98fd0a14616d11e5a6dc144af5b456ecba2db1285d19c9404cec95dfd",
+  "325562edb9257d73066bc6ec106efcf861c53c93faefd965be7242b0a84faf61",
+  "3319943d6cb9273fe68bbb955e37ce43739da36c14ccf4208ff8abfde0d140a5",
+  "346ff1a95ce20c9ecec9d949d16ef7de488dfd2c0713c18d9d4902ecb8db2f63",
+  "36fba3644326cf4400c7ac90c4813c84b150c082da1a56c29153d3a8311ce827",
+  "390c544cc8d3c0a09a207a1a25d2b9c1824567108584da5eb876b6c813b6f47d",
+  "3a1006f201263b3a8242d29606002be9a99b1c2cc18cf54a5b8f7f2321484251",
+  "3afd1f5ac9ca92af40c71b38b94aa5c40abc08a44716612647f349f8bd921975",
+  "3cd31e07ccc50e2d8f268f20a9ef450273edc04df3e116e2cacc3bfbd511c96c",
+  "41f5ff34d80f0709f8fc00340dffec89faa69e219f3de3f7b5d93989a3d3d5ce",
+  "441cbbaeeb9ff8217c29f18e83af67e3c6cb2d02cb2f8c0bf442a0a0c3903cba",
+  "44c2bdf7ffcff80860a7de61e2d7a1f379aad0e8aa86745c929d722bd372b5c1",
+  "44d0c4987203c940d5885b34941b2cd6b0b86f014a8cfb58671379a34fc4a545",
+  "4782393d71eb75a87e9144f99cba4de19271c370201f55d4d754f9bd9e1465d7",
+  "4884d5585d2cf01eb3e7677f91de9811eba8d14f36e8164dc1a1244e824ea38b",
+  "49f981acfe1fd18dac399e93c4f63747a7dee708dfe7bb3e4ec12a067a58ef19",
+  "5186b84b31e841bcdfc159870d06b36a614a8fd9e1e7c312586aec160de98775",
+  "58232b69991f075fda1ba44e5ab1881c8ad7bd3fe475e23ecc4db53bcc221918",
+  "585ee0323239e79bd9ad22cc5992c4a01a3164791bac3b7a7374a3568122cd4b",
+  "5b20fa256ae389e304ff096014cc64fe8a630a7c805ad90fc9fff1d000484ac2",
+  "5f3ba03497fbdc2cfcd3c68a32a35b236243f66d17b5d1641f959c0e62a7dc6f",
+  "5f480b7d538c53536f03376040dc32f2b7a3b86272e65374cc667828a3875448",
+  "5fedc6bdcd4d6eea5b48df17b368beac9f16c16a1be462d96fb067f721d267dc",
+  "60fdf02e520cf09b24bda98b7ba008da8e676c6c5405e9b685ea77cf3394cd15",
+  "614d7f22c954e5625c0a363c0e5d0d268346c65b7e28f136b3cf22a374a7f41b",
+  "61b02e551936f391eb023f7642fdba535919703fc0c58bd4313edb6d51557523",
+  "61d57449fccc492708229cb4dae743a2ca11bacc5a006f3be38f6f05cbeb9d42",
+  "62136f63db21c916ed6e930d069586b9b7f832604a229ce84b902b818b1437d0",
+  "68768cd789a4ccef60dedc3ca8c553c95ee23ebac46521ddc0ddcec4bcbb1d0f",
+  "6a745d19ae78a9e1b843e83b2e816854dbc7ab4a72a83ceb434eefee2feb0c5a",
+  "6bd932bc7268edbbc57c5abce9fbef00e8d8732b4170e2eceb4ed0ee40ad49bd",
+  "6c348791296b7261f83875ed59eff390cd0a87d9247092fda289c4e7e56c01d7",
+  "6dd90e2b49c47bd917d4e7636b4cd5fe47367c6d2c5e880a41948d3ff3e3ce52",
+  "6fac497e393327a3e70502407b2ae384b5d124fa0df7a2b696e125f561e37657",
+  "721511f1cf0cff1fae53d9a02d2c07c5722929a9fa6399b80d8d4b7c8f87dfdd",
+  "72d2f189e849e4f682bf5d499008f4c782aba0a218b3bcaa77aef06bc2cc4d95",
+  "73a204cfb53ab4321e1811866ff940f78baf43a734c8a7faf8c2febabe1a3e08",
+  "759516f419e484dcb5ba93b996f782d9f5f9c14cddbbaad955bc6bc7508be6ed",
+  "79d5747ccf0c9c6a997e99ee03acc00469f1459138fe6d2a8935a0baa8862533",
+  "7a6fd76ae291e6b424d34e35e3ca538f3edcaffcfb02d581bc6632c81ebab69a",
+  "7b8f0b6e7d5b11a7d2308ccb95252868056d103ce5237ea34dae8e5eab026f71",
+  "7c3bee6a754701088ef324be6d939b0233188446be962f828d3b2a18b0901d30",
+  "7c663ded5b3c179313cb11bc9aa71ee127cdc7803b53e119fe8d8d21e60429c8",
+  "7d81b6d7fcf0e62e2b967b468d1e10273f789076fbb07fc5bff480b2575999a0",
+  "7f1ee0efd2dc73390efcb98a7d11b0c77396fcc3c26ea08a1d4167b4720a6dae",
+  "8251015741c71154149296137fa4031d2affa8464adee4b2fb928cefd28bd96a",
+  "842292de06388b3a7f23db3d54f4af5dafa6d638b76e3458c3e293a45be1fb8c",
+  "85ec37bab42448bcc867c460e3fce424e1315a5023fd06ef89a6ebfe520ff9dc",
+  "8745585a13de3350542b1775511289e0e230f24ea42b1c49cdf0a05febefdb25",
+  "8869e5c5845292e198643c3e2c748ea65102c4e648c8b6661e9be11f220261d7",
+  "897f9385e18aa78abc677e0c2cd5ed0d84a98232cd0640a4bfa5d9aba2e81f88",
+  "8a011d064828c57d317af37d57e5fda520474192172cbde9c394ad0cd34ec670",
+  "8defd017ef6e601634d8849fee9aadd8115d1f8e051e418349b34f2b098d8953",
+  "90a5e033d27af0a30a1110c10d5edb8480075d481ea5eb6a679ef47771e41963",
+  "92424c2298320f515625a60cf8d588437fd8f05fda636ca0a898bdab0e4908fd",
+  "96310c078bd8d49bc8aaad6b3ea3c23e21d530552fe2616695a3b61acfef006e",
+  "967e16fc7c0ea77f14220e4b195b94d3b0c3c0ded9ae61a822d86d370c1a4048",
+  "96d75ad5d72f0f951031ed93d3a1c7ab05dfaebdc7b20fcbc37d3e979f65dfee",
+  "970aaec2f33ce1fec9fc2a1c41d7f986f85929d57984fc9f592ec0e4258d849a",
+  "98ed2f4c4a2ff82bffbbb82d6aafa8cde7c28bdc05a301845dcd61c74dd4f25b",
+  "9a7fb7ecc2fc498572239541ba01a47b9bb7353b3c38435e60a0c1714e0d22b7",
+  "9bcbdd3daf879545034da308b96db735b58456c8a858604992ad112f32d238b8",
+  "9c5b8c68b43c8363b0b84e7b008793f6a90f6aaca7f48a9445fb9a794a8b4b72",
+  "9de307a966a4c31ef2b7acb6dc92f4801bca6786088fc5318cf5154c71fef0a8",
+  "9ea514aec60a4fef5ff7f4bf11900ea9a33b2058849d032fb84d7c0a727eda52",
+  "9f05e72ea02ccf6e982169522120e4261329d07fbfb5dbc2b3df2e7f181ae08f",
+  "a1a2c9b2f2237df30b2c5761b8bb105726e6e0af9e33dc5695fc87d5885765ed",
+  "a33940dab536e0a853b3540ad41be67a036884a9a4a58a0b3262ea53dd469fb5",
+  "a3a5c27af7f1a3ab370ad371d7ab434ff57b2cba5167b0409f93ed2dc5e05e8c",
+  "aa3bf31f3ac0f30033a5a1ffe0610861c3e7ca94010a2c824ef9a866791c15e9",
+  "aa603e7252c6501b533a52120e8d1cc86c0029c70e5fcb89a63a4ba8d00d39bb",
+  "af19a5d3088c46c38bd509d9c60fda6e397f7de0e876eb256c4bb36c2d69d9e0",
+  "b00cc32eb21ef7b808b3030f144ebfb0152ad2d0d37720b39880a075cad6146d",
+  "b216cd949a0afa41fbb00510cf0d0da2a4bb21ea59585eb2a998af73fb390afd",
+  "b3b3f80f0047e9fbba1e76bf48780d2b95089cb54c1edbe19491ea03a2006966",
+  "b5528cd8a9cb3bd4883ab529eb76d18c40d05943cb7326c007014efbc2c55e21",
+  "b69570aa4137c9e47cef11f61dd989fbd95795c5bc424d9a2a24819491d260be",
+  "b9b451a482a17963430eb409ffe847cbd5dd31a04ad79eaf9b6cb77986c6ae85",
+  "b9f372ea4d4a33317ac36e680fd7f4d2427374629211e9397913bc6840e88567",
+  "baa1e72e3f7f2e892a4c1e7d96cbda42196277d54c6abc4c2e411919ac4865d9",
+  "c02b828951e5c875ca77b3b70fa4db1e43b5f48e83fa2b7e3c7bd08731e9367f",
+  "c0b83efcfea45983aef9fbc21e73ae50fe136a31cb9cbfb7f6ba7a223998e30a",
+  "c19e0bb8a467ff2998461bba26b45c23997e6608680470ac56ce597a3c31700c",
+  "c3c8fdb5cfba3e9a0b2d364fd966d11126d1121a0534cabe5906373c894ac4e5",
+  "c93ca266e1692938b723a7abb9278878e4b76fd3f95985cc95cc488c284b4933",
+  "cad9cbb85b16d4a889c91c693b796383e9de0a6f7d21fcaca9bc4fcf1b9fa158",
+  "cdf823e6abd7ea92e29437c9f0256671d2c7efb19faf162332421b41bd6923b8",
+  "d0268d5bfcea14ab9cebe34e5a2b83498b71cb8a394a7ef29b8df5f7cd7af3e6",
+  "d2d7c16331824c97c531c87da27570c7a52b693bf1a2b7df26a07be1fefad9ab",
+  "d8b709982844c02ed8488edf1bf9b498bf77538e7b6ed304c8af02846d35aabc",
+  "db61b8d627823f1d9003199d8d3afaaa0beb1990d221845e35fa6a1c40752c5e",
+  "e017b322bc7759fd0fa08caffc1dd8bb6baf34f7c20ec9d5b70e5848388919da",
+  "e1258eca4bc6c8f0756995e077897d1816782f1f4c52b44e839ab8e79e7a19f4",
+  "e210e95230ada2c734be87f7cc91df5bfab0107d978b23dacc301c2c503f5e14",
+  "e556c825cbd94b1a73f4407d0cbeb9d2931e75671dd27eb4b23668261f625612",
+  "e759ed8d357fa357105d2fd06e76d9d563d47dd45a7988d2536987adac563702",
+  "e95cfd18722bc9391273123cf6ce1006cc06a7c459cba1a6db6dd8751071ee59",
+  "e9bf0037c318404fda6504018b5753cb8e6612c47b18693c2803438104a3d998",
+  "eb4807f7730fded5a2814a42c6ae34c46f4b34688dccc69d170aa91299fada27",
+  "eb5509604e4a4916b590ddf6a22130c84c7b9cb5e3312c51969d0af1243110f4",
+  "ed7007f19e4717cc88f03bd6e28941317497b18f56c4e24087876c97960df3d2",
+  "eddad8e1b3afe9e13feeb3682c5e0274fd4081c8984ff2c1c45e5c3402d6c378",
+  "f2987904ce01f778b45543ba1a1406b6022a4cf83692bfae0255116e91b2bfe6",
+  "f32bf6b8ed93d0fec49a9736addef1e9e786b90d0d7ae47ec4f7d388151263f3",
+  "f45fbbbd7941dc4165ec26f2d25bc67aba34bbc75e9384c02e9156e7962fab4c",
+  "f626c6d1f324b96898138690fb454fa632639bbe9047ee97624b6ea8393c8538",
+  "f80116162a3d6043a11d90f1024e0058b1490671f9a2b97ee5f95493d89c4630",
+  "fb54fdd5aeb2d8e9d303203dfe991cb0b82f108c15fde64abbae10b2d2981df3",
+  "fc8c164fde2b119e1bba693b160634960c67c35d5f4b6a6c48342a3aa161a881",
+  "fc937d06c1da1beddd56c577c3aaa9b3370eb0ea64c083341fb6118b22247bbd",
+  "fc9e0edb336fc103876a1c0b47bb5afdff60c6436568ee620cc6abc277443e8e"
+ ],
+ "gpl_spec": "PASS",
+ "hazards": [
+  {
+   "sids": [
+    "fs/dcache.c::fast_dput",
+    "fs/inode.c::iput",
+    "fs/aio.c::refill_reqs_available"
+   ],
+   "text": "Transient and final-count checks race; user head must clamp; lists must empty; ref after put warns."
+  },
+  {
+   "sids": [
+    "fs/binfmt_elf.c::create_elf_tables",
+    "fs/exec.c::de_thread",
+    "fs/coredump.c::dump_emit_page"
+   ],
+   "text": "Abort on malformed tables, bad interp, overflow and faults; dump fails on alloc, limit, short write."
+  },
+  {
+   "sids": [
+    "fs/namei.c::path_openat",
+    "fs/namespace.c::count_mounts",
+    "fs/inode.c::touch_atime"
+   ],
+   "text": "Retry stale lookups; mount counts enforce maxima; copy refuses unbindable; atime needs freeze."
+  },
+  {
+   "sids": [
+    "fs/namespace.c::init_mount_tree",
+    "fs/direct-io.c::dio_complete",
+    "fs/eventpoll.c::EP_MAX_NESTS",
+    "fs/eventfd.c::eventfd_signal_mask"
+   ],
+   "text": "Boot failures fatal; dio defers faults; epoll nesting limited to four; eventfd counter saturates."
+  },
+  {
+   "sids": [
+    "fs/exec.c::bprm_execve",
+    "fs/file.c::alloc_fd",
+    "fs/pipe.c::pipe_resize_ring"
+   ],
+   "text": "Post-commit exec failure ends process; fd exhaustion; shrink needs occupancy."
+  },
+  {
+   "sids": [
+    "fs/proc/kcore.c::read_kcore_iter",
+    "fs/proc/inode.c::pde_read",
+    "fs/inode.c::iput_not_last"
+   ],
+   "text": "Kcore zeroes unmapped; missing proc handlers fail; puts assume live refs."
+  },
+  {
+   "sids": [
+    "fs/proc/proc_sysctl.c::grab_header",
+    "fs/proc/proc_sysctl.c::proc_sys_revalidate",
+    "fs/proc/proc_sysctl.c::do_sysctl_args",
+    "fs/proc/proc_tty.c::proc_tty_init",
+    "fs/proc/root.c::proc_apply_options",
+    "fs/proc/root.c::proc_parse_param"
+   ],
+   "text": "Withdrawal heals via pin retry; tty owner-only; live remount changing pidonly pidns rejected."
+  },
+  {
+   "sids": [
+    "fs/splice.c::wait_for_space",
+    "fs/splice.c::splice_to_pipe",
+    "fs/readdir.c::fillonedir",
+    "fs/stat.c::cp_old_stat",
+    "fs/statfs.c::do_statfs_native",
+    "fs/super.c::destroy_super_rcu"
+   ],
+   "text": "Pipe absence signals or ends; listing risks faults; statfs overflows, teardown defers."
+  },
+  {
+   "sids": [
+    "fs/xattr.c::import_xattr_name",
+    "fs/xattr.c::sys_llistxattr",
+    "fs/xattr.c::removexattr",
+    "fs/xattr.c::generic_listxattr",
+    "init/do_mounts.c::rootwait_setup",
+    "init/do_mounts.c::root_dev_setup",
+    "init/do_mounts.c::root_data_setup",
+    "init/do_mounts.c::fs_names_setup",
+    "init/do_mounts.c::root_delay_setup"
+   ],
+   "text": "Xattr rejects bad names, retries stale only; bad boot opts warn, missing target halts."
+  },
+  {
+   "sids": [
+    "init/do_mounts_rd.c::crd_load",
+    "init/do_mounts_rd.c::exit_code",
+    "init/do_mounts_rd.c::compr_fill",
+    "init/do_mounts_rd.c::compr_flush",
+    "init/do_mounts_rd.c::error",
+    "init/initramfs.c::error",
+    "init/initramfs.c::message",
+    "init/initramfs_test.c::initramfs_test_fname_overrun",
+    "init/initramfs_test.c::initramfs_test_hdr_hex",
+    "init/initramfs_test.c::initramfs_test_fname_path_max"
+   ],
+   "text": "Missing handler halts; short IO latches failure; first message sticks; bad headers fail."
+  },
+  {
+   "sids": [
+    "init/main.c::do_one_initcall"
+   ],
+   "text": "Initcall checks preemption/IRQs, warns and restores on mismatch."
+  }
+ ],
+ "invariants": [
+  {
+   "sids": [
+    "fs/dcache.c::__d_alloc",
+    "fs/namespace.c::mnt_get_count",
+    "fs/file_table.c::alloc_empty_file"
+   ],
+   "text": "New objects start counted and pinned with unique ids; teardown runs once via doomed zero-count."
+  },
+  {
+   "sids": [
+    "fs/fs-writeback.c::__mark_inode_dirty",
+    "fs/fs-writeback.c::__writeback_single_inode",
+    "fs/inode.c::atime_needs_update"
+   ],
+   "text": "Dirty absorbs time; lazytime escalates or retries; redirty goes to tail; atime honors suppressions."
+  },
+  {
+   "sids": [
+    "fs/aio.c::ioctx_alloc",
+    "fs/aio.c::aio_setup_ring",
+    "fs/aio.c::kill_ioctx"
+   ],
+   "text": "Rings size with margin and dual headers; capacity bounds double; credits batch; table reuses holes."
+  },
+  {
+   "sids": [
+    "fs/binfmt_elf.c::load_elf_phdrs",
+    "fs/exec.c::would_dump",
+    "fs/exec.c::begin_new_exec",
+    "fs/binfmt_misc.c::entry_matches_magic"
+   ],
+   "text": "ELF aligns maps, bounds headers, validates interp and props; creds force nondumpable, apply set-id."
+  },
+  {
+   "sids": [
+    "fs/namei.c::may_delete_dentry",
+    "fs/locks.c::posix_lock_file",
+    "fs/open.c::build_open_flags",
+    "fs/dax.c::grab_mapping_entry"
+   ],
+   "text": "Unlink and open enforce rights, sticky and type; locks check overlap by owner; DAX prefers unlocked."
+  },
+  {
+   "sids": [
+    "fs/exec.c::alloc_bprm",
+    "fs/file.c::sane_fdtable_size",
+    "fs/namespace.c::may_mount"
+   ],
+   "text": "Bprm owns mm and creds; fd ceiling bounded; mounts need privilege."
+  },
+  {
+   "sids": [
+    "fs/kernfs/dir.c::kernfs_link_sibling",
+    "fs/namei.c::vfs_rename",
+    "fs/proc/base.c::has_pid_permissions"
+   ],
+   "text": "Kernfs orders siblings, rejects dups; rename stays on one mount; pid gated."
+  },
+  {
+   "sids": [
+    "fs/proc/root.c::proc_parse_param",
+    "fs/proc/root.c::valid_hidepid",
+    "fs/proc/root.c::proc_apply_options",
+    "fs/proc/root.c::proc_fill_super",
+    "fs/proc/root.c::proc_root_lookup",
+    "fs/proc/root.c::proc_root_getattr",
+    "fs/proc_namespace.c::mounts_open_common",
+    "fs/proc_namespace.c::show_vfsmnt",
+    "fs/ramfs/inode.c::ramfs_parse_param",
+    "fs/ramfs/inode.c::ramfs_fill_super",
+    "fs/read_write.c::vfs_readv",
+    "fs/read_write.c::vfs_writev"
+   ],
+   "text": "Proc mount takes gid hidepid subset pidns; mounts pin ns, ramfs sizes, vectors check."
+  },
+  {
+   "sids": [
+    "fs/read_write.c::do_sendfile",
+    "fs/read_write.c::generic_copy_file_checks",
+    "fs/read_write.c::generic_write_checks",
+    "fs/splice.c::splice_to_pipe",
+    "fs/splice.c::do_splice",
+    "fs/splice.c::ipipe_prep",
+    "fs/splice.c::opipe_prep"
+   ],
+   "text": "Sendfile checks perms ceilings; splice rejects pipe offsets self append and checks ranges."
+  },
+  {
+   "sids": [
+    "fs/utimes.c::do_utimes_path",
+    "fs/utimes.c::do_utimes_fd",
+    "fs/utimes.c::do_futimesat",
+    "fs/utimes.c::do_compat_futimesat",
+    "fs/xattr.c::xattr_permission",
+    "fs/xattr.c::xattr_permission_error",
+    "fs/xattr.c::xattr_supports_user_prefix",
+    "fs/xattr.c::__vfs_setxattr_noperm",
+    "fs/xattr.c::__vfs_setxattr_locked",
+    "fs/xattr.c::__vfs_removexattr_locked",
+    "fs/xattr.c::vfs_setxattr"
+   ],
+   "text": "Utimes retries stale; xattr trusted needs priv, user limited, locked ops check auth."
+  },
+  {
+   "sids": [
+    "init/calibrate.c::DELAY_CALIBRATION_TICKS",
+    "init/calibrate.c::MAX_DIRECT_CALIBRATION_RETRIES",
+    "init/calibrate.c::calibrate_delay_direct.alt_1",
+    "init/calibrate.c::calibrate_delay_direct.alt_2",
+    "init/calibrate.c::LPS_PREC",
+    "init/calibrate.c::calibrate_delay_converge",
+    "init/do_mounts.c::readonly",
+    "init/do_mounts.c::readwrite",
+    "init/do_mounts.c::rootwait_timeout_setup",
+    "init/do_mounts.c::split_fs_names",
+    "init/do_mounts.c::do_mount_root",
+    "init/do_mounts.h::init_flush_fput"
+   ],
+   "text": "Calibration spans tick with retries then halves; ro rw empty only, waits to ms, lists split."
+  },
+  {
+   "sids": [
+    "init/do_mounts.c::wait_for_root",
+    "init/do_mounts.c::parse_root_device",
+    "init/do_mounts_rd.c::rd_load_image",
+    "init/do_mounts.h::rd_load_image",
+    "init/do_mounts_rd.c::identify_ramdisk_image",
+    "init/do_mounts_rd.c::nr_blocks",
+    "init/do_mounts_rd.c::in_file",
+    "init/do_mounts_rd.c::rd_image_start",
+    "init/do_mounts_rd.c::ramdisk_start_setup",
+    "init/do_mounts_initrd.c::initrd_end",
+    "init/do_mounts_initrd.c::mount_initrd",
+    "init/do_mounts_initrd.c::no_initrd",
+    "init/do_mounts_initrd.c::early_initrdmem",
+    "init/do_mounts_initrd.c::early_initrd",
+    "init/do_mounts.c::is_tmpfs"
+   ],
+   "text": "Root wait polls to deadline; ramdisk probe/load by type; initrd bounds and shm/ram choice."
+  },
+  {
+   "sids": [
+    "init/initramfs.c::xwrite",
+    "init/initramfs.c::csum_present",
+    "init/initramfs.c::io_csum",
+    "init/initramfs.c::parse_header",
+    "init/initramfs.c::do_name",
+    "init/initramfs.c::do_copy",
+    "init/initramfs.c::do_symlink",
+    "init/initramfs.c::maybe_link",
+    "init/initramfs.c::clean_path",
+    "init/initramfs.c::find_link",
+    "init/initramfs.c::free_hash",
+    "init/initramfs.c::do_utime.alt_1",
+    "init/initramfs.c::do_utime.alt_2",
+    "init/initramfs.c::do_utime_path.alt_1",
+    "init/initramfs_test.c::initramfs_test_cpio",
+    "init/initramfs_test.c::initramfs_test_extract",
+    "init/initramfs_test.c::initramfs_test_hardlink",
+    "init/initramfs.c::reserve_initrd_mem",
+    "init/initramfs.c::do_retain_initrd",
+    "init/initramfs.c::retain_initrd_param",
+    "init/initramfs.c::keepinitrd_setup",
+    "init/initramfs.c::kexec_free_initrd.alt_1",
+    "init/initramfs.c::kexec_free_initrd.alt_2",
+    "init/initramfs.c::populate_initrd_image",
+    "init/initramfs.c::initramfs_async",
+    "init/initramfs.c::initramfs_async_setup"
+   ],
+   "text": "Cpio decode with checksum, link reuse, type branch; test restore; retain/async policy."
+  },
+  {
+   "sids": [
+    "init/main.c::argv_init",
+    "init/main.c::envp_init",
+    "init/main.c::panic_later",
+    "init/main.c::panic_param",
+    "init/main.c::set_init_arg",
+    "init/main.c::unknown_bootoption",
+    "init/main.c::obsolete_checksetup",
+    "init/main.c::do_early_param",
+    "init/main.c::parse_early_options",
+    "init/main.c::repair_env_string",
+    "init/main.c::rdinit_setup",
+    "init/main.c::init_setup",
+    "init/main.c::execute_command",
+    "init/main.c::ramdisk_execute_command",
+    "init/main.c::ramdisk_execute_command_set",
+    "init/main.c::get_boot_config_from_initrd.alt_1",
+    "init/main.c::warn_bootconfig.alt_1",
+    "init/main.c::exit_boot_config.alt_1",
+    "init/main.c::bootconfig_found.alt_1",
+    "init/main.c::initargs_offs.alt_1",
+    "init/main.c::extra_command_line",
+    "init/main.c::extra_init_args",
+    "init/main.c::get_boot_config_from_initrd.alt_2",
+    "init/main.c::warn_bootconfig.alt_2",
+    "init/main.c::exit_boot_config.alt_2",
+    "init/main.c::bootconfig_found.alt_2",
+    "init/main.c::initargs_offs.alt_2",
+    "init/main.c::static_command_line",
+    "init/main.c::boot_command_line",
+    "init/main.c::__ro_after_init.alt_1",
+    "init/main.c::print_unknown_bootoptions",
+    "init/main.c::print_kernel_cmdline"
+   ],
+   "text": "Boot args defaults with overflow latch; unknowns to env; bootconfig trailer and extras."
+  },
+  {
+   "sids": [
+    "include/linux/blkdev.h::early_lookup_bdev",
+    "include/linux/string.h::strscpy",
+    "include/linux/byteorder/generic.h::ntohl",
+    "include/linux/delay.h::ssleep",
+    "include/linux/device.h::devtmpfs_mount",
+    "include/linux/ext2_fs.h::ext2_image_size",
+    "include/linux/kdev_t.h::MKDEV",
+    "include/linux/kdev_t.h::new_encode_dev",
+    "include/linux/ktime.h::ktime_add_ms",
+    "include/linux/ktime.h::ktime_after",
+    "include/linux/list.h::INIT_LIST_HEAD",
+    "include/linux/list.h::list_add",
+    "include/linux/list.h::list_del",
+    "include/linux/list.h::list_for_each_entry_safe",
+    "include/linux/printk.h::pr_emerg",
+    "include/linux/raid/detect.h::md_run_setup",
+    "include/linux/slab.h::kmalloc_flex",
+    "include/asm-generic/bug.h::WARN.alt_1",
+    "include/asm-generic/bug.h::WARN.alt_2",
+    "include/linux/irqflags.h::irqs_disabled.alt_1",
+    "include/linux/irqflags.h::irqs_disabled.alt_2",
+    "include/linux/irqflags.h::local_irq_enable.alt_1",
+    "include/linux/irqflags.h::local_irq_enable.alt_2",
+    "include/asm-generic/sections.h::dereference_function_descriptor",
+    "include/linux/acpi.h::acpi_early_init",
+    "include/linux/acpi.h::acpi_subsystem_init",
+    "include/linux/buildid.h::init_vmlinux_build_id",
+    "include/linux/cgroup.h::cgroup_init",
+    "include/linux/cgroup.h::cgroup_init_early",
+    "include/linux/compiler.h::prevent_tail_call_optimization",
+    "include/linux/context_tracking.h::context_tracking_init",
+    "include/linux/cpu.h::arch_cpu_finalize_init",
+    "include/linux/cpuset.h::cpuset_init",
+    "include/linux/cpuset.h::cpuset_init_smp",
+    "include/linux/cpuset.h::set_mems_allowed.alt_1",
+    "include/linux/cpuset.h::set_mems_allowed.alt_2",
+    "include/linux/debug_locks.h::locking_selftest"
+   ],
+   "text": "Relies on ambient block, string, time, list, IRQ, logging and setup helpers."
+  },
+  {
+   "sids": [
+    "init/main.c::initcall_blacklist.alt_1",
+    "init/main.c::initcall_blacklisted.alt_1",
+    "init/main.c::blacklist_entry",
+    "init/main.c::initcall_blacklist.alt_2",
+    "init/main.c::initcall_blacklisted.alt_2",
+    "init/main.c::trace_initcall_start_cb",
+    "init/main.c::trace_initcall_finish_cb",
+    "init/main.c::trace_initcall_level_cb",
+    "init/main.c::initcall_calltime",
+    "init/main.c::do_trace_initcall_start.alt_1",
+    "init/main.c::do_trace_initcall_finish.alt_1",
+    "init/main.c::do_trace_initcall_level.alt_1",
+    "init/main.c::do_trace_initcall_start.alt_2",
+    "init/main.c::do_trace_initcall_finish.alt_2",
+    "init/main.c::do_trace_initcall_level.alt_2",
+    "init/main.c::initcall_debug_enable.alt_2",
+    "init/main.c::do_ctors"
+   ],
+   "text": "Blacklist strips suffix, inert w/o symbols; initcall trace; UML skips ctors."
+  },
+  {
+   "sids": [
+    "init/main.c::start_kernel",
+    "init/main.c::kernel_init",
+    "init/main.c::run_init_process",
+    "init/main.c::try_to_run_init_process",
+    "init/main.c::kernel_init_freeable",
+    "init/main.c::__ro_after_init.alt_3",
+    "init/main.c::arch_parse_debug_rodata",
+    "init/main.c::set_debug_rodata",
+    "init/main.c::mark_readonly",
+    "init/version.c::early_hostname",
+    "init/version.c::__weak"
+   ],
+   "text": "IRQs off to enable, low ramdisk off; launch order/halt; SMP/tests; ro toggle; hostname; weak."
+  }
+ ],
+ "locks": [
+  {
+   "sids": [
+    "fs/dcache.c::d_instantiate",
+    "fs/dcache.c::d_hash",
+    "fs/dcache.c::dentry_kill"
+   ],
+   "text": "Bind takes inode before dentry; hash uses bucket lock; kill orders parent and inode with revalidation."
+  },
+  {
+   "sids": [
+    "fs/namespace.c::lock_mount_hash",
+    "fs/super.c::super_lock",
+    "fs/namespace.c::mnt_want_write"
+   ],
+   "text": "Mount hash and ids use sequence lock; super destroy uses exclusive plus publish; writers exclude."
+  },
+  {
+   "sids": [
+    "fs/aio.c::aio_complete",
+    "fs/aio.c::ioctx_add_table",
+    "fs/aio.c::kiocb_set_cancel_fn"
+   ],
+   "text": "Completion uses irq-disabled lock for tail and credits; table uses lock plus RCU; cancel uses irq save."
+  },
+  {
+   "sids": [
+    "fs/exec.c::exec_mmap",
+    "fs/namei.c::may_lookup",
+    "fs/buffer.c::__lock_buffer",
+    "fs/eventpoll.c::ep_insert"
+   ],
+   "text": "Exec holds mmap write with signal guards; namei uses RCU retry; buffers sleep-lock; epoll mutex."
+  },
+  {
+   "sids": [
+    "fs/exec.c::search_binary_handler",
+    "fs/file.c::alloc_fd",
+    "fs/file.c::fd_install"
+   ],
+   "text": "Binfmt search drops lock across loader; fd alloc locked; install uses RCU."
+  },
+  {
+   "sids": [
+    "fs/namespace.c::namespace_lock",
+    "fs/namei.c::lock_two_directories",
+    "fs/kernfs/dir.c::kernfs_add_one"
+   ],
+   "text": "Namespace exclusive; rename nests parents; kernfs splits read and write."
+  },
+  {
+   "sids": [
+    "fs/proc/proc_sysctl.c::proc_sys_make_inode",
+    "fs/proc/proc_sysctl.c::sysctl_is_seen",
+    "fs/proc/proc_tty.c::t_start",
+    "fs/proc/proc_tty.c::t_stop",
+    "fs/proc/task_mmu.c::lock_ctx_mm.alt_1",
+    "fs/proc/task_mmu.c::unlock_ctx_mm.alt_1",
+    "fs/proc/task_mmu.c::m_start",
+    "fs/proc/task_mmu.c::m_stop",
+    "fs/proc/task_mmu.c::smaps_pte_range",
+    "fs/proc/task_mmu.c::pagemap_pmd_range"
+   ],
+   "text": "Sysctl spin guards withdrawal; tty mutex spans walk; maps retain then lock, serialize leaves."
+  },
+  {
+   "sids": [
+    "fs/splice.c::splice_file_to_pipe",
+    "fs/splice.c::splice_pipe_to_pipe",
+    "fs/select.c::__pollwake",
+    "fs/select.c::poll_schedule_timeout",
+    "fs/select.c::core_sys_select",
+    "fs/signalfd.c::signalfd_poll",
+    "fs/super.c::sb_lock",
+    "fs/super.c::super_lock_shared"
+   ],
+   "text": "Pipe splice holds mutex by address; poll wakes under sync; signalfd sighand, super list locks."
+  },
+  {
+   "sids": [
+    "fs/xattr.c::vfs_setxattr",
+    "fs/xattr.c::vfs_removexattr",
+    "include/linux/fs/super.h::__sb_start_write_trylock",
+    "include/linux/fs/super.h::sb_end_pagefault",
+    "include/linux/fs/super.h::sb_end_intwrite",
+    "include/linux/fs.h::file_start_write_trylock",
+    "include/linux/fs/super.h::DEFINE_GUARD",
+    "include/linux/fs.h::dir_relax",
+    "include/linux/fs.h::dir_relax_shared"
+   ],
+   "text": "Xattr holds inode lock, drops before deleg wait; freeze per-level semaphores, dir relax drops."
+  },
+  {
+   "sids": [
+    "init/init_task.c::init_signals",
+    "init/init_task.c::init_sighand",
+    "init/main.c::rest_init"
+   ],
+   "text": "Init signals ready with locks; task lookup under brief read-side sections."
+  }
+ ],
+ "pass": 1,
+ "phase_map": [
+  {
+   "anchor": "HB-KPAPER-001/hb-s5.p14",
+   "crown": "A",
+   "phase": "F0"
+  },
+  {
+   "anchor": "HB-KPAPER-001/hb-s5.p10",
+   "crown": "A",
+   "phase": "F5"
+  }
+ ],
+ "schema": "lx.dossier.v1",
+ "state_machines": [
+  {
+   "sids": [
+    "fs/dcache.c::dput",
+    "fs/dcache.c::dentry_kill",
+    "fs/inode.c::evict"
+   ],
+   "text": "Dentry put prefers lockless last-ref with LRU; kill unhashes and defers free; final iput evicts."
+  },
+  {
+   "sids": [
+    "fs/namespace.c::cleanup_mnt",
+    "fs/super.c::deactivate_super",
+    "fs/super.c::grab_super"
+   ],
+   "text": "Mount goes counted to doomed to destroyed with sync or deferred drain and RCU free."
+  },
+  {
+   "sids": [
+    "fs/aio.c::ioctx_alloc",
+    "fs/aio.c::kill_ioctx",
+    "fs/aio.c::aio_complete"
+   ],
+   "text": "Async goes alloc to live to draining with cancel; completion publishes, recycles and wakes."
+  },
+  {
+   "sids": [
+    "fs/binfmt_elf.c::load_elf_binary",
+    "fs/namei.c::path_openat",
+    "fs/eventpoll.c::ep_send_events"
+   ],
+   "text": "Load runs checks, interp, replacement, mapping then launch; open walks; epoll scans ready."
+  },
+  {
+   "sids": [
+    "fs/exec.c::do_execveat_common",
+    "fs/locks.c::time_out_leases",
+    "fs/file_table.c::__fput"
+   ],
+   "text": "Exec counts, creds, loads, completes; leases demote; fput orders teardown."
+  },
+  {
+   "sids": [
+    "fs/inode.c::find_inode",
+    "fs/namespace.c::mark_mounts_for_expiry",
+    "fs/pipe.c::anon_pipe_read"
+   ],
+   "text": "Inodes go new to freeing to isolating; expiry needs two marks; pipes block."
+  },
+  {
+   "sids": [
+    "fs/proc/proc_sysctl.c::grab_header",
+    "fs/proc/proc_sysctl.c::proc_sys_fill_cache",
+    "fs/proc/root.c::proc_init_fs_context",
+    "fs/proc/root.c::proc_get_tree",
+    "fs/proc/root.c::proc_kill_sb",
+    "fs/proc/root.c::proc_fs_type"
+   ],
+   "text": "Header pins on lookup release on exit; context parses then builds or reconfigures super."
+  },
+  {
+   "sids": [
+    "init/do_mounts.c::mount_root_generic",
+    "init/do_mounts.c::mount_block_root.alt_1",
+    "init/do_mounts.c::mount_nodev_root",
+    "init/do_mounts.c::fs_is_nodev",
+    "init/do_mounts.c::mount_root",
+    "init/do_mounts.c::mount_nfs_root.alt_1",
+    "init/do_mounts.c::mount_cifs_root.alt_1",
+    "init/do_mounts.c::NFSROOT_TIMEOUT_MIN",
+    "init/do_mounts.c::NFSROOT_TIMEOUT_MAX",
+    "init/do_mounts.c::NFSROOT_RETRY_MAX"
+   ],
+   "text": "Generic tries requested then all block; nodev first win; dispatch by device, network retries."
+  },
+  {
+   "sids": [
+    "init/initramfs.c::state.alt_1",
+    "init/initramfs.c::do_header",
+    "init/initramfs.c::do_skip",
+    "init/initramfs.c::do_reset"
+   ],
+   "text": "Parser cycles collect/header/skip/name/copy/symlink/reset; checksums by magic."
+  },
+  {
+   "sids": [
+    "init/main.c::rest_init",
+    "init/main.c::do_initcalls",
+    "init/main.c::do_initcall_level",
+    "init/main.c::initcall_levels",
+    "init/main.c::initcall_level_names",
+    "init/main.c::do_pre_smp_initcalls",
+    "init/main.c::ignore_unknown_bootoption"
+   ],
+   "text": "First tasks then idle; eight stages plus early range; nine markers/eight names."
+  }
+ ],
+ "structs": [
+  {
+   "sids": [
+    "fs/aio.c::aio_ring",
+    "fs/aio.c::kioctx",
+    "fs/aio.c::AIO_RING_MAGIC"
+   ],
+   "text": "Async ring has magic, headers, capacities and credits; context adds lists, waits and refs."
+  },
+  {
+   "sids": [
+    "fs/namespace.c::alloc_vfsmnt",
+    "fs/inode.c::inode_init_once",
+    "fs/dcache.c::dentry_stat_t"
+   ],
+   "text": "Mount holds root, super, ids and counts; inode holds number, mode, state and locks; dentry counts."
+  },
+  {
+   "sids": [
+    "fs/binfmt_misc.c::binfmt_misc_entry",
+    "fs/buffer.c::bh_lru",
+    "fs/char_dev.c::char_device_struct",
+    "fs/eventpoll.c::eventpoll"
+   ],
+   "text": "Misc entries hold magic, mask, interp, refs; LRU holds per-CPU pointers; epoll holds queues, tree."
+  },
+  {
+   "sids": [
+    "fs/file.c::init_files",
+    "fs/mount.h::mnt_namespace",
+    "fs/inode.c::LAST_INO_BATCH"
+   ],
+   "text": "Tables bundle arrays and RCU; mount ns links roots; inode batch is 1024."
+  },
+  {
+   "sids": [
+    "fs/readdir.c::old_linux_dirent",
+    "fs/readdir.c::linux_dirent",
+    "fs/readdir.c::compat_linux_dirent",
+    "fs/super.c::super_dev",
+    "fs/super.c::super_dev_table",
+    "fs/xattr.c::sx_key",
+    "include/linux/buffer_head.h::buffer_head"
+   ],
+   "text": "Dirents hold inode offset len name; device table hashes supers; buffers track blocks."
+  },
+  {
+   "sids": [
+    "include/linux/mount.h::vfsmount",
+    "include/linux/mount.h::mount_flags",
+    "include/linux/mount.h::__randomize_layout",
+    "include/uapi/linux/fs.h::BLOCK_SIZE_BITS",
+    "include/uapi/linux/fs.h::BLOCK_SIZE",
+    "include/uapi/linux/fs.h::INR_OPEN_CUR",
+    "include/uapi/linux/fs.h::INR_OPEN_MAX"
+   ],
+   "text": "Mounts hold root sb flags idmap; block shift ten gives 1K; open limits bound tables."
+  },
+  {
+   "sids": [
+    "init/do_mounts.c::rootfs_init_fs_context",
+    "init/init_task.c::init_cred",
+    "init/init_task.c::init_groups",
+    "init/init_task.c::init_task_exec_state",
+    "init/init_task.c::init_shadow_call_stack",
+    "init/init_task.c::__init_thread_info"
+   ],
+   "text": "Root context picks shm/ram; init creds, groups, exec state, shadow stack, thread."
+  },
+  {
+   "sids": [
+    "init/initramfs.c::N_ALIGN",
+    "init/initramfs.c::dir_entry",
+    "init/initramfs.c::dir_add.alt_1",
+    "init/initramfs.c::dir_utime.alt_1",
+    "init/initramfs_internal.h::CPIO_HDRLEN",
+    "init/initramfs_test.c::initramfs_test_csum",
+    "init/initramfs_test.c::INITRAMFS_TEST_MANY_LIMIT",
+    "init/initramfs_test.c::INITRAMFS_TEST_MANY_PATH_MAX",
+    "init/initramfs_test.c::initramfs_test_many",
+    "init/main.c::MAX_INIT_ARGS",
+    "init/main.c::MAX_INIT_ENVS",
+    "init/main.c::KERNEL_CMDLINE_PREFIX",
+    "init/main.c::KERNEL_CMDLINE_PREFIX_LEN",
+    "init/main.c::KERNEL_CMDLINE_CONTINUATION",
+    "init/main.c::KERNEL_CMDLINE_CONTINUATION_LEN",
+    "init/main.c::MIN_CMDLINE_LOG_WRAP_IDEAL_LEN",
+    "init/main.c::CMDLINE_LOG_WRAP_IDEAL_LEN",
+    "init/main.c::IDEAL_CMDLINE_LEN",
+    "init/main.c::IDEAL_CMDLINE_SPLIT_LEN",
+    "init/main.c::__read_mostly.alt_1",
+    "init/main.c::loops_per_jiffy"
+   ],
+   "text": "32 buckets, 110B header, magics/trailer, time queue; bulk 1000, caps, wrap."
+  },
+  {
+   "sids": [
+    "init/main.c::blacklist_entry",
+    "init/version-timestamp.c::init_uts_ns",
+    "init/version-timestamp.c::linux_banner",
+    "init/version.c::linux_proc_banner",
+    "init/version.c::linux_banner"
+   ],
+   "text": "Veto node with owned name; UTS with names; boot and proc banners."
+  }
+ ],
+ "stubs": [
+  {
+   "sid": "include/linux/sched/signal.h::signal_pending",
+   "state": "stub",
+   "target_dossier": "D01"
+  },
+  {
+   "sid": "include/linux/rcupdate.h::rcu_read_lock",
+   "state": "stub",
+   "target_dossier": "D02"
+  },
+  {
+   "sid": "include/linux/spinlock.h::spin_lock",
+   "state": "stub",
+   "target_dossier": "D03"
+  },
+  {
+   "sid": "include/linux/mutex.h::mutex_lock",
+   "state": "stub",
+   "target_dossier": "D03"
+  },
+  {
+   "sid": "include/linux/slab.h::kmalloc",
+   "state": "stub",
+   "target_dossier": "D05"
+  },
+  {
+   "sid": "include/linux/mmap_lock.h::mmap_write_lock_killable",
+   "state": "stub",
+   "target_dossier": "D06"
+  },
+  {
+   "sid": "include/linux/capability.h::capable",
+   "state": "stub",
+   "target_dossier": "D12"
+  },
+  {
+   "sid": "include/linux/list.h::list_empty",
+   "state": "stub",
+   "target_dossier": "D14"
+  },
+  {
+   "sid": "include/linux/err.h::IS_ERR",
+   "state": "stub",
+   "target_dossier": "D17"
+  },
+  {
+   "sid": "include/linux/uaccess.h::copy_from_user",
+   "state": "stub",
+   "target_dossier": "D17"
+  }
+ ]
+}

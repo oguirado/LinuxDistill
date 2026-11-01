@@ -1,0 +1,27 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "lx.dossier.v1",
+ "title": "One subsystem dossier (reduce output); the only lx-derived material a WRITE card may receive",
+ "type": "object",
+ "additionalProperties": false,
+ "required": ["schema", "dossier", "pass", "extracts", "exports", "invariants", "locks", "structs", "state_machines", "entry_points", "hazards", "phase_map", "stubs", "gpl_spec"],
+ "properties": {
+  "schema": {"const": "lx.dossier.v1"},
+  "dossier": {"type": "string", "pattern": "^D(0[1-9]|1[0-7])$"},
+  "pass": {"type": "integer", "minimum": 1, "maximum": 3},
+  "extracts": {"type": "array", "minItems": 1, "items": {"type": "string", "pattern": "^[0-9a-f]{64}$"}},
+  "exports": {"$ref": "#/$defs/fl"}, "invariants": {"$ref": "#/$defs/fl"}, "locks": {"$ref": "#/$defs/fl"},
+  "structs": {"$ref": "#/$defs/fl"}, "state_machines": {"$ref": "#/$defs/fl"}, "entry_points": {"$ref": "#/$defs/fl"},
+  "hazards": {"$ref": "#/$defs/fl"},
+  "phase_map": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["phase", "crown", "anchor"],
+   "properties": {"phase": {"enum": ["F0", "F1", "F2", "F3", "F4", "F5", "F6"]}, "crown": {"enum": ["A", "B", "C", "D", "none"]},
+    "anchor": {"type": "string", "minLength": 1}}}},
+  "stubs": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["target_dossier", "sid", "state"],
+   "properties": {"target_dossier": {"type": "string", "pattern": "^D(0[1-9]|1[0-7])$"}, "sid": {"type": "string", "maxLength": 200},
+    "state": {"enum": ["stub", "interface"]}}}},
+  "gpl_spec": {"enum": ["PASS"]}
+ },
+ "$defs": {"fl": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["text", "sids"],
+  "properties": {"text": {"type": "string", "minLength": 1, "maxLength": 1200},
+   "sids": {"type": "array", "minItems": 1, "items": {"type": "string", "maxLength": 200}}}}}}
+}

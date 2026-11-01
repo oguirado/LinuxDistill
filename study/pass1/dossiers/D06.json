@@ -1,0 +1,1045 @@
+{
+ "dossier": "D06",
+ "entry_points": [
+  {
+   "sids": [
+    "include/linux/mm.h::vma_find",
+    "include/linux/mm.h::vma_next",
+    "include/linux/mm.h::vma_prev",
+    "include/linux/mm.h::vma_lookup",
+    "include/linux/mm.h::zap_vma",
+    "include/linux/userfaultfd_k.h::handle_userfault"
+   ],
+   "text": "Area iteration offers bounded search with forward and backward steps; lookup uses the tree; zap covers the area; disabled userfault reports bus error."
+  },
+  {
+   "sids": [
+    "mm/filemap.c::generic_file_read_iter",
+    "mm/filemap.c::filemap_fault",
+    "mm/memory.c::handle_mm_fault",
+    "mm/hugetlb.c::hugetlb_fault",
+    "mm/fadvise.c::vfs_fadvise",
+    "mm/truncate.c::mapping_try_invalidate"
+   ],
+   "text": "Read, fault, write and cachestat cover buffered paths; general fault delegates huge versus ordinary; advice and invalidation batch with eviction."
+  },
+  {
+   "sids": [
+    "mm/memory.c::do_pte_missing",
+    "mm/memory.c::handle_pte_fault",
+    "mm/memory.c::do_swap_page",
+    "mm/hmm.c::hmm_range_fault",
+    "mm/memory.c::vmf_insert_pfn",
+    "mm/memory.c::vmf_insert_mixed"
+   ],
+   "text": "Faults converge missing file swap and marker paths; HMM binds handlers with test; pfn and mixed installers validate caching."
+  },
+  {
+   "sids": [
+    "mm/migrate.c::migrate_pages_sync",
+    "mm/khugepaged.c::khugepaged_enter_vma",
+    "mm/mmap.c::find_vma_intersection",
+    "mm/huge_memory.c::split_huge_pmd_address",
+    "mm/huge_memory.c::setup_transparent_hugepage",
+    "mm/hugetlb.c::hugetlb_init",
+    "mm/hugetlb.c::hugetlb_vm_ops",
+    "mm/memory-failure.c::memory_failure"
+   ],
+   "text": "Migration runs async then sync; THP and hugetlb boot register policy and sizes; huge ops and poison handling guard pools."
+  },
+  {
+   "sids": [
+    "mm/vmalloc.c::__get_vm_area_node",
+    "mm/shmem.c::shmem_get_folio_gfp",
+    "mm/khugepaged.c::collapse_file",
+    "mm/khugepaged.c::collapse_huge_page",
+    "mm/madvise.c::sys_madvise",
+    "mm/madvise.c::sys_process_madvise"
+   ],
+   "text": "Vmap allocation forbids atomic context; shmem acquires folios; anon and file collapse commit huge; madvise checks permissions."
+  },
+  {
+   "sids": [
+    "mm/mempolicy.c::sys_mbind",
+    "mm/mempolicy.c::sys_set_mempolicy",
+    "mm/mempolicy.c::sys_get_mempolicy",
+    "mm/mempolicy.c::sys_migrate_pages",
+    "mm/migrate.c::sys_move_pages",
+    "mm/mmap.c::sys_mmap_pgoff",
+    "mm/mmap.c::ksys_mmap_pgoff",
+    "mm/mmap.c::sys_munmap",
+    "mm/mmap.c::sys_brk",
+    "mm/mprotect.c::sys_mprotect"
+   ],
+   "text": "Policy binds ranges with migration and queries modes; mmap aligns and delegates, munmap removes, brk extends, mprotect forwards."
+  },
+  {
+   "sids": [
+    "mm/mremap.c::sys_mremap",
+    "mm/mseal.c::sys_mseal",
+    "mm/msync.c::sys_msync",
+    "mm/nommu.c::sys_brk",
+    "mm/secretmem.c::sys_memfd_secret",
+    "mm/shmem.c::shmem_fault",
+    "mm/shmem.c::shmem_create",
+    "mm/shmem.c::shmem_fill_super"
+   ],
+   "text": "Remap moves ranges, seal locks, sync flushes exclusive modes; no-MMU brk resizes; secretmem gates creation, shmem faults cached."
+  },
+  {
+   "sids": [
+    "mm/userfaultfd.c::userfaultfd_register",
+    "mm/userfaultfd.c::userfaultfd_unregister",
+    "mm/userfaultfd.c::userfaultfd_wake",
+    "mm/userfaultfd.c::userfaultfd_writeprotect",
+    "mm/userfaultfd.c::userfaultfd_copy",
+    "mm/userfaultfd.c::userfaultfd_zeropage",
+    "mm/userfaultfd.c::userfaultfd_continue",
+    "mm/userfaultfd.c::userfaultfd_poison",
+    "mm/userfaultfd.c::userfaultfd_move"
+   ],
+   "text": "Userfaultfd registers ranges and serves wake, protect, copy, zero, continue, poison and move with validation and progress."
+  }
+ ],
+ "exports": [
+  {
+   "sids": [
+    "include/asm-generic/pgalloc.h::pte_alloc_one_kernel",
+    "include/asm-generic/pgalloc.h::pmd_alloc_one",
+    "include/asm-generic/pgalloc.h::pud_alloc_one",
+    "include/linux/mm.h::pagetable_alloc_noprof",
+    "include/linux/mm.h::pagetable_free",
+    "include/asm-generic/pgalloc.h::pte_free",
+    "include/asm-generic/tlb.h::tlb_remove_table",
+    "mm/pgtable-generic.c::pmdp_huge_clear_flush"
+   ],
+   "text": "Per-level tables allocate zeroed pages with distinct flags; free checks alignment then destroys; TLB frees at once or batches; huge clear flushes range."
+  },
+  {
+   "sids": [
+    "mm/filemap.c::filemap_add_folio",
+    "mm/filemap.c::__filemap_get_folio_mpol",
+    "mm/mempolicy.c::alloc_pages_noprof",
+    "mm/mempolicy.c::folio_alloc_noprof",
+    "mm/filemap.c::filemap_read",
+    "mm/fadvise.c::generic_fadvise"
+   ],
+   "text": "Cache insert charges and locks; lookup offers locking and creation; policy resolves node for pages and folios; buffered read and advice tune caching."
+  },
+  {
+   "sids": [
+    "mm/filemap.c::filemap_fault",
+    "mm/memory.c::pmd_install",
+    "mm/memory.c::handle_mm_fault",
+    "mm/hugetlb.c::hugetlb_fault",
+    "mm/hugetlb.c::alloc_hugetlb_folio",
+    "mm/gup.c::folio_add_pin",
+    "mm/migrate.c::migrate_pages"
+   ],
+   "text": "Faults supply locked folios and publish small or upper entries with retry; huge alloc layers pool and buddy with admission; pin and migration preserve counts."
+  },
+  {
+   "sids": [
+    "mm/migrate.c::migrate_folio",
+    "mm/rmap.c::rmap_walk_locked",
+    "mm/rmap.c::try_to_migrate",
+    "mm/migrate.c::migrate_pages_sync",
+    "mm/migrate_device.c::migrate_device_pages",
+    "mm/migrate_device.c::migrate_device_finalize",
+    "mm/migrate.c::migration_entry_wait",
+    "mm/rmap.c::try_to_unmap"
+   ],
+   "text": "Migration moves folios with flag handling, walks anon and file maps, runs async then sync, finalizes device ranges and waits on entries."
+  },
+  {
+   "sids": [
+    "mm/memory.c::finish_fault",
+    "mm/memory.c::map_anon_folio_pte_nopf",
+    "mm/memory.c::do_swap_page",
+    "mm/huge_memory.c::do_huge_pmd_anonymous_page",
+    "mm/huge_memory.c::mm_get_huge_zero_folio.alt_2",
+    "mm/ksm.c::ksm_might_need_to_copy",
+    "mm/huge_memory.c::set_pmd_migration_entry",
+    "mm/memory.c::vm_normal_folio"
+   ],
+   "text": "Faults install anon and file pages with protections, resolve swap, use shared huge zero page and support migration entries."
+  },
+  {
+   "sids": [
+    "mm/gup.c::get_user_pages",
+    "mm/gup.c::get_user_pages_fast",
+    "mm/gup.c::pin_user_pages",
+    "mm/gup.c::fixup_user_fault",
+    "mm/pagewalk.c::walk_page_range",
+    "mm/highmem.c::kmap_high",
+    "mm/hugetlb.c::hugetlb_reserve_pages",
+    "mm/huge_memory.c::thp_get_unmapped_area",
+    "mm/huge_memory.c::move_huge_pmd",
+    "mm/huge_memory.c::__folio_split"
+   ],
+   "text": "Pin and lookup cover slow fast and pinned acquisition with fixup, generic walks, highmem mapping, huge reservation and THP placement."
+  },
+  {
+   "sids": [
+    "mm/vmalloc.c::alloc_vmap_area",
+    "mm/vmalloc.c::find_vm_area",
+    "mm/interval_tree.c::mapping_rmap_tree_insert",
+    "mm/ksm.c::ksm_enable_merge_any",
+    "mm/ksm.c::ksm_madvise",
+    "mm/shmem.c::shmem_get_folio",
+    "mm/khugepaged.c::collapse_pte_mapped_thp",
+    "mm/memory.c::remap_pfn_range",
+    "mm/memory.c::copy_page_range",
+    "mm/memory.c::zap_vma_range"
+   ],
+   "text": "Vmap and interval trees manage ranges; KSM and shmem acquire and merge; collapse installs huge; remap copy and zap mutate mappings."
+  },
+  {
+   "sids": [
+    "mm/memremap.c::memremap_pages",
+    "mm/memremap.c::devm_memremap_pages",
+    "mm/memremap.c::memunmap_pages",
+    "mm/migrate.c::filemap_migrate_folio",
+    "mm/migrate.c::migrate_huge_page_move_mapping"
+   ],
+   "text": "Device memory maps intervals with managed lifetimes and drains on teardown; file and huge folios migrate after checks."
+  },
+  {
+   "sids": [
+    "mm/mremap.c::move_page_tables",
+    "mm/vma.c::copy_vma",
+    "mm/vma.c::vma_merge_extend",
+    "mm/shmem.c::shmem_file_setup_with_mnt",
+    "mm/truncate.c::truncate_inode_pages",
+    "mm/nommu.c::exit_mmap",
+    "mm/nommu.c::access_process_vm"
+   ],
+   "text": "Page tables relocate between ranges merging or allocating destinations; shmem sets up files, cache truncates, no-MMU supports access."
+  },
+  {
+   "sids": [
+    "mm/util.c::vma_is_stack_for_current",
+    "mm/util.c::vma_set_file",
+    "mm/util.c::account_locked_vm",
+    "mm/util.c::vm_mmap",
+    "mm/util.c::vm_mmap_shadow_stack",
+    "mm/util.c::__account_locked_vm",
+    "mm/util.c::vm_commit_limit",
+    "mm/util.c::vm_memory_committed",
+    "mm/util.c::__vm_enough_memory"
+   ],
+   "text": "Kernel mapping checks wraps and charges; stack and file helpers aid validation; locked accounting and commit limits gate growth."
+  }
+ ],
+ "extracts": [
+  "028befd6f0e3394e4609ac7d08e3cc6134d120b3b7e48fc776b060e72145aeb1",
+  "02bcb249b235a909c7c246bd09ba4787b99e92d649778fd9d49e6ea1cd519dd1",
+  "052fb7b974e619e1a6ec8a3d05dedc7d058b77a0873759029047698f9c8fbc2a",
+  "08cde316274028c26f0541f61e553194b58d8e592ba200794b5e953425c77248",
+  "0bb2a1fd54ffa60c7583e877d3f7cbdea977472faee8783abaed0d4a52348f6e",
+  "0d09b1775da5fa9af3c3effd1fe567ad763ea3f7d77c4fe816c4be34d6e6ca4e",
+  "0f41916d135217eadb0dd461910b97db3e685464f9caa103db920f640c433323",
+  "10ad75a5128fcb75bf8405141578b163a60ee53dbea2bdb46515e86066f3d891",
+  "11870c901ad1ef09e40323da8794faa644cb09e6ffb36d36475b79b7764549c7",
+  "120561651e33605c738c62bd7b37b40a2209db695deca034de3b86edf93ddc79",
+  "124659cd60c52f7e43771dc2f33f606210be74fc9058ef22d4fdf7199157efd9",
+  "13896fc06911adb6f1c6990089f15e9012a4286cf4e931b838cf9872f4be400d",
+  "168c1c6ca1be11b9417e46e1486a4966f95d3719155a97a64bb0538526b4abd5",
+  "1829d07de346f8c9780bdc346abe8892782fd37a2df3fbb32be3359e442d002e",
+  "18928ad0cd42d8820f34ecf5555768ee2d7bc9b939b51d39ce6589708ed1f649",
+  "1896f9adbae7843fde0bb35bb0e65bab3ddfe38fb9d5b294e5bbe966e5d4602e",
+  "1b7d815af26ffe1cc4c03c66e275bced8805f950c579864669ef087998768d19",
+  "1bab3b6399b7166c92ad92fa83bb143a45e1826af2d78b34f35c7d4039edf13c",
+  "1e95121d44664137f960a07ae99949e21ee2665eb4ab26543ea50ef0a9978194",
+  "269da8bdd1e22bd8ec7a89827956790f79265af430d64282e3462eeca5d7659f",
+  "26dca870c903ed0215aa257d920a343a178b606bef3ecd0aeb0f5537a051ba0b",
+  "27f992fad8e54034a013bd9fff7b9fd295bc9f5234d1491ab13354ddb9185613",
+  "288b80f14a72d091ceb3ab8df9eea583f9a78a0425991db687dbb213e20d089c",
+  "29a8831c0cc9201f32ae369e11aada4147e056b4c7addaf80dd2165d5bd4150f",
+  "2a960fcaa0fd87baf596e4ed88fd34c811146b4f395b733105cb8752cadb77bf",
+  "2b2cd745c9a0250877b9c3850ddb2ff52718cd6f0849ab863f1fee6c680e70eb",
+  "2dc3d240cb1465e5c201c3ebdf2a0ab1341e8e322ec24926951302e7e75fc716",
+  "31470f9bddc31ca44a8c60064308904292b18c51118731c02062e35d3ab8e127",
+  "331c3c24e4059a53c5b565493d8015f1e3a95b4161cc64e16bbb6c860c9bae79",
+  "340923874ccf42a70a7dd3d4e7800508cd480af54680c0e153a59ccfcd25ab96",
+  "36069648a6d08111f3cbb7721b68fc981a07e4915cab1dd336db86fe9148dd10",
+  "377dff9056f22e348f0783068159eead43da6ffd4602b7db318656113705765a",
+  "38af45046b238498a4fac6cd378beec61de9398f559043d0a55a4f0d78e74b4d",
+  "394b4814006b7e203ac0144d07465a33146bfef9ead5509d0299171a0bfe464e",
+  "3a202813d12e9305331f6b3ad24ddb278b4f042e6cac339e75c72e84360f1c21",
+  "3a64d44df5f9c85911579590b3f1ad6f2a95f846d8c24d09c8947bd41f3e02bf",
+  "3b6ad2ff70a62863e55297243f68a362c4a85acdf3db049f733dbff9b48a8afa",
+  "3e4ff3f8122605c978e0abecdb7ba29509509115f5d72cb5ba33ee1b36d3ae48",
+  "3e86e3d1d3190eda92c5c2e8675e21669c749153b580bc4d544453a530053f1a",
+  "3f1ad6edaaca66dbdaefce887e2b961f83dcd348ec37415c639201490719653d",
+  "3fdb4df89d4482191c2b26753966b8530e9a0b53147c9dccffcc6b873966e53f",
+  "40c4428b037dfc2ffe14cb37092bb817d5b8de56fd36217edd0db0c626f7311a",
+  "423b76983bdfcdb391872f19536d0014a309cb33bd395a4ca70856f7b6e0fc07",
+  "43e4688c1602951d9d550909ac33314d5cdb5eeb2570377ea5332f46247f3dde",
+  "490be199ddf551c47f965e23466fa3d302752cac1a18deba6945810ce216af66",
+  "4957b6ab38f3a3b43678c18db0fb3018894d1c34274e9070b0ce3fc60987c623",
+  "4997e3277adaa89d9f8974d26f5e82eab4f2aee07d0e836f64c1f5e2bddeaf71",
+  "4f44df529379397b40c72622d877087b4d57b46b06de61bed7f261dedc2aede2",
+  "504791913fbd7173240684d4cbb901f528478d7d2a7c7e51d77944c98bbee106",
+  "517a00ee2194c606fcb53a6d1ed91e91693f30ec698f72e91e5909bf4e48d2a2",
+  "524546144eadb57a91a83c5789d925af347b803b9603f5c846a5fe37fee93576",
+  "551353bec14983e53b6781baf945a523a60786efab6f1beb3f246e43d8e77129",
+  "55a6497bd9811d974873f95c26557414c60bef935e494e3ffbf1bfe0cf987371",
+  "55cfcdf2917440abcbdd2196b31088fba8d2449bddfade6a37ecbc13ccb89767",
+  "573a18a2eaf1f311153be5ecce198f96f0fad4d9f704d0a1c1da1fe23466891e",
+  "57411298aa5c7b956df47d25f2c38d346783b74c0fc5745e65554bb625cded0b",
+  "694d084926ad3fdb82b2079065c1602bb4bfd1921c054f509ad4a62edb4ff070",
+  "69b08bb96d4a8babd04a8f7180017f285a1932a2ad2e640435035b721be11660",
+  "6aeb2b6f1a937a77dd50a6d07a0895d942fc2494b9f3232dbd370329c8690333",
+  "6e7b85204f34ef39ad7a3d1ea18e313d6352f3dfa20473afbc8c842b13764998",
+  "72d4c099184f3ab9de426c9f379ade0d0c07db8b2fce5ad52681b0b04771e9c0",
+  "758bef3c396baea84af2b2c73194d449df369b408b364dd6b3cdea568464e0c5",
+  "794ed6e321fd0aff940e557b380ae98236911ff1191cfb489c1fb621c0bb99f7",
+  "7a0bc6198925c9636e7b98a87de2c11728bb4c65c16c687db6386492cc6e5f1d",
+  "7adbce9c69c7719ef562994d48357230d455f89e2a1259d7e3cec8ab7c58c7f3",
+  "7ba94e8d7aab170e2140bae56204d7721515212cb22931875dc4dce08479fd69",
+  "7c7d6eeb02ef7de2dd4edb75e8cd41b84bb16950fa53a4259b1bf9b5587bd645",
+  "7cf52f9f864181f42e56601d2f14d4297f3549d9d92234839564e3ddb7b173fa",
+  "7e4947644d0162e6b855e46e77053f9e60c3d9842c9cb093d42001c5132d505d",
+  "7eee7efaf0e2b99234319a2498aaaa094b11940b10eec355f2c861a631f6e20c",
+  "7f9a15ce122f2e3e0a236d256254b71bf472f5b8e8c741454c5b6749bd61c201",
+  "7fd5a2b00fa5366e39beefcb9559ed21da6580b9e572eafe0df68d7ffab72d71",
+  "822ae5242cd2f04d7d39b8574d83d4eb6643be187d782aa47127ea6ddbda889c",
+  "83763ee5c958f988cf51ba1b3f52667a54e6d28ae1eaeb9425a2b89dbc321ea0",
+  "84b3e590f3fa661ea4dd242627b15241c0817eb1c28bc44dcae80c885ddcac3a",
+  "8544554341569266ba2b066dfa3c35dcd546ab54fa080acdbfea7952884b0cbd",
+  "88e3e4a9feb82b3ccbf1b32069b3897cf7c1a7f674600a144e06b9dd870e73b2",
+  "8a8d757e87a31330f69cf9fd086d3e126986b158c96a28e39025ef05b02529e5",
+  "8b60ebfbded459fd7be6e34dba6e6218bf7dbf38989f4a0c0ba52db1a7c838a9",
+  "8cabec2e12eb66892b1b1c3afaeca3b0e4b9cabd5d95522ccf64c2e2143eb7c9",
+  "8dd5b2242f09a07d13737f38c5488d838e4bb2f3fdb1fa4b2b612e45b8269879",
+  "8e0f45f08194c4b9ea119a56bf5c9ca3b5b8949fabe52b2827c57a5b91110de0",
+  "8e743c6d6ea18b9d9f257e67ff3e0359851a790662e8f612e3b399e2a9b9acc5",
+  "902d81c87e35fee12337d573e2f8c7ae8ad0b03611042d92fc86b4ab5e122410",
+  "94900839382bdf105f5da24518b64d2df4ef3c7de704d0deba30d345b6644b6e",
+  "979a60741e572155e3402331fbb9b1dc65a0e36b94fb466df43db3aa19b5ad47",
+  "99a5a269e6972667c28898ffd6552b9ce39e68e4bed029a197a3997d2109925b",
+  "9e371909a61720bb2c2540e7e6a26c949d1ef99a5b915009835c1e7c3048d717",
+  "9e73d4d69c76590f5c13690a9bc1254b299793098a848a2011641099fbafe1f1",
+  "9f2ee4da9ddbb137d834fa40d7cd68f809f76d1a4f3845a8cfb4a818d1e86af0",
+  "a08b128029c5152b93cdab840d242fe89fa50bec2dee119a0f5f1a33fd367f8b",
+  "a338dd180eadaf1fbbaeae6f83d9e9598b5c282710086c49037f87b75057bf00",
+  "a5ca57e2b2fc7672da9fbe72912d97591c66df06aa83e1c001ff6e73a186bf48",
+  "a5fa30e8d19e186e97717b4a8c865b7036801de14c0d5a45e3b764b775cfd9bb",
+  "a9578523aefae7a8b08c7e79d6124055e1d0afcb37babe420371909ce123eb46",
+  "ab322cdb67d063389ef797b32dbbee9fd3dce285d9d70a939032ac7cf30987af",
+  "ab86f5cabca0596956c24dee59eb3852a0e6c01e42bb53e6eda087f63e0c33fc",
+  "ad43d8e841d04df5d628649688515038658b01792e74770154b5ce40a59d031d",
+  "ae81f535ab393d057eb15defb4009501aaa9af336720c24a41ef80fae3c64e36",
+  "afa2c95513593c6c022fd04f46d45464846dd18876c2539efcd46d73339b972e",
+  "b006f9e57733cd54291515b91721f10c67037c484c53687b00e9bd0ec192fa5c",
+  "b4b8d9be4772e4cdaa5b5fc7c1bd9f27e99dc473b1be216eeb2999a501e43b22",
+  "b6bc1db1aac9fda293c9e15eddb7f8138d451152cd2fa417d52d067a63e88ec1",
+  "bd817808432a9b8d3e50f60b48e397ac8a618c0b6d366454c0ece32ef03973af",
+  "c1324d09311cb553a33f1e4764940973fde3b513ec2ba5a537618ee635c0fa96",
+  "c2da6d2557d7abe0381e6814d44e8d3a54642501accb8efe4ebcb20f0c858d0a",
+  "c313529080858a060a57a72cb216bc1133f3a9dfde3336374d3354b816291c77",
+  "c32926eb16d4e103112997acaab256a0188fcea276157bcf71f455c7dca2be2b",
+  "c828f1889f551c6cf952cc67a7320a0347be12c1b8c17eea8e6435a85e9169b9",
+  "c84c5826711e9638686ec4eb1ee9af0147a584c91280a6b02a8ab220bcb7a71c",
+  "ca964e969b3d03c5cf2d370ce4731e1fa4ac30f72a9a12f830d37ac7bb79246f",
+  "d134784a337e052b5475609a0f99f0bef3fabf43c757ce469d3e60368f848d78",
+  "d2ceeae0e7b5bca1fb62c995b49b2a00af3bfae35971f613e8422ed7ab04fb23",
+  "d5626fe4f76fc7003f8052d88fa2e04fd6a16faecb37ba8c3d4c918c212b14de",
+  "dbd78b696cd393a8e58589af08de5e99e9876eed8155bbe6abab3b0223ac0835",
+  "dde2c8754121aa327cbd3a395899f6f397f13c844e584eb88657805b82706da3",
+  "e0aea6d1ca1e82cf45fab42fe777f7b684da32657614849a8eac21aa47f4bf06",
+  "e36106e2477fe410ec795b04fcd92033106c78d595d7d8ba7babc02142a85f1b",
+  "e46e5c966b61a521b944879c5deb9447acd3cfae092b6b46d4b2d5cda16fee65",
+  "e4b6e39e366f4f3564ac5d754fb353b0a1f80af8f5402ec02442d50598781877",
+  "eabdce0c611ab193ad737cda01ee936c9bd1e6bdee5d54b1b087602e37ad6e15",
+  "ebd59b90bd6e1f1964672baa10b9bb806b155116d516fe066acd715a0d2ab4b1",
+  "ebf3570ceed4e3cc3c72d3b2148cdedd43527b9a8dfa7a3be761ab38ca417b28",
+  "ecef29741b960a78990d8631bba93bf3f36d3862dc154e52b0868be61ba6edd1",
+  "f58ab9182f2c7545e428d451bcdf1a713c5d64ef180a706b9f76a871cdee67fe",
+  "f5f5a3910d744aa0d60d49a5985e1c0b2ba46fc7cc2e7dfc93c0f5d0ef25fc94",
+  "f6ae01771db5fa650536956c0f1f32a618095a5e3fee04f054efc0bf8ef116d8",
+  "f7149f9a9e5f6853e0f9cfebb00357365e08f3daa62a13ee039ca0617366af3a",
+  "fb2df411ab86bb6786e2148c53d0922bbe0d4d91b9841408e974569840f30c5b",
+  "fdacb74fa1ef61738ca48f00f96204acc40fa8129afb0876bdd28dcdcd4a26bc"
+ ],
+ "gpl_spec": "PASS",
+ "hazards": [
+  {
+   "sids": [
+    "include/linux/mm.h::folio_get",
+    "include/linux/mm.h::get_page",
+    "include/asm-generic/tlb.h::tlb_needs_table_invalidate",
+    "mm/huge_memory.c::__split_huge_pmd_locked",
+    "mm/pgtable-generic.c::__pte_offset_map",
+    "mm/gup.c::unpin_user_pages"
+   ],
+   "text": "Bad takes, lost reserve bits and no-MMU faults warn or trap; every table removal needs invalidation; mixed huge and small translations are forbidden."
+  },
+  {
+   "sids": [
+    "mm/filemap.c::folio_wait_bit_common",
+    "mm/filemap.c::sysctl_page_lock_unfairness",
+    "mm/truncate.c::folio_unmap_invalidate",
+    "mm/filemap.c::filemap_unaccount_folio",
+    "mm/rmap.c::folio_add_new_anon_rmap"
+   ],
+   "text": "Waiters set the flag before final check to avoid lost wakeup; unfairness bounds starvation; removing mapped or dirty folios warns; busy unless clean and stable."
+  },
+  {
+   "sids": [
+    "include/linux/vmalloc.h::VM_NO_GUARD",
+    "mm/balloon.c::balloon_page_dequeue",
+    "mm/util.c::snapshot_page",
+    "mm/hugetlb.c::hugetlb_no_page",
+    "mm/hugetlb.c::vma_commit_reservation",
+    "mm/filemap.c::generic_file_mmap.alt_1"
+   ],
+   "text": "No-guard loses overflow trap; empty balloon is fatal; snapshot may tear; revoked or oversize huge fails bus error; mmap without read support fails."
+  },
+  {
+   "sids": [
+    "mm/migrate.c::migrate_pages_batch",
+    "mm/migrate.c::fallback_migrate_folio",
+    "mm/migrate.c::try_split_folio",
+    "mm/gup.c::folio_add_pins",
+    "mm/memory.c::__do_fault",
+    "mm/memory.c::do_anonymous_page",
+    "mm/memory.c::handle_pte_marker"
+   ],
+   "text": "Migration splits unsupported, retries mismatch and reports busy or poison; faults unmap poison and reject unknown guards."
+  },
+  {
+   "sids": [
+    "mm/hmm.c::hmm_vma_walk_pmd",
+    "mm/hmm.c::hmm_dma_map_pfn",
+    "mm/huge_memory.c::shrink_huge_zero_folio_scan",
+    "mm/huge_memory.c::__folio_split",
+    "mm/hugetlb.c::set_max_huge_pages",
+    "mm/hugetlb.c::hugepages_setup",
+    "mm/memory-failure.c::memory_failure"
+   ],
+   "text": "HMM reads lockless with recheck and sentinel on map error; zero reclaim aborts on retention; growth aborts on signal."
+  },
+  {
+   "sids": [
+    "mm/vmalloc.c::vmap_pte_range",
+    "mm/vmalloc.c::remove_vm_area",
+    "mm/khugepaged.c::__collapse_huge_page_copy",
+    "mm/khugepaged.c::check_pmd_state",
+    "mm/khugepaged.c::collapse_huge_page",
+    "mm/ksm.c::remove_stable_node",
+    "mm/ksm.c::write_protect_page"
+   ],
+   "text": "Populated vmap leaves trap overlap and forbid IRQ removal; poison aborts collapse; KSM exit races report busy."
+  },
+  {
+   "sids": [
+    "mm/vma.c::__split_vma",
+    "mm/vma_init.c::vm_area_dup",
+    "mm/memory-failure.c::memory_failure_queue",
+    "mm/memory-failure.c::has_extra_refcount",
+    "mm/memory-failure.c::me_pagecache_dirty",
+    "mm/memory-failure.c::me_pagecache_clean"
+   ],
+   "text": "Split needs interior address with clean unwind on veto; queue overflow drops newest; surplus refs fail file recovery."
+  },
+  {
+   "sids": [
+    "mm/mempolicy.c::do_mbind",
+    "mm/mempolicy.c::copy_nodes_to_user",
+    "mm/mempolicy.c::kernel_migrate_pages",
+    "mm/mmap.c::do_mmap",
+    "mm/mmap.c::file_mmap_ok"
+   ],
+   "text": "Bad arguments fail invalid, privilege fails permission, alloc fails no-memory, user copy fails bad-address, shortfall fails IO."
+  },
+  {
+   "sids": [
+    "mm/memremap.c::memremap_pages",
+    "mm/memremap.c::pagemap_range",
+    "mm/memremap.c::memunmap_pages",
+    "mm/mmap_lock.c::mmap_upgrade_trylock",
+    "mm/mempolicy.c::mpol_parse_str"
+   ],
+   "text": "Device mapping rejects misuse, overlap and missing callbacks; lock upgrade never succeeds inline; malformed policy strings fail."
+  },
+  {
+   "sids": [
+    "mm/mremap.c::move_page_tables",
+    "mm/mremap.c::check_mremap_params",
+    "mm/nommu.c::vm_insert_page",
+    "mm/rmap.c::try_to_unmap_one"
+   ],
+   "text": "Moves expect empty destination; overlap or exhaustion fails; no-MMU insert rejects aliases and wraps; unmap retries transient locks."
+  },
+  {
+   "sids": [
+    "mm/shmem.c::shmem_write_begin",
+    "mm/truncate.c::truncate_pagecache",
+    "mm/userfaultfd.c::mfill_copy_folio_retry",
+    "mm/userfaultfd.c::move_pages"
+   ],
+   "text": "Poison surfaces as IO error; full truncate unmaps twice; dropped locks revalidate snapshots; huge contention fails busy not deadlock."
+  },
+  {
+   "sids": [
+    "mm/userfaultfd.c::userfaultfd_poll",
+    "mm/userfaultfd.c::userfaultfd_wake",
+    "mm/userfaultfd.c::userfaultfd_copy",
+    "mm/userfaultfd.c::userfaultfd_ctx_read",
+    "mm/util.c::vm_mmap",
+    "mm/util.c::__vmalloc_array_noprof",
+    "mm/vmalloc.c::__vmalloc_node_range_noprof",
+    "mm/vmalloc.c::vm_area_alloc_pages"
+   ],
+   "text": "Zero-length wake matches all; poll ready does not ensure nonblocking read; wrap, overflow and busy targets fail without leaks."
+  }
+ ],
+ "invariants": [
+  {
+   "sids": [
+    "include/linux/mm_types.h::ptdesc_folio",
+    "include/linux/mm.h::ptdesc_address",
+    "include/linux/mm.h::folio_address",
+    "include/linux/mm.h::compound_order",
+    "include/linux/mm.h::folio_size",
+    "include/linux/mm_types.h::folio",
+    "mm/filemap.c::__filemap_add_folio"
+   ],
+   "text": "Page, folio and descriptor views share one backing reversibly; sizes scale by order; insert needs locked aligned folio and links mapping."
+  },
+  {
+   "sids": [
+    "include/linux/pgtable.h::pud_index.alt_1",
+    "include/linux/pgtable.h::pmd_offset.alt_1",
+    "include/linux/pgtable.h::pte_same",
+    "include/linux/pgtable.h::pte_access_permitted",
+    "include/linux/pgtable.h::pmd_addr_end",
+    "include/asm-generic/pgtable-nopmd.h::__PAGETABLE_PMD_FOLDED"
+   ],
+   "text": "Middle index shifts then masks with child at parent base plus index; entries compare numerically; access needs presence; folded levels alias parent."
+  },
+  {
+   "sids": [
+    "include/linux/mm.h::vma_is_anonymous",
+    "include/linux/huge_mm.h::thp_vma_suitable_order.alt_1",
+    "include/linux/huge_mm.h::vma_thp_disabled",
+    "include/linux/mm_types.h::fault_flag",
+    "mm/filemap.c::generic_file_mmap.alt_1",
+    "mm/hugetlb.c::vma_commit_reservation"
+   ],
+   "text": "Anonymous means no file ops; huge order must align and fit with opt-outs; faults encode roles; mmap needs read support; huge needs reservation."
+  },
+  {
+   "sids": [
+    "mm/readahead.c::get_next_ra_size",
+    "mm/readahead.c::get_init_ra_size",
+    "mm/filemap.c::filemap_read_rcu_batch",
+    "mm/filemap.c::folio_seek_hole_data",
+    "mm/rmap.c::__folio_add_file_rmap",
+    "mm/memory.c::do_set_pmd.alt_1"
+   ],
+   "text": "Readahead grows geometrically to a cap; lockless read needs uptodate and sizes after validity; hole probe uses exceptional entries; upper refuses races."
+  },
+  {
+   "sids": [
+    "mm/migrate.c::__folio_migrate_mapping",
+    "mm/migrate.c::move_to_new_folio",
+    "mm/migrate.c::__migrate_folio",
+    "mm/migrate.c::try_split_folio",
+    "mm/memory-failure.c::__get_hwpoison_page",
+    "mm/memory-failure.c::kill_procs"
+   ],
+   "text": "Migration needs locked endpoints and frozen refs for index exchange; large unsupported folios split; poison acquisition is bounded."
+  },
+  {
+   "sids": [
+    "mm/huge_memory.c::global_enabled_mode",
+    "mm/huge_memory.c::defrag_mode",
+    "mm/huge_memory.c::anon_enabled_mode",
+    "mm/huge_memory.c::__folio_split",
+    "mm/hugetlb.c::hugetlb_dup_vma_private",
+    "mm/hugetlb.c::region_count",
+    "mm/hugetlb_cgroup.c::hugetlb_cgroup_init"
+   ],
+   "text": "THP policy combines global defrag and per-size modes; zero set once; splits need locked splittable folios; fork clears guarantees."
+  },
+  {
+   "sids": [
+    "mm/memory.c::wp_can_reuse_anon_folio",
+    "mm/memory.c::check_swap_exclusive",
+    "mm/memory.c::do_fault_around",
+    "mm/gup.c::is_valid_gup_args",
+    "mm/gup.c::gup_fast_folio_allowed",
+    "mm/vmalloc.c::vmap_try_huge_pmd",
+    "mm/vmalloc.c::find_vmap_lowest_match",
+    "mm/khugepaged.c::collapse_max_ptes_swap",
+    "mm/khugepaged.c::check_pmd_state"
+   ],
+   "text": "Reuse needs sole ownership; GUP fast allows anon shared huge; vmap tries huge then lowest fit; collapse honors ceilings and PMD checks."
+  },
+  {
+   "sids": [
+    "mm/ksm.c::try_to_merge_one_page",
+    "mm/ksm.c::stable_tree_insert",
+    "mm/shmem.c::shmem_charge",
+    "mm/shmem.c::shmem_add_to_page_cache",
+    "mm/vma.c::is_mergeable_vma",
+    "mm/vma.c::can_vma_merge_left",
+    "mm/madvise.c::madvise_vma_behavior",
+    "mm/memory-failure.c::soft_offline_page",
+    "mm/mempolicy.c::mbind_range"
+   ],
+   "text": "KSM merges via stable and unstable trees with age skip; shmem charges before quota; VMA merge needs equal state and abutting ranges."
+  },
+  {
+   "sids": [
+    "mm/mempolicy.c::do_mbind",
+    "mm/mempolicy.c::sanitize_mpol_flags",
+    "mm/mempolicy.c::get_nodes",
+    "mm/mempolicy.c::__mpol_equal",
+    "mm/mempolicy.c::alloc_pages_bulk_mempolicy_noprof"
+   ],
+   "text": "Bind needs aligned start and rounds length; empty nodes allowed, oversize rejected; equality matches mode; bulk follows policy."
+  },
+  {
+   "sids": [
+    "mm/vma.c::vms_gather_munmap_vmas",
+    "mm/vma.c::vma_merge_new_range",
+    "mm/vma.c::expand_upwards",
+    "mm/vma.c::expand_downwards",
+    "mm/vma.c::accountable_mapping"
+   ],
+   "text": "Unmap gather splits and detaches with counts; merge prefers neighbours; stack growth needs guards; only private writable charges."
+  },
+  {
+   "sids": [
+    "mm/mremap.c::get_extent",
+    "mm/mremap.c::move_page_tables",
+    "mm/mremap.c::vrm_calc_charge",
+    "mm/mremap.c::check_mremap_params",
+    "mm/rmap.c::anon_1",
+    "mm/rmap.c::set_tlb_ubc_flush_pending.alt_1",
+    "mm/rmap.c::try_to_unmap_one",
+    "mm/rmap.c::folio_unmap_pte_batch"
+   ],
+   "text": "Remap steps bound by length and alignment splitting huge when partial; charge delta or full; anon reuses neighbours; unmap batches TLB."
+  },
+  {
+   "sids": [
+    "mm/userfaultfd.c::validate_range",
+    "mm/userfaultfd.c::validate_unaligned_range",
+    "mm/userfaultfd.c::resolve_userfault_fork",
+    "mm/userfaultfd.c::wake_userfault",
+    "mm/userfaultfd.c::__wake_userfault",
+    "mm/userfaultfd.c::userfaultfd_api",
+    "mm/userfaultfd.c::uffd_api_available_features",
+    "mm/userfaultfd.c::uffd_ctx_features",
+    "mm/userfaultfd.c::find_userfault",
+    "mm/userfaultfd.c::find_userfault_evt",
+    "mm/userfaultfd.c::UFFD_FEATURE_TOGGLEABLE"
+   ],
+   "text": "Spans need alignment and limits; faults queue FIFO; fork requeues; wake samples then filters; API checks version and features."
+  },
+  {
+   "sids": [
+    "mm/vmalloc.c::vmap_pages_pte_range",
+    "mm/vmalloc.c::__vmap_pages_range_noflush",
+    "mm/vmalloc.c::vmap_small_pages_range_noflush",
+    "mm/vmalloc.c::vm_area_alloc_pages",
+    "mm/vmalloc.c::vmalloc_gfp_adjust",
+    "mm/vmalloc.c::memalloc_apply_gfp_scope",
+    "mm/vmalloc.c::memalloc_restore_scope",
+    "mm/vmalloc.c::vmalloc_to_page",
+    "mm/vmalloc.c::vmalloc_to_pfn",
+    "mm/vmalloc.c::vunmap_range"
+   ],
+   "text": "Vmap installs only into empty targets with valid frames; alloc tries large then bulk zero-order; unmap flushes after walk."
+  }
+ ],
+ "locks": [
+  {
+   "sids": [
+    "include/linux/mmap_lock.h::mmap_write_lock",
+    "include/linux/mmap_lock.h::mmap_read_lock",
+    "include/linux/mmap_lock.h::mmap_write_unlock",
+    "include/linux/mmap_lock.h::mmap_read_trylock",
+    "include/linux/mmap_lock.h::vma_start_read_locked",
+    "include/linux/mmap_lock.h::vma_mark_detached.alt_1",
+    "include/linux/mmu_notifier.h::mmu_notifier_invalidate_range_start.alt_1",
+    "include/linux/mmu_notifier.h::mmu_notifier_invalidate_range_end.alt_1"
+   ],
+   "text": "Address-space lock offers shared, exclusive and try forms; range locks need ref with detach; notifier start pairs with end and bars new entries."
+  },
+  {
+   "sids": [
+    "include/linux/mm.h::ptlock_alloc",
+    "include/linux/mm.h::pte_lockptr.alt_1",
+    "include/linux/mm.h::pmd_lock",
+    "include/linux/mm.h::pud_lock",
+    "include/linux/mm.h::pte_offset_map",
+    "include/linux/mm.h::pte_unmap_unlock",
+    "include/linux/hugetlb.h::huge_pte_lock"
+   ],
+   "text": "Each table level has a dedicated lock; map-with-lock pairs with unlock-with-unmap; huge locks engage only on huge entries."
+  },
+  {
+   "sids": [
+    "mm/filemap.c::filemap_invalidate_lock_two",
+    "mm/filemap.c::folio_wait_bit_common",
+    "mm/memory.c::zap_pte_range",
+    "mm/filemap.c::filemap_fault",
+    "mm/hugetlb.c::hugetlb_fault",
+    "mm/migrate.c::unmap_and_move_hugetlb_folio"
+   ],
+   "text": "Dual mappings lock in address order; zap holds leaf lock and flushes before release; huge faults order mutex, shared access, then table lock."
+  },
+  {
+   "sids": [
+    "mm/rmap.c::__rmap_walk_file",
+    "mm/rmap.c::folio_get_anon_vma",
+    "mm/migrate.c::__folio_migrate_mapping",
+    "mm/migrate.c::migrate_folio_unmap",
+    "mm/rmap.c::rmap_walk_locked",
+    "mm/rmap.c::anon_vma_clone",
+    "mm/vma.c::vma_prepare",
+    "mm/vma.c::vma_complete"
+   ],
+   "text": "File walks use caller or internal read lock with RCU for anon; exchange holds lock without IRQs; clone holds write guard."
+  },
+  {
+   "sids": [
+    "mm/memory.c::finish_fault",
+    "mm/memory.c::pte_unmap_same",
+    "mm/huge_memory.c::insert_pmd",
+    "mm/huge_memory.c::huge_zero_lock",
+    "mm/khugepaged.c::start_stop_khugepaged",
+    "mm/hugetlb.c::hugetlb_lock",
+    "mm/hugetlb.c::set_max_huge_pages",
+    "mm/memory-failure.c::unpoison_memory"
+   ],
+   "text": "Fault leaves install under table lock with recheck; PMD serializes huge; hugetlb spin never spans alloc; unpoison holds mutex."
+  },
+  {
+   "sids": [
+    "mm/gup.c::gup_fast",
+    "mm/gup.c::gup_fast_fallback",
+    "mm/highmem.c::lock_kmap.alt_1",
+    "mm/pagewalk.c::folio_walk_start",
+    "mm/vmalloc.c::alloc_vmap_area",
+    "mm/vmalloc.c::__purge_vmap_area_lazy",
+    "mm/khugepaged.c::collapse_huge_page",
+    "mm/ksm.c::run_store",
+    "mm/madvise.c::madvise_lock"
+   ],
+   "text": "Slow GUP asserts protection while fast disables IRQs; vmap busy ops hold node lock and purge holds mutex; madvise scales by operation."
+  },
+  {
+   "sids": [
+    "mm/mempolicy.c::do_mbind",
+    "mm/mempolicy.c::sys_set_mempolicy_home_node",
+    "mm/mempolicy.c::__mpol_dup",
+    "mm/mempolicy.c::shared_policy_replace",
+    "mm/vma.c::__vm_munmap"
+   ],
+   "text": "Bind and home hold mmap write releasing before migration; task policy uses task lock; shared tree exclusive; unmap needs write."
+  },
+  {
+   "sids": [
+    "mm/mincore.c::do_mincore",
+    "mm/mlock.c::do_mlock",
+    "mm/mmu_notifier.c::__mmu_notifier_register",
+    "mm/mmu_notifier.c::__mmu_notifier_invalidate_range_end",
+    "mm/mremap.c::take_rmap_locks",
+    "mm/mremap.c::move_pgt_entry",
+    "mm/mremap.c::do_mremap",
+    "mm/mseal.c::mseal_range",
+    "mm/msync.c::sys_msync"
+   ],
+   "text": "Mincore uses read, mlock and seal use write; notifier register needs exclusive; remap nests table locks; sync drops across flush."
+  },
+  {
+   "sids": [
+    "mm/rmap.c::anon_1",
+    "mm/rmap.c::try_to_unmap_one",
+    "mm/shmem.c::shmem_undo_range",
+    "mm/userfaultfd.c::uffd_mfill_lock.alt_1"
+   ],
+   "text": "Anon needs mmap write then anon write before table lock; unmap waits devices under folio lock; fill uses light lookup."
+  },
+  {
+   "sids": [
+    "mm/vma.c::mm_all_locks_mutex",
+    "mm/vmalloc.c::free_vmap_area_lock",
+    "mm/vmalloc.c::vmap_purge_lock",
+    "mm/vmalloc.c::drain_vmap_area_work",
+    "mm/vmalloc.c::clear_vm_uninitialized_flag",
+    "mm/vmalloc.c::vmap_pages_pte_range"
+   ],
+   "text": "Global mutex guards spaces; spin guards free areas; purge mutex serializes reclaim; publication pairs barrier with readers."
+  }
+ ],
+ "pass": 1,
+ "phase_map": [
+  {
+   "anchor": "HB-KPAPER-001/hb-s5.p14",
+   "crown": "A",
+   "phase": "F0"
+  },
+  {
+   "anchor": "HB-KPAPER-001/hb-s5.p04",
+   "crown": "A",
+   "phase": "F1"
+  },
+  {
+   "anchor": "HB-KPAPER-001/hb-s5.p05",
+   "crown": "A",
+   "phase": "F3"
+  }
+ ],
+ "schema": "lx.dossier.v1",
+ "state_machines": [
+  {
+   "sids": [
+    "include/linux/mm.h::p4d_alloc",
+    "include/linux/mm.h::pud_alloc",
+    "include/linux/mm.h::pmd_alloc",
+    "mm/mmu_gather.c::tlb_gather_mmu",
+    "mm/mmu_gather.c::tlb_flush_mmu",
+    "mm/huge_memory.c::__split_huge_pmd_locked",
+    "mm/truncate.c::folio_unmap_invalidate"
+   ],
+   "text": "Walk reuses present entries and allocates missing levels top-down; gather moves init through queue to flush and free; split invalidates then publishes."
+  },
+  {
+   "sids": [
+    "mm/filemap.c::filemap_read",
+    "mm/filemap.c::generic_perform_write",
+    "mm/memory.c::__handle_mm_fault",
+    "mm/folio.c::__folio_put",
+    "mm/gup.c::follow_page_mask",
+    "mm/migrate.c::migrate_pages"
+   ],
+   "text": "Reads repeat bounded batches with yield; cached fetch retries to uptodate; release dispatches huge or buddy; resolution walks top to leaf; faults dispatch by size."
+  },
+  {
+   "sids": [
+    "mm/migrate.c::migrate_pages_batch",
+    "mm/migrate.c::move_to_new_folio",
+    "mm/migrate.c::migrate_folio_unmap",
+    "mm/migrate.c::migrate_folio_move",
+    "mm/migrate.c::migrate_folios_move",
+    "mm/migrate_device.c::__migrate_device_pages",
+    "mm/hmm.c::hmm_range_fault_locked"
+   ],
+   "text": "Batch loops unmap flush move and undo with retries; single validates copies and exchanges; device finalizes survivors for HMM."
+  },
+  {
+   "sids": [
+    "mm/huge_memory.c::do_huge_pmd_anonymous_page",
+    "mm/memory.c::do_wp_page",
+    "mm/memory.c::wp_page_copy",
+    "mm/memory.c::do_pte_missing",
+    "mm/memory.c::do_fault",
+    "mm/memory.c::do_cow_fault",
+    "mm/huge_memory.c::deferred_split_scan",
+    "mm/hugetlb.c::set_max_huge_pages"
+   ],
+   "text": "Anon huge picks zero or alloc then enrolls collapse; writes reuse or copy; missing splits anon and file; deferred requeues."
+  },
+  {
+   "sids": [
+    "mm/huge_memory.c::enabled_store",
+    "mm/huge_memory.c::hugepage_init",
+    "mm/memory-failure.c::try_memory_failure_hugetlb.alt_1",
+    "mm/vmalloc.c::va_clip",
+    "mm/khugepaged.c::collapse_huge_page",
+    "mm/ksm.c::ksm_scan_thread",
+    "mm/vma.c::vma_prepare",
+    "mm/memfd.c::memfd_wait_for_pins"
+   ],
+   "text": "Policy writes restart background; vmalloc clips by fit; collapse isolates then installs; KSM cycles prune; VMA prepares then commits."
+  },
+  {
+   "sids": [
+    "mm/vma.c::do_vmi_align_munmap",
+    "mm/vma.c::vms_gather_munmap_vmas",
+    "mm/vma.c::vms_complete_munmap_vmas",
+    "mm/nommu.c::split_vma",
+    "mm/mmap.c::exit_mmap"
+   ],
+   "text": "Removal aligns, gathers, clears, commits then disposes with restore; split divides anon; exit notifies, flushes and releases."
+  },
+  {
+   "sids": [
+    "mm/mremap.c::move_page_tables",
+    "mm/mremap.c::move_vma",
+    "mm/mremap.c::do_mremap",
+    "mm/msync.c::sys_msync",
+    "mm/rmap.c::try_to_unmap_one",
+    "mm/secretmem.c::secretmem_fault",
+    "mm/truncate.c::truncate_inode_pages_range",
+    "mm/shmem.c::shmem_writeout"
+   ],
+   "text": "Relocation moves whole levels or descends splitting huge; sync skips holes; unmap batches to swap or discard; fault retries."
+  },
+  {
+   "sids": [
+    "mm/mmu_notifier.c::mn_itree_inv_start_range",
+    "mm/mmu_notifier.c::mn_itree_inv_end",
+    "mm/mmu_notifier.c::mn_itree_invalidate",
+    "mm/mempolicy.c::node_store",
+    "mm/memremap.c::memremap_pages"
+   ],
+   "text": "Invalidate start marks odd seq, end advances to even applying queue; weights cycle modes; device commits stepwise."
+  },
+  {
+   "sids": [
+    "mm/vma.c::vma_shrink",
+    "mm/vma_exec.c::relocate_vma_down",
+    "mm/vma_exec.c::create_init_stack_vma"
+   ],
+   "text": "Shrink preallocates then updates; exec relocation expands, moves tables and shrinks; init stack places one page at top."
+  }
+ ],
+ "structs": [
+  {
+   "sids": [
+    "include/linux/mm_types.h::vm_area_struct",
+    "include/linux/mm_types.h::mm_struct",
+    "include/linux/mm_types.h::page",
+    "include/linux/mm_types.h::folio",
+    "include/linux/pagewalk.h::mm_walk",
+    "include/linux/rmap.h::anon_vma",
+    "include/asm-generic/tlb.h::mmu_gather"
+   ],
+   "text": "Area holds bounds, protections and file; space holds tree, locks and counts; page and folio share storage; walk and gather track range and callbacks."
+  },
+  {
+   "sids": [
+    "include/linux/vmalloc.h::vm_struct",
+    "include/linux/vmalloc.h::vmap_area",
+    "mm/mmu_gather.c::__tlb_gather_mmu",
+    "mm/filemap.c::filemap_cachestat",
+    "mm/hugetlb.c::hugepage_subpool_get_pages"
+   ],
+   "text": "Virtual mapping holds address, size, pages and caller; gather chains local and heap batches; cachestat counts; subpool tracks max, use and reserve."
+  },
+  {
+   "sids": [
+    "mm/migrate.c::migrate_pages_batch",
+    "mm/memory.c::do_fault",
+    "mm/highmem.c::pkmap_count",
+    "mm/mm_slot.h::mm_slot_alloc",
+    "mm/hmm.c::hmm_vma_walk",
+    "mm/huge_memory.c::mthp_stats",
+    "mm/hugetlb.c::hstates",
+    "mm/hugetlb_vmemmap.h::HUGETLB_VMEMMAP_RESERVE_SIZE"
+   ],
+   "text": "Batch tracks lists and retries; fault links area and entries; highmem and slots hash state; per-size tables count huge usage."
+  },
+  {
+   "sids": [
+    "mm/vmalloc.c::alloc_vmap_area",
+    "mm/vmalloc.c::get_subtree_max_size",
+    "mm/khugepaged.c::khugepaged_collapse_control",
+    "mm/ksm.c::ksm_mm_slot",
+    "mm/ksm.c::ksm_stable_node",
+    "mm/rmap.c::anon_vma_chain_alloc",
+    "mm/vma.c::init_vma_prep",
+    "mm/huge_memory.c::hugepage_attr_group"
+   ],
+   "text": "Vmap augments free maxima; collapse control holds nodes and bitmap; KSM slots and stable nodes link trees; chains bind areas."
+  },
+  {
+   "sids": [
+    "mm/vma.c::MMAP_STATE",
+    "mm/vma.h::UNMAP_STATE",
+    "mm/vma.h::VMG_STATE",
+    "mm/mremap.c::vma_remap_struct",
+    "mm/nommu.c::__put_nommu_region"
+   ],
+   "text": "Map state tracks iterator bounds file and merge candidates; unmap tracks cursor areas; remap groups addresses; nommu tracks regions."
+  },
+  {
+   "sids": [
+    "mm/mremap.c::pgt_entry",
+    "mm/mremap.c::mremap_to",
+    "mm/pgtable-generic.c::kernel_pgtable_work",
+    "mm/nommu.c::mmap_arg_struct",
+    "mm/rmap.c::folio_referenced_arg",
+    "mm/shmem.c::shmem_options",
+    "mm/shmem.c::shmem_aops.alt_2",
+    "mm/userfaultfd.c::mfill_state"
+   ],
+   "text": "Remap bundles ranges delta and notify contexts; table kinds span levels; referenced scan and fill cursor carry extents."
+  },
+  {
+   "sids": [
+    "mm/vma.c::mmap_state",
+    "mm/vma.c::mmap_state.anon_1",
+    "mm/vma.h::vma_prepare",
+    "mm/vma.h::unlink_vma_file_batch",
+    "mm/vma.h::vma_munmap_struct",
+    "mm/vma.h::vma_merge_struct",
+    "mm/vma.h::vma_merge_struct.anon_1",
+    "mm/vma.h::vma_merge_state",
+    "mm/vma.h::unmap_desc"
+   ],
+   "text": "Mapping prepare merge unmap and batch records carry spaces ranges files policies and accounting for atomic updates."
+  }
+ ],
+ "stubs": [
+  {
+   "sid": "include/linux/sched.h::cond_resched",
+   "state": "stub",
+   "target_dossier": "D01"
+  },
+  {
+   "sid": "include/linux/rcupdate.h::rcu_read_lock",
+   "state": "stub",
+   "target_dossier": "D02"
+  },
+  {
+   "sid": "include/linux/spinlock.h::spin_lock",
+   "state": "stub",
+   "target_dossier": "D03"
+  },
+  {
+   "sid": "include/vdso/bits.h::BIT",
+   "state": "stub",
+   "target_dossier": "D04"
+  },
+  {
+   "sid": "mm/slub.c::kfree",
+   "state": "stub",
+   "target_dossier": "D05"
+  },
+  {
+   "sid": "include/linux/capability.h::capable",
+   "state": "stub",
+   "target_dossier": "D12"
+  },
+  {
+   "sid": "include/linux/printk.h::pr_warn",
+   "state": "stub",
+   "target_dossier": "D13"
+  },
+  {
+   "sid": "include/linux/minmax.h::min",
+   "state": "stub",
+   "target_dossier": "D14"
+  },
+  {
+   "sid": "include/linux/fs.h::file_inode",
+   "state": "stub",
+   "target_dossier": "D15"
+  },
+  {
+   "sid": "include/linux/err.h::IS_ERR",
+   "state": "stub",
+   "target_dossier": "D17"
+  }
+ ]
+}

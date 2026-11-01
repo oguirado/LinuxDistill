@@ -36,3 +36,11 @@ Spot check by the orchestrator: IMPACT-13 gold (3 callers of `autogroup_kref_get
 - Not in scope here: the LX-DOSSIER class, source/meta shards (BT-LX-07/08), the VM leg of FT-LX0, gate-registry argv, schemas of the intermediate formats.
 
 Derived outputs (index, dist, hb, graph, nodes, closure, routes) are untracked and reproducible by build.sh; tools, gates, fixtures, BUILD_TIMES and the shard SHA256SUMS are tracked.
+
+## Knowledge layer (2026-11-01) — `tools/lx_knowledge.py`
+Deterministic index of the APPROVED study pass 1 (`study/pass1/`, 2,628 files, SHA256SUMS). No model in the loop.
+- 111,144 finding nodes: 89,089 extract, 20,974 partial, 1,081 dossier. 347,660 CITES edges to router sids; 8,989 DERIVES edges; 46 unresolved citations listed in `knowledge/unresolved.jsonl`.
+- Review flags: Argon round-2 verdicts are attached to the 136 sampled dossier findings (64 SUPPORTED, 71 PARTIAL, 1 UNSUPPORTED); every other node is "unreviewed".
+- Index `index/lx-knowledge/` (lx.index.v1, integer BM25F; fields text, kind, sid, dossier). ID = sha256(study SHA256SUMS + g_lx_fresh).
+- `lx_knowledge.py query "<text>" [--level dossier]` returns specification findings first, with their code locations (path@start-end bytes).
+- Gate G-LX-KNOW PASS: rebuild byte-identical, 0 unresolved CITES edges. Must-FAIL legs: a tampered index ⇒ E_CHUNK_SHA; a changed study file ⇒ new ID.

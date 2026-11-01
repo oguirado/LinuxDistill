@@ -1,0 +1,1002 @@
+{
+ "dossier": "D10",
+ "entry_points": [
+  {
+   "sids": [
+    "arch/x86/coco/core.c::cc_random_init",
+    "arch/x86/coco/sev/core.c::snp_init_platform_device",
+    "arch/x86/coco/tdx/tdx.c::tdx_early_init"
+   ],
+   "text": "Boot seeds randomness, registers SNP devices and probes TDX hooks."
+  },
+  {
+   "sids": [
+    "arch/x86/include/asm/entry-common.h::arch_enter_from_user_mode.alt_1",
+    "arch/x86/include/asm/entry-common.h::arch_exit_to_user_mode.alt_1",
+    "arch/x86/include/asm/fred.h::fred_entry_from_kvm",
+    "arch/x86/coco/sev/vc-handle.c::kernel_exc_vmm_communication"
+   ],
+   "text": "User entry, exit-work and exit; FRED builds descriptor; VC splits by privilege."
+  },
+  {
+   "sids": [
+    "arch/x86/mm/kmmio.c::get_kmmio_fault_page",
+    "arch/x86/mm/init_64.c::kernel_physical_mapping_change",
+    "arch/x86/include/asm/irqflags.h::native_safe_halt",
+    "arch/x86/include/asm/kvm_host.h::kvm_arch_alloc_vm"
+   ],
+   "text": "Fault lookup by aligned address; direct-map delegates; halt purges; VM alloc zeroes."
+  },
+  {
+   "sids": [
+    "arch/x86/include/asm/reboot.h::machine_ops",
+    "arch/x86/include/asm/reboot.h::MRR_BIOS"
+   ],
+   "text": "Machine table: restart/halt/power-off/shutdown/crash, BIOS/APM."
+  },
+  {
+   "sids": [
+    "arch/x86/include/asm/syscall_wrapper.h::SYSCALL_PT_ARG6",
+    "arch/x86/include/asm/syscall_wrapper.h::SC_IA32_REGS_TO_ARGS",
+    "arch/x86/include/asm/syscall_wrapper.h::__SC_COMPAT_CAST"
+   ],
+   "text": "Syscall entries read six regs in order with compat narrowing."
+  },
+  {
+   "sids": [
+    "arch/x86/include/uapi/asm/mce.h::MCE_GET_RECORD_LEN",
+    "arch/x86/include/uapi/asm/msr.h::X86_IOC_RDMSR_REGS",
+    "arch/x86/include/uapi/asm/mtrr.h::MTRRIOC_ADD_ENTRY",
+    "arch/x86/include/uapi/asm/mtrr.h::MTRRIOC_GET_ENTRY"
+   ],
+   "text": "MCE/MSR/MTRR ioctls use fixed types/numbers with directional semantics."
+  },
+  {
+   "sids": [
+    "arch/x86/mm/extable.c::early_fixup_exception",
+    "arch/x86/mm/kaslr.c::kernel_randomize_memory",
+    "arch/x86/mm/numa.c::numa_setup",
+    "arch/x86/mm/numa.c::setup_node_to_cpumask_map",
+    "arch/x86/mm/numa.c::init_cpu_to_node",
+    "arch/x86/mm/pat/memtype.c::pat_bp_init",
+    "arch/x86/mm/pat/memtype.c::pat_cpu_init",
+    "arch/x86/mm/pat/set_memory.c::set_memory_rox",
+    "arch/x86/mm/pat/set_memory.c::set_memory_nonglobal",
+    "arch/x86/mm/pat/set_memory.c::set_mce_nospec",
+    "arch/x86/mm/pgtable.c::reserve_top_address",
+    "arch/x86/virt/hw.c::x86_virt_init",
+    "arch/x86/virt/hw.c::x86_virt_emergency_disable_virtualization_cpu",
+    "arch/x86/virt/svm/sev.c::snp_probe_rmptable_info",
+    "arch/x86/virt/vmx/tdx/seamcall.S::__seamcall",
+    "arch/x86/virt/vmx/tdx/seamldr.c::seamldr_install_module"
+   ],
+   "text": "Early fixup, KASLR, NUMA/PAT boot, ROX toggles, top reserve, virt/RMP probe, seamcall, install."
+  }
+ ],
+ "exports": [
+  {
+   "sids": [
+    "arch/x86/coco/core.c::cc_platform_has",
+    "arch/x86/coco/core.c::cc_mkenc",
+    "arch/x86/coco/sev/core.c::snp_set_memory_shared",
+    "arch/x86/coco/sev/core.c::snp_set_memory_private",
+    "arch/x86/mm/pat/set_memory.c::set_memory_encrypted"
+   ],
+   "text": "CC queries dispatch by vendor; SNP memory helpers toggle shared/private and encrypted, no-op without SNP."
+  },
+  {
+   "sids": [
+    "arch/x86/mm/ioremap.c::__ioremap_caller",
+    "arch/x86/mm/ioremap.c::ioremap_encrypted",
+    "arch/x86/mm/ioremap.c::iounmap",
+    "arch/x86/mm/pat/memtype.c::memtype_reserve"
+   ],
+   "text": "IO mappings validate and reserve caching mode with encrypted variant; unmap releases validated areas."
+  },
+  {
+   "sids": [
+    "arch/x86/coco/sev/core.c::snp_get_msg_seqno",
+    "arch/x86/coco/sev/core.c::securetsc_get_tsc_khz",
+    "arch/x86/coco/sev/svsm.c::snp_issue_svsm_attest_req",
+    "arch/x86/coco/tdx/tdx-shared.c::tdx_accept_memory"
+   ],
+   "text": "SNP sequences requests with secure-TSC time; SVSM attestation and TDX acceptance hide per-CPU work."
+  },
+  {
+   "sids": [
+    "arch/x86/include/asm/cpuid/api.h::cpuid_read",
+    "arch/x86/include/asm/cpuid/api.h::native_cpuid",
+    "arch/x86/lib/insn.c::insn_decode",
+    "arch/x86/include/asm/atomic.h::arch_atomic_read"
+   ],
+   "text": "CPUID exposes raw and leaf reads; decode handles full and MMIO forms; atomics read unordered."
+  },
+  {
+   "sids": [
+    "arch/x86/include/asm/invpcid.h::invpcid_flush_all",
+    "arch/x86/include/asm/io.h::readl",
+    "arch/x86/include/asm/io.h::writel",
+    "arch/x86/include/asm/mshyperv.h::hv_do_hypercall",
+    "arch/x86/include/asm/fixmap.h::__set_fixmap"
+   ],
+   "text": "INVPCID flushes address, context or all; MMIO/port IO touches devices; hypercalls and fixmap map."
+  },
+  {
+   "sids": [
+    "arch/x86/include/asm/msr.h::rdmsrq_on_cpu",
+    "arch/x86/include/asm/mtrr.h::guest_force_mtrr_state",
+    "arch/x86/include/asm/mtrr.h::mtrr_save_fixed_ranges"
+   ],
+   "text": "No MTRR: add/del fail, trim ok; single-CPU MSR read ignores CPU."
+  },
+  {
+   "sids": [
+    "arch/x86/include/asm/syscall_wrapper.h::COMPAT_SYSCALL_DEFINE0",
+    "arch/x86/include/asm/syscall_wrapper.h::COMPAT_SYSCALL_DEFINEx",
+    "arch/x86/include/asm/syscall_wrapper.h::COND_SYSCALL_COMPAT",
+    "arch/x86/include/asm/syscall_wrapper.h::__SYSCALL_DEFINEx",
+    "arch/x86/include/asm/syscall_wrapper.h::SYSCALL_DEFINE0",
+    "arch/x86/include/asm/syscall_wrapper.h::COND_SYSCALL"
+   ],
+   "text": "Syscall macros build native/compat handlers with casts and weak fallback."
+  },
+  {
+   "sids": [
+    "arch/x86/include/asm/xen/page.h::phys_to_machine",
+    "arch/x86/include/asm/xen/page.h::pfn_to_gfn",
+    "arch/x86/include/asm/xen/page.h::virt_to_machine",
+    "arch/x86/include/asm/xen/page.h::xen_safe_write_ulong",
+    "arch/x86/include/asm/xen/pci.h::xen_pci_frontend_enable_msi"
+   ],
+   "text": "Xen address helpers preserve offsets; MSI wrappers forward or deny."
+  },
+  {
+   "sids": [
+    "arch/x86/include/asm/vdso/sys_call.h::VDSO_SYSCALL0",
+    "arch/x86/include/asm/vdso/sys_call.h::VDSO_SYSCALL5",
+    "arch/x86/include/asm/vdso/gettimeofday.h::clock_gettime_fallback",
+    "arch/x86/include/asm/vdso/gettimeofday.h::gettimeofday_fallback"
+   ],
+   "text": "VDSO traps take 0-5 args; time fallbacks forward clock calls."
+  },
+  {
+   "sids": [
+    "arch/x86/lib/copy_mc.c::copy_mc_to_kernel",
+    "arch/x86/lib/copy_mc.c::copy_mc_to_user",
+    "arch/x86/lib/csum-partial_64.c::ip_compute_csum",
+    "arch/x86/lib/csum-wrappers_64.c::csum_and_copy_from_user",
+    "arch/x86/lib/csum-wrappers_64.c::csum_and_copy_to_user",
+    "arch/x86/lib/csum-wrappers_64.c::csum_partial_copy_nocheck",
+    "arch/x86/mm/extable.c::ex_get_fixup_type",
+    "arch/x86/mm/extable.c::fixup_exception",
+    "arch/x86/mm/kmmio.c::kmmio_handler",
+    "arch/x86/mm/ident_map.c::kernel_ident_mapping_init",
+    "arch/x86/mm/ident_map.c::kernel_ident_mapping_free",
+    "arch/x86/mm/init.c::early_alloc_pgt_buf",
+    "arch/x86/mm/init.c::init_memory_mapping",
+    "arch/x86/mm/init.c::init_mem_mapping",
+    "arch/x86/mm/init.c::devmem_is_allowed",
+    "arch/x86/mm/pat/set_memory.c::set_memory_nx",
+    "arch/x86/mm/pat/set_memory.c::set_memory_rw",
+    "arch/x86/mm/pat/set_memory.c::set_memory_np",
+    "arch/x86/mm/pat/set_memory.c::set_memory_np_noalias",
+    "arch/x86/mm/pat/set_memory.c::set_memory_ro",
+    "arch/x86/mm/pat/set_memory.c::set_pages_ro",
+    "arch/x86/mm/pat/set_memory.c::set_pages_rw",
+    "arch/x86/mm/pat/memtype.c::memtype_reserve_io",
+    "arch/x86/mm/iomap_32.c::iomap_free",
+    "arch/x86/mm/pat/memtype.c::memtype_free_io",
+    "arch/x86/mm/mem_encrypt.c::force_dma_unencrypted",
+    "arch/x86/mm/mem_encrypt.c::mem_encrypt_init",
+    "arch/x86/mm/mem_encrypt.c::mem_encrypt_setup_arch",
+    "arch/x86/mm/mem_encrypt_amd.c::early_set_memory_encrypted",
+    "arch/x86/mm/mem_encrypt_amd.c::sme_early_init",
+    "arch/x86/mm/pgprot.c::add_encrypt_protection_map",
+    "arch/x86/mm/mem_encrypt_amd.c::sme_map_bootdata",
+    "arch/x86/mm/mem_encrypt_amd.c::sme_unmap_bootdata",
+    "arch/x86/mm/mmap.c::arch_pick_mmap_layout",
+    "arch/x86/mm/mmap.c::get_mmap_base",
+    "arch/x86/mm/physaddr.c::__phys_addr.alt_1",
+    "arch/x86/mm/physaddr.c::__virt_addr_valid.alt_1",
+    "arch/x86/mm/pgtable.c::pgd_alloc",
+    "arch/x86/mm/pgtable.c::pgd_free",
+    "arch/x86/mm/pgtable.c::ptep_set_access_flags",
+    "arch/x86/mm/pgtable.c::ptep_test_and_clear_young",
+    "arch/x86/mm/pti.c::pti_init",
+    "arch/x86/mm/pti.c::pti_finalize",
+    "arch/x86/mm/tlb.c::switch_mm",
+    "arch/x86/mm/tlb.c::leave_mm",
+    "arch/x86/mm/tlb.c::native_flush_tlb_global",
+    "arch/x86/mm/tlb.c::arch_tlbbatch_flush",
+    "arch/x86/virt/hw.c::x86_virt_get_ref",
+    "arch/x86/virt/hw.c::x86_virt_put_ref",
+    "arch/x86/virt/svm/sev.c::snp_shutdown",
+    "arch/x86/virt/svm/sev.c::snp_rmptable_init",
+    "arch/x86/virt/svm/sev.c::snp_lookup_rmpentry",
+    "arch/x86/virt/svm/sev.c::rmp_make_private",
+    "arch/x86/virt/svm/sev.c::rmp_make_shared",
+    "arch/x86/virt/vmx/tdx/tdx.c::tdx_init",
+    "arch/x86/virt/vmx/tdx/tdx.c::tdx_cpu_enable",
+    "arch/x86/virt/vmx/tdx/tdx.c::tdx_guest_keyid_alloc",
+    "arch/x86/virt/vmx/tdx/tdx.c::tdx_guest_keyid_free",
+    "arch/x86/virt/vmx/tdx/tdx.c::tdx_sys_disable",
+    "arch/x86/virt/vmx/tdx/tdx.c::tdh_mng_create",
+    "arch/x86/virt/vmx/tdx/tdx.c::tdh_mng_init",
+    "arch/x86/virt/vmx/tdx/tdx.c::tdh_vp_create",
+    "arch/x86/virt/vmx/tdx/tdx.c::tdh_vp_enter",
+    "arch/x86/virt/vmx/tdx/tdx.c::tdh_mem_page_add",
+    "arch/x86/virt/vmx/tdx/seamldr.c::seamldr_get_info",
+    "arch/x86/mm/pat/memtype.c::arch_io_reserve_memtype_wc",
+    "arch/x86/mm/pat/memtype.c::pgprot_writecombine"
+   ],
+   "text": "Copies, fixups, identity maps, attr changes, memtype, encrypt, mmap, PGD, PTI/TLB, virt, RMP, TDX."
+  }
+ ],
+ "extracts": [
+  "04201c87f8ddd60b156c468d5ff06c258fefd7caf0d4a5767138c8c8f5a6e0d0",
+  "04d2e91dde2cf0bc7d5806e5fdb59b5ef413b15e022ef4bbaf22a21f88fc76ea",
+  "0758f850a8d91dc87743013c8f3dd5b48b909b633205aadb87665dbf95d9825c",
+  "09a510fbde5c353d126c2e47dcda3be6c699d96494ab42d6df45fd78fa72e6b0",
+  "0c3497ecf6a7db46627245159756cba59a8396a2b25d8772e9a939d382a4a2ac",
+  "0ce81529c086b9adb9f569db1e5dfe7812d4fb5d11b559916f717fc728671b38",
+  "0ddfc3b501e1d3d6dce5d60c9242dc464bc7fee6c397e407151b7ffe2c91470e",
+  "0e4dba8f7e5316adef35d52eafa2f18409e9a399e73ddbb8fc014981a93da3cf",
+  "0f777e282527795bcbfce077931b51b8bb4dbf6cbb77ea3aa6d636b6aed73c67",
+  "12a6fef5453ef066367c1226fd94c4d2b341d4c24d062b2d04f07f8ecaba4d87",
+  "14f29d5768445633bd0fe870455f65708ad7b9534e71bd7922989d18e7d0b09e",
+  "16552815aa4237d918dd21d2241fa3b1ed82b636283c5b645e5c44d3d54596f7",
+  "18b1d88e9640658db5f48338f943d9c7a348d0bf589a64ef6f55c12e430cf80b",
+  "19944bfc71d6cb0ffe979cc7060c64cb05da2d5bf7de4e3fb4142cf44a07e580",
+  "19cbc878901121ab0ff2be7860b1ff5a78e7fc93539cf80d24ccb8a5967ede05",
+  "1b838eac9c1db220638d00b40bf5aca447969383f5e7130493b688bc63c1f4e3",
+  "1f45a2827e891dfa7d6082d08637477ecad22a06f7fbc3341ce947e0a99fce8a",
+  "211228522508ababc69ed57054d48d39163790225cc5e49234c17f914bad06ac",
+  "212521d0242c19b4531d16736c4a1bf600fe5e0d1959d22cbdae48b1ea7b463c",
+  "24067e7035bfa661a2dde9ccd62d19f060a50b64c12d436c5c6abce02291699d",
+  "242dfc901798803bcb4fd45a4a7675eaf2d45fa1233c084f59734e5b2de1d0c4",
+  "251a7eb98076bf6b21cf41ee5407afa4c5429e73b5bcf91ca55097003e54a7cb",
+  "259445dc3c1aa0e24b2b7db3517d7df023530171c1f779f4fcbd592ab040bc49",
+  "27dd03bcd8ed86fc4ddaba2dbaef21d90bcfb576cb243be6790af76fd75b98d6",
+  "287c5a77a421a1a550aada363b5253b3dc198a49ca45831afc782f7db9081baa",
+  "2898e214ff59ddc0f2cad7c90dda1b04aaf306169e17eec04e5a0137ab94f6eb",
+  "289d72689abf81c6d7f1e9b9925443747744a179678a294bd4f8e466ae1bccf8",
+  "2aabc01653e5b4d7b01f5a9526927671aa8d1c035b36c75d17d3828581f59493",
+  "2ab86860418e1febd5889a64c0c129153390fb73c729429e2172b0836e9e5371",
+  "2f1e34583dde6f5c16412b66be2c4c11946feef563a3a84635a08c012ba951d0",
+  "30a591f4563cf596de5ec1906f4c77e1d296b823b56034501a6c0e49e3fc986f",
+  "31e31962ed5ccf59a64f4e5ca97ad72b53619c7242838c17cccc0134dcd515d9",
+  "347807b2a7241661a3f787ef4846e84c29577a96e1e0e85ec331f9bafdffbefa",
+  "3478d41cb8d6b9ecea773cc1f175d000918c4fa3a1361d183a2721e62e05c0fd",
+  "39e2fd29a14975a2e8c9d017822910f7561eb12411d87f6d4e206b60ce95f92b",
+  "3c5cbcd570092cf6bb37fd398be3e748c7a40c07cb08ee27c22fcdb871e1c2b9",
+  "4207728d577419b8fd762252eb6b1514dc88233af906727e7ebb6447c0b8662b",
+  "42f385e8b9b176fb5db8447b55a0293acfdefe31fd64ad540ed4a531d11d94d3",
+  "43d265a98a4acedb813e47c809eb11b47818834cdb36d0d9df74f7ab917e02d1",
+  "470282b04d1263f5b2a0c38fab10afcfdb42e8e92ec2b9671b4d76e44941febc",
+  "4930ca587d69370a2644d411e0f560bf423cd96243330cc3cd5fa60f95e854c7",
+  "4c33ebb607c582d0cc5d73c71744d09aad80ff146a08417480587c3077706dda",
+  "4f38eee76464c43d640ea11e1df7b234c02f97742ce9fca3307fb9a72d0e3c55",
+  "503ebe82edd095bd71732098ec3f046a7980e27242f8118fd51850d2aa2586e8",
+  "51ce599b796db56076b7d6ffa3193aca51c282ed4221a3bfc7e02fb5beebba99",
+  "51df16762e8a8078a871ada3e617a0c97d8b0572dafd276040e563680220c1cb",
+  "52c86f93c15f174320414d91ccae8fcc1d78989c0aad33b9e9dc53e3745d4ea3",
+  "56ea3df19c8f9bcaccabda6692aaee693e831ff0001f198c628c9f0d95ace387",
+  "5f19087845f833edccb33e4bb96fb1ba3eb97a6f654e7b8c943b48192a721a23",
+  "657596b2da145da7e0f1f71e685fc4a51025bb5d0b3969720076fc476d0cf994",
+  "6678b71e98251caf14122001c5db2af219c8f11250d94aebc8b0dbdee96eb458",
+  "66feb36b0ee84a0626311d4315f88019134939013467cb077b01bb0187ea22f0",
+  "671e8ab52a97c7eac267b9b2ac566ce5dff392e6e123f9e993412bb12e7ec494",
+  "6a7da6bbebf6b060f2f6d5824888c6d3dc569dba50ebf3b6cac99a219f581e24",
+  "6f05e7006415978818f477347bbc42a76220b74c228028e553bc8b5ff6db5355",
+  "6f0d83e1d092fccff2a3ec2692653b48edb10ec150120d5c9c489e001e72093e",
+  "7317b5e7c7707a70c460be71dc5d2a4692c7f9963b87836dc84c1828f5b961f4",
+  "7344913256aea636b0803121b0bc5f330b3b35242b779f486461613bb4ac329d",
+  "786ed7c42bec59b15437d4b1b2e11a0abb758925157ab913530f8adca8a20e02",
+  "79bc140fc31c9ba19661e89f454a833953d5c2f6d7b18109813d2035ca57953d",
+  "79ed872db376df70e733e4d7cb81a462e9613e191954dd5ab3eafe59f8fc1667",
+  "7abb1d8c06a74e57ef485c87871e04be9af3e964413ef3381b3f0ed78ccad128",
+  "7c968a535a64d0a228622f9aaedd552074cfc0c39c9df91d6271ec44487c9def",
+  "7cf8d01c5c1b958df7613b65ddabc1da91844899b0d295f73d1938d8158f2562",
+  "7e3490f01da8a565485d6bb12b21b41e882e47bdd8b40fb68bf8672bbccf61ba",
+  "7ead7f1e71cbf00150f8f1f9eb7fbe473fa4569527b3abb01b3fbee0ba449133",
+  "7ef4076f6a0e064407c8d315fa33a517fe78c8988d087129796f7aae8be5cb37",
+  "83a73f666761e955fb7a089e3b136ba2b1880740a12ef03d943076520dea823f",
+  "843fd2162ef9ee164b3c4136bd2f2d502aada302ec0d9366b65816cd74949c92",
+  "897b75151c8caffe89eb00fd5fea34aab48faed68a39357bf71cffe055ab6ece",
+  "8cebb2245aa3c12a61e6a34b974a569bbd483116ca51aba0cf3cf6602aa9340a",
+  "8d3026f9c13756f325c9e2d1d95767a3c1870456ae89052707aaec522b82cc6c",
+  "8f2d7246d0642d37c09b44d521f33c6c28775debfddc9b44864eb5b2ba148bc4",
+  "913e91cfc99ab0ff4a5e185daaeb26455f6d2a542b96be8b11d2bc68b59c93ea",
+  "91516db3455a00361646fe618173d09f0891563b24378781637baf9744414f64",
+  "9180beeaaf464b673bd37f28e6ef3a0c6842cca3913637a0ad78082802f18c7b",
+  "92b794c0348a67c4bd72b05433e0d6f071b81a13c23b19ca5144547f51ac3f4f",
+  "98d1acc737ee152b1e4e1e6710ea8bd1200a58ef82ca18d0df4b69d4c068a6b0",
+  "9d5f2f2501d6eac182422d4b81c31cdc4326c4231a091149888e6d7481e1e4f7",
+  "9d844285c4feef0bce403649e7715845c2184dead3f03b78dcfddba028c0182e",
+  "9e45d388a887888abf3a8143a4703c22b19178c86b5db5f7da34b46eac89c160",
+  "9e631a24ae009205505fe93c112f11470a4492e769d996ae2fe9b3cd66335ffa",
+  "a1b64a31542dd55e28a7d168af934258cacc7f9c7628f7206eaa42a2208b3490",
+  "a37776a608026da18f91e774cab1d4c1569c06b62a130012402f43bef14229eb",
+  "a455747491e9e1cf4b97668794f7abea79d225f6409f8f5ede7f97dc5743bafa",
+  "a48c0afc9ee16ced578760fe8c6d1336faaf91e37a012bd7f5429253099526ef",
+  "a78baf706bbece10bd84aca64f017fc98d4d45d3639333a59a37213e64dbd0ed",
+  "a8a65325afc1fb2aba68f0868d4dd5da8a12d8ef68a326d9a87097a59cedc8b2",
+  "acba0d2a2b48d4295b77f3dbd75102f0d3eaefab7165ada3279bb751186f6bfd",
+  "ada4f31a9aecb249cb0febd0aa762459a691287ad08887f4d703ceaefd563cd9",
+  "b03f7822fa1e737fe804e1c35aab61f4322708b7f2826c42756db7896d62cf75",
+  "b264725cad57abaff7d194291877ef5b6183dcdcd651dd48e394e9b054c56d61",
+  "b8ff70f0469d47cd2f9b10c0c8d3268c5d0ed352fdef37db6f669bcdf374ca29",
+  "b9c55abd7c37361d1fd132f016ecc49977344a294b005b1bd198ee94089bf26b",
+  "bc51f0c0b96cc8082433f8931b300402b4ab1317f23e6cedc9eb4a2255a42a77",
+  "bf3b6e33636181c3d111ac5a46493f95b24079ee5352a39b3595a1237933b998",
+  "c1f2c269d32f1c4be21e567338ee51ece1ff360e8bf637f5ee7629c0cc0d0a9e",
+  "c36878bb44a207c01546ca579e7d9470598d84f6aa95b73e8bdee0351db022ca",
+  "c43231288015270113712296cdb0b61af72e434822cf8ca5e4dd61b6d045a274",
+  "cdfdf74f1867f1fd4e3413017a8bc6479f62b5026e1d4fe9f90bb9e2530fbb19",
+  "ce712ba25a074743e96ec720da4e1f22c4d1c33fd7c634cacecff9a4573c39f5",
+  "cf5e3f04394d5594363b40b92dfdadd77fdb08e26f6b79e6d2a17e117c14ac06",
+  "d12fa0bb4369e0d88eeb6a084bc06a815f81f6b278822a62a5b7fe0b78196dfb",
+  "d505eec3c30ab7e4b5e6b5586a36eecf110f678345674ec3eb837bb6b21c37bc",
+  "d6c71886c55b2379a1dd6af41c1e66dc7f5679a0f58ae1ba4a0b8d1a2a8ad642",
+  "daa2c70c866029335ffe59114d9d2ab8f23eed83446c284aed9870dfc7e94d2c",
+  "dfead2c1910eb2d441c611d661166cc2dcad632921d5a1dbfaceedd9b80b06b5",
+  "e7403db0488eff06d4ee411a4bf6a86f170a0b894221d4b2dcaffd03c14efdb9",
+  "eaf5de724fcd5476eda9aef00913db2c30cb59067b8fd6f04a50a044be7c2c17",
+  "ee704a0fb843ae828e1fb5365ee62274bee286c2dd4d19b3a2f4e1c0a812efb8",
+  "efdad19015be3eb44fdd790849b9e0a3cbd6c5a7faa449a3ed41531c5d3ff821",
+  "f4fdd82bbd76537c70ceb1a260ddb39cde5070b7d6972af55554db0b051f89f0",
+  "f5d041ec81f26eddf1d41c395fc3cea49e6f55c3225167892bca8cf1b40df9a8",
+  "f700d412821ade3d9b58d03dbcaeab7c3ebcd4b879b7d23681943634cc3c1338",
+  "feabea23fa9a296b895731009e089e7dfa89f41b2545d1a4c18dfb90c0ce8f4c"
+ ],
+ "gpl_spec": "PASS",
+ "hazards": [
+  {
+   "sids": [
+    "arch/x86/coco/core.c::cc_random_init",
+    "arch/x86/mm/ioremap.c::__ioremap_caller",
+    "arch/x86/mm/kmmio.c::register_kmmio_probe",
+    "arch/x86/coco/sev/svsm.c::svsm_pval_terminate"
+   ],
+   "text": "Guest aborts without randomness; remap null on invalid/RAM/exhausted; probe fails on overlap."
+  },
+  {
+   "sids": [
+    "arch/x86/mm/pat/memtype.c::memtype_reserve",
+    "arch/x86/mm/pat/memtype_interval.c::memtype_check_conflict",
+    "arch/x86/mm/pat/set_memory.c::cpa_flush_all",
+    "arch/x86/mm/tlb.c::flush_tlb_one_kernel"
+   ],
+   "text": "Bad memtype ranges fail; flush needs interrupts except early boot; isolated flush defers."
+  },
+  {
+   "sids": [
+    "arch/x86/coco/sev/core.c::AP_INIT_CS_LIMIT",
+    "arch/x86/coco/sev/core.c::AP_INIT_CR0_DEFAULT",
+    "arch/x86/coco/sev/core.c::sev_status_feat_names"
+   ],
+   "text": "Bringup fixes CS limit 0xffff and CR0 0x60000010; status maps SEV/SNP/top labels."
+  },
+  {
+   "sids": [
+    "arch/x86/include/asm/i8259.h::PIC_MASTER_CMD",
+    "arch/x86/include/asm/i8259.h::PIC_SLAVE_CMD",
+    "arch/x86/include/asm/irq_vectors.h::NMI_VECTOR",
+    "arch/x86/include/asm/irq_vectors.h::NR_VECTORS",
+    "arch/x86/include/asm/kasan.h::KASAN_SHADOW_OFFSET",
+    "arch/x86/include/asm/cpuid/api.h::cpuid_leaf_0x2",
+    "arch/x86/include/asm/cpuid/leaf_types.h::leaf_0x21_0"
+   ],
+   "text": "PIC 0x20/0x21 0xA0/0xA1 cascade 2; vectors 2/32/128/256; KASAN shift 3; leaf2 untrusted."
+  },
+  {
+   "sids": [
+    "arch/x86/coco/tdx/tdx.c::tdx_map_gpa",
+    "arch/x86/include/asm/apic.h::native_apic_msr_write",
+    "arch/x86/include/asm/mshyperv.h::hv_do_hypercall",
+    "arch/x86/include/asm/extable.h::ex_handler_msr_mce"
+   ],
+   "text": "Private mapping can shut down; absent HyperV drops writes; MCE MSR fault never returns."
+  },
+  {
+   "sids": [
+    "arch/x86/include/asm/special_insns.h::wrpkru.alt_1",
+    "arch/x86/include/asm/special_insns.h::wrpkru.alt_2"
+   ],
+   "text": "PKRU write is costly; gate on feature, skip when unchanged."
+  },
+  {
+   "sids": [
+    "arch/x86/include/asm/text-patching.h::text_gen_insn",
+    "arch/x86/include/asm/text-patching.h::__text_gen_insn",
+    "arch/x86/include/asm/text-patching.h::int3_emulate_push",
+    "arch/x86/include/asm/text-patching.h::int3_emulate_pop"
+   ],
+   "text": "Patch traps on bad jump; push/pop trust saved stack."
+  },
+  {
+   "sids": [
+    "arch/x86/include/asm/uv/uv_hub.h::uv_gam_range"
+   ],
+   "text": "Range lookup failure is fatal."
+  },
+  {
+   "sids": [
+    "arch/x86/include/asm/uaccess.h::__put_user_goto",
+    "arch/x86/include/asm/uaccess.h::__get_user_asm.alt_1",
+    "arch/x86/include/asm/uaccess.h::__get_user_asm.alt_2",
+    "arch/x86/include/asm/uaccess.h::do_get_user_call",
+    "arch/x86/include/asm/uaccess.h::do_put_user_call"
+   ],
+   "text": "User accesses need fixups; never assume progress after fault."
+  },
+  {
+   "sids": [
+    "arch/x86/include/uapi/asm/processor-flags.h::X86_EFLAGS_CF_BIT",
+    "arch/x86/include/uapi/asm/processor-flags.h::X86_CR0_PE_BIT",
+    "arch/x86/include/uapi/asm/processor-flags.h::X86_CR4_VMXE",
+    "arch/x86/include/uapi/asm/sgx.h::SGX_MAGIC",
+    "arch/x86/include/uapi/asm/svm.h::SVM_EXIT_SW"
+   ],
+   "text": "EFLAGS/CR use fixed bits; SGX magic A4; SVM dense exit codes."
+  },
+  {
+   "sids": [
+    "arch/x86/mm/fault.c::do_kern_addr_fault",
+    "arch/x86/mm/fault.c::do_user_addr_fault",
+    "arch/x86/mm/init_32.c::native_pagetable_init",
+    "arch/x86/mm/init_32.c::test_wp_bit",
+    "arch/x86/virt/svm/sev.c::__snp_fixup_e820_tables",
+    "arch/x86/mm/mem_encrypt_amd.c::sme_early_init",
+    "arch/x86/lib/copy_mc_64.S::copy_mc_fragile",
+    "arch/x86/lib/copy_mc_64.S::copy_mc_enhanced_fast_string",
+    "arch/x86/lib/copy_user_64.S::rep_movs_alternative",
+    "arch/x86/mm/numa.c::init_cpu_to_node",
+    "arch/x86/mm/pat/memtype.c::pat_cpu_init",
+    "arch/x86/mm/pat/set_memory.c::slow_virt_to_phys",
+    "arch/x86/mm/pat/set_memory.c::kernel_unmap_pages_in_pgd",
+    "arch/x86/mm/pgtable.c::pmdp_clear_flush_young",
+    "arch/x86/mm/pgtable.c::pudp_invalidate",
+    "arch/x86/mm/pgtable.c::arch_check_zapped_pte",
+    "arch/x86/mm/pti.c::pti_user_pagetable_walk_pte",
+    "arch/x86/mm/tlb.c::native_flush_tlb_local",
+    "arch/x86/virt/svm/sev.c::__snp_leak_pages",
+    "arch/x86/virt/vmx/tdx/tdx.c::check_features",
+    "arch/x86/virt/vmx/tdx/tdx.c::check_tdx_erratum",
+    "arch/x86/virt/vmx/tdx/seamcall_internal.h::seamcall_err",
+    "arch/x86/virt/svm/sev.c::snp_prepare"
+   ],
+   "text": "Fatal faults, map surprises, SNP align, copy faults, NUMA/PAT miss, unmapped, align warns, leaks, errata."
+  }
+ ],
+ "invariants": [
+  {
+   "sids": [
+    "arch/x86/coco/core.c::intel_cc_platform_has",
+    "arch/x86/coco/core.c::amd_cc_platform_has",
+    "arch/x86/coco/core.c::cc_mkdec"
+   ],
+   "text": "Intel affirms string IO and encryption; AMD top affirms encryption only; transforms invert by mode."
+  },
+  {
+   "sids": [
+    "arch/x86/mm/ioremap.c::__ioremap_check_mem",
+    "arch/x86/mm/pat/memtype.c::memtype_reserve",
+    "arch/x86/mm/pat/memtype.c::reserve_ram_pages_type",
+    "arch/x86/mm/pat/memtype_interval.c::memtype_check_conflict"
+   ],
+   "text": "Remap rejects zero, wrapped and RAM; RAM needs all-default then stamps; non-RAM needs uniform type."
+  },
+  {
+   "sids": [
+    "arch/x86/include/asm/pgtable.h::pmd_present",
+    "arch/x86/include/asm/pgtable.h::pgd_none",
+    "arch/x86/mm/pat/set_memory.c::static_protections",
+    "arch/x86/mm/pat/set_memory.c::__split_large_page"
+   ],
+   "text": "Empty is zero raw; present includes protection-none and large; splits large pages on mismatch."
+  },
+  {
+   "sids": [
+    "arch/x86/coco/sev/core.c::pvalidate_pages",
+    "arch/x86/coco/sev/vc-shared.c::verify_exception_info",
+    "arch/x86/coco/sev/core.c::snp_set_vmsa"
+   ],
+   "text": "Validation uses monitor or direct path then evicts new private pages; exceptions need valid flag."
+  },
+  {
+   "sids": [
+    "arch/x86/lib/insn-eval.c::insn_get_addr_ref",
+    "arch/x86/include/asm/cpuid/api.h::cpuid_leaf_0x2",
+    "arch/x86/include/asm/cpuid/api.h::for_each_cpuid_0x2_desc",
+    "arch/x86/include/asm/dma.h::set_dma_addr"
+   ],
+   "text": "Addresses resolve segments and ModRM or fail; leaf2 needs count one; DMA programs page then address."
+  },
+  {
+   "sids": [
+    "arch/x86/include/asm/apic.h::apic_is_x2apic_enabled",
+    "arch/x86/include/asm/futex.h::arch_futex_atomic_op_inuser",
+    "arch/x86/include/asm/irqflags.h::arch_local_irq_save",
+    "arch/x86/include/asm/irqflags.h::arch_local_irq_restore"
+   ],
+   "text": "x2APIC needs feature plus enable; futex uses locked updates; IRQ save/restore preserve flags."
+  },
+  {
+   "sids": [
+    "arch/x86/include/asm/realmode.h::real_mode_size_needed"
+   ],
+   "text": "Real-mode size is zero once allocated, else page-aligned blob span."
+  },
+  {
+   "sids": [
+    "arch/x86/include/asm/uv/uv_hub.h::UV_NASID_TO_PNODE",
+    "arch/x86/include/asm/uv/uv_hub.h::UV_PNODE_TO_GNODE",
+    "arch/x86/include/asm/uv/uv_hub.h::UV_PNODE_TO_NASID",
+    "arch/x86/include/asm/uv/uv_hub.h::uv_soc_phys_ram_to_gpa",
+    "arch/x86/include/asm/uv/uv_hub.h::uv_gpa_in_mmr_space"
+   ],
+   "text": "Partition derives from net id by shift/mask; top global bits mean MMR."
+  },
+  {
+   "sids": [
+    "arch/x86/include/asm/uv/uv_mmrs.h::uvh_event_occurred0_u",
+    "arch/x86/include/asm/uv/uv_mmrs.h::uvyh_event_occurred1_u",
+    "arch/x86/include/asm/uv/uv_mmrs.h::uvyh_event_occurred2_u"
+   ],
+   "text": "Each event flag is one RW bit; mask isolates shift; pad to 64."
+  },
+  {
+   "sids": [
+    "arch/x86/include/asm/word-at-a-time.h::has_zero",
+    "arch/x86/include/asm/word-at-a-time.h::find_zero.alt_1",
+    "arch/x86/include/asm/xen/interface.h::set_xen_guest_handle.alt_1",
+    "arch/x86/include/asm/xen/page.h::pfn_to_mfn",
+    "arch/x86/include/asm/xen/page.h::mfn_to_pfn"
+   ],
+   "text": "Zero scan is word arithmetic; outside PV mapping is identity, inside cached."
+  },
+  {
+   "sids": [
+    "arch/x86/mm/ident_map.c::ident_p4d_init",
+    "arch/x86/mm/ident_map.c::ident_pud_init",
+    "arch/x86/mm/ident_map.c::ident_pmd_init",
+    "arch/x86/mm/ident_map.c::free_p4d",
+    "arch/x86/mm/ident_map.c::free_pud",
+    "arch/x86/mm/ident_map.c::free_pmd",
+    "arch/x86/mm/ident_map.c::free_pte",
+    "arch/x86/mm/fault.c::vmalloc_sync_one",
+    "arch/x86/mm/fault.c::vmalloc_fault",
+    "arch/x86/mm/fault.c::kernelmode_fixup_or_oops",
+    "arch/x86/mm/fault.c::bad_area_access_from_pkeys",
+    "arch/x86/mm/fault.c::bad_area_access_error",
+    "arch/x86/mm/fault.c::bad_area_nosemaphore",
+    "arch/x86/mm/extable.c::ex_fixup_addr",
+    "arch/x86/mm/extable.c::ex_handler_default",
+    "arch/x86/mm/extable.c::pt_regs_nr",
+    "arch/x86/mm/extable.c::ex_handler_zeropad",
+    "arch/x86/mm/extable.c::ex_handler_fault",
+    "arch/x86/mm/extable.c::ex_handler_sgx",
+    "arch/x86/mm/extable.c::ex_handler_fprestore",
+    "arch/x86/virt/svm/sev.c::dump_rmpentry",
+    "arch/x86/virt/svm/sev.c::get_raw_rmpentry",
+    "arch/x86/virt/svm/sev.c::__snp_lookup_rmpentry",
+    "arch/x86/virt/svm/sev.c::get_rmpentry",
+    "arch/x86/mm/init_64.c::free_pagetable",
+    "arch/x86/mm/init_64.c::free_vmemmap_pages",
+    "arch/x86/mm/init_64.c::free_pte_table",
+    "arch/x86/mm/init_64.c::free_pmd_table",
+    "arch/x86/mm/init_64.c::free_pud_table",
+    "arch/x86/mm/init.c::probe_page_size_mask",
+    "arch/x86/mm/init.c::page_size_mask",
+    "arch/x86/mm/init.c::cr4_set_bits_and_update_boot",
+    "arch/x86/mm/init.c::setup_pcid",
+    "arch/x86/mm/pat/memtype.c::pat_disabled",
+    "arch/x86/mm/pat/memtype.c::pat_disable",
+    "arch/x86/mm/pat/memtype.c::pat_get_cache_mode",
+    "arch/x86/mm/pat/memtype.c::lookup_memtype",
+    "arch/x86/mm/pat/memtype.c::reserve_pfn_range",
+    "arch/x86/mm/pat/memtype.c::free_pfn_range",
+    "arch/x86/mm/pgprot.c::protection_map",
+    "arch/x86/mm/pgprot.c::vm_get_page_prot",
+    "arch/x86/mm/pgtable.c::pgd_prepopulate_pmd",
+    "arch/x86/mm/tlb.c::flush_tlb_kernel_range",
+    "arch/x86/mm/tlb.c::kernel_tlb_flush_all",
+    "arch/x86/mm/tlb.c::initialize_tlbstate_and_flush",
+    "arch/x86/mm/tlb.c::should_flush_tlb",
+    "arch/x86/mm/pti.c::pti_clone_pgtable",
+    "arch/x86/virt/hw.c::x86_virt_cpu_vmxon",
+    "arch/x86/virt/hw.c::x86_vmx_enable_virtualization_cpu",
+    "arch/x86/virt/svm/sev.c::setup_rmptable",
+    "arch/x86/virt/svm/sev.c::clear_rmp",
+    "arch/x86/virt/svm/sev.c::snp_prepare",
+    "arch/x86/virt/svm/sev.c::snp_enable",
+    "arch/x86/virt/svm/cmdline.c::init_sev_config",
+    "arch/x86/virt/vmx/tdx/seamcall_internal.h::seamcall",
+    "arch/x86/virt/vmx/tdx/seamcall_internal.h::sc_retry",
+    "arch/x86/virt/vmx/tdx/seamcall_internal.h::__seamcall_dirty_cache",
+    "arch/x86/virt/vmx/tdx/tdx.c::build_tdx_memlist",
+    "arch/x86/virt/vmx/tdx/tdx.c::fill_out_tdmrs",
+    "arch/x86/virt/vmx/tdx/tdx.c::construct_tdmrs",
+    "arch/x86/virt/vmx/tdx/tdx.c::config_global_keyid",
+    "arch/x86/virt/vmx/tdx/tdx.c::mk_keyed_paddr",
+    "arch/x86/virt/vmx/tdx/tdx.c::paddr_is_tdx_private",
+    "arch/x86/virt/vmx/tdx/tdx.c::is_tdx_memory"
+   ],
+   "text": "Table alloc/free, fixup relativity, RMP gating, page gating, PAT map, TLB gen, VMX/RMP/TDMR/key rules."
+  }
+ ],
+ "locks": [
+  {
+   "sids": [
+    "arch/x86/mm/pat/memtype.c::memtype_reserve",
+    "arch/x86/mm/pat/set_memory.c::__change_page_attr_set_clr",
+    "arch/x86/mm/kmmio.c::register_kmmio_probe",
+    "arch/x86/mm/kmmio.c::unregister_kmmio_probe"
+   ],
+   "text": "One lock serialises memtype intervals; attribute walks lock; probes add fault lock with IRQs saved."
+  },
+  {
+   "sids": [
+    "arch/x86/coco/sev/core.c::snp_get_msg_seqno",
+    "arch/x86/coco/tdx/tdx.c::tdx_kexec_finish",
+    "arch/x86/include/asm/dma.h::claim_dma_lock",
+    "arch/x86/include/asm/mc146818rtc.h::lock_cmos.alt_1"
+   ],
+   "text": "SNP holds guest mutex; attest and TDX reload mask IRQs; DMA and CMOS use IRQ-saving locks."
+  },
+  {
+   "sids": [
+    "arch/x86/include/asm/paravirt-spinlock.h::pv_queued_spin_lock_slowpath",
+    "arch/x86/include/asm/paravirt-spinlock.h::pv_vcpu_is_preempted",
+    "arch/x86/include/asm/paravirt-spinlock.h::native_queued_spin_unlock",
+    "arch/x86/include/asm/paravirt-spinlock.h::virt_spin_lock.alt_1"
+   ],
+   "text": "Slowpath/unlock use static calls, release order; virt spins unfairly."
+  },
+  {
+   "sids": [
+    "arch/x86/include/asm/pgtable_64.h::native_ptep_get_and_clear",
+    "arch/x86/include/asm/pgtable.h::ptep_set_wrprotect",
+    "arch/x86/include/asm/pgtable.h::pmdp_establish.alt_1"
+   ],
+   "text": "Single stores are volatile under exclusion; shared takes use xchg/cmpxchg."
+  },
+  {
+   "sids": [
+    "arch/x86/include/asm/sync_bitops.h::sync_set_bit",
+    "arch/x86/include/asm/sync_bitops.h::sync_clear_bit",
+    "arch/x86/include/asm/sync_bitops.h::sync_change_bit",
+    "arch/x86/include/asm/sync_bitops.h::sync_test_and_set_bit",
+    "arch/x86/include/asm/sync_bitops.h::sync_test_and_clear_bit",
+    "arch/x86/include/asm/sync_bitops.h::sync_test_and_change_bit"
+   ],
+   "text": "Cross-CPU bit updates use locked RMW; caller owns address lifetime."
+  },
+  {
+   "sids": [
+    "arch/x86/include/asm/tlbflush.h::cr4_set_bits_irqsoff",
+    "arch/x86/include/asm/tlbflush.h::cr4_clear_bits_irqsoff",
+    "arch/x86/include/asm/tlbflush.h::cr4_set_bits",
+    "arch/x86/include/asm/tlbflush.h::cr4_clear_bits",
+    "arch/x86/include/asm/tlbflush.h::tlb_state",
+    "arch/x86/include/asm/tlbflush.h::cr4_init_shadow"
+   ],
+   "text": "CR4 mirror/hardware update only with IRQs off; helpers save/restore."
+  },
+  {
+   "sids": [
+    "arch/x86/include/asm/uv/uv_hub.h::uv_hub_nmi_s"
+   ],
+   "text": "Each hub NMI block has its own raw spinlock."
+  },
+  {
+   "sids": [
+    "arch/x86/mm/kmmio.c::kmmio_handler",
+    "arch/x86/mm/fault.c::pgd_lock",
+    "arch/x86/mm/fault.c::arch_sync_kernel_mappings",
+    "arch/x86/mm/fault.c::__bad_area",
+    "arch/x86/mm/mmio-mod.c::mmiotrace_mutex",
+    "arch/x86/mm/mmio-mod.c::trace_lock",
+    "arch/x86/mm/pat/memtype.c::memtype_lock",
+    "arch/x86/mm/pat/set_memory.c::cpa_lock",
+    "arch/x86/virt/vmx/tdx/seamldr.c::seamldr_call",
+    "arch/x86/virt/vmx/tdx/tdx.c::try_init_module_global",
+    "arch/x86/virt/vmx/tdx/seamldr.c::seamldr_lock_module_update",
+    "arch/x86/virt/vmx/tdx/seamldr.c::seamldr_unlock_module_update",
+    "arch/x86/mm/tlb.c::switch_mm",
+    "arch/x86/virt/hw.c::x86_virt_get_ref"
+   ],
+   "text": "KMMIO read, table nesting, VMA read, tracer mutex/event, memtype/CPA, loader/sysinit, preempt off."
+  }
+ ],
+ "pass": 1,
+ "phase_map": [
+  {
+   "anchor": "HB-KPAPER-001/hb-s5.p14",
+   "crown": "A",
+   "phase": "F0"
+  },
+  {
+   "anchor": "HB-KPAPER-001/hb-s5.p04",
+   "crown": "A",
+   "phase": "F2"
+  }
+ ],
+ "schema": "lx.dossier.v1",
+ "state_machines": [
+  {
+   "sids": [
+    "arch/x86/coco/core.c::cc_platform_has",
+    "arch/x86/include/asm/archrandom.h::rdrand_long",
+    "arch/x86/coco/sev/noinstr.c::__sev_es_ist_enter",
+    "arch/x86/coco/sev/noinstr.c::__sev_es_ist_exit"
+   ],
+   "text": "Vendor steers from none; random retries fixed count; IST enter/exit nest with completion."
+  },
+  {
+   "sids": [
+    "arch/x86/mm/pat/set_memory.c::change_page_attr_set_clr",
+    "arch/x86/mm/pat/set_memory.c::cpa_collapse_large_pages",
+    "arch/x86/mm/kmmio.c::arm_kmmio_fault_page",
+    "arch/x86/mm/kmmio.c::release_kmmio_fault_page"
+   ],
+   "text": "Change merges set/clear; collapse rebuilds on agree; KMMIO arms then defers free."
+  },
+  {
+   "sids": [
+    "arch/x86/coco/sev/vc-handle.c::vc_handle_exitcode",
+    "arch/x86/coco/sev/vc-shared.c::vc_handle_ioio",
+    "arch/x86/coco/tdx/tdx.c::tdx_handle_virt_exception",
+    "arch/x86/lib/insn.c::insn_get_prefixes"
+   ],
+   "text": "VC routes exits with bounded retry; VE dispatches by class; decode runs prefixes then ModRM."
+  },
+  {
+   "sids": [
+    "arch/x86/include/asm/desc.h::refresh_tss_limit",
+    "arch/x86/include/asm/fpu/sched.h::switch_fpu",
+    "arch/x86/mm/tlb.c::mm_free_global_asid"
+   ],
+   "text": "TSS reload gated by invalid marker; FPU switch skips when awaiting reload; ASID cycles free."
+  },
+  {
+   "sids": [
+    "arch/x86/include/asm/mwait.h::mwait_idle_with_hints"
+   ],
+   "text": "Idle exits on reschedule, arms flag, waits, clears polling."
+  },
+  {
+   "sids": [
+    "arch/x86/include/asm/shared/tdx.h::TDVMCALL_STATUS_SUCCESS",
+    "arch/x86/include/asm/shared/tdx.h::TDVMCALL_STATUS_RETRY",
+    "arch/x86/include/asm/shared/tdx_errno.h::TDX_INTERRUPTED_RESUMABLE",
+    "arch/x86/include/asm/shared/tdx_errno.h::TDX_SYS_BUSY",
+    "arch/x86/include/asm/shared/tdx_errno.h::TDX_OPERAND_BUSY",
+    "arch/x86/include/asm/shared/tdx_errno.h::TDX_NON_RECOVERABLE_VCPU"
+   ],
+   "text": "TDX success ends; retry/busy reissue; operand needs fix; fatal ends."
+  },
+  {
+   "sids": [
+    "arch/x86/include/asm/uv/uv_hub.h::UV_NMI_STATE_OUT",
+    "arch/x86/include/asm/uv/uv_hub.h::UV_NMI_STATE_IN",
+    "arch/x86/include/asm/uv/uv_hub.h::UV_NMI_STATE_DUMP",
+    "arch/x86/include/asm/uv/uv_hub.h::UV_NMI_STATE_DUMP_DONE"
+   ],
+   "text": "CPU NMI moves outside, inside, dumping, done."
+  },
+  {
+   "sids": [
+    "arch/x86/include/asm/vmx.h::GUEST_ACTIVITY_ACTIVE",
+    "arch/x86/include/asm/vmx.h::GUEST_ACTIVITY_SHUTDOWN",
+    "arch/x86/include/asm/x86_init.h::x86_legacy_i8042_state",
+    "arch/x86/include/asm/xen/cpuid.h::XEN_CPUID_TSC_MODE_DEFAULT",
+    "arch/x86/include/uapi/asm/amd_hsmp.h::hsmp_msg_type"
+   ],
+   "text": "Guest active/halted/shutdown/wait-SIPI; TSC, i8042, HSMP select modes."
+  },
+  {
+   "sids": [
+    "arch/x86/mm/fault.c::do_kern_addr_fault",
+    "arch/x86/mm/fault.c::do_user_addr_fault",
+    "arch/x86/mm/fault.c::access_error",
+    "arch/x86/mm/mmio-mod.c::pre",
+    "arch/x86/mm/mmio-mod.c::post",
+    "arch/x86/mm/mmio-mod.c::enable_mmiotrace",
+    "arch/x86/mm/mmio-mod.c::disable_mmiotrace",
+    "arch/x86/mm/numa.c::numa_init",
+    "arch/x86/mm/numa.c::x86_numa_init",
+    "arch/x86/mm/pat/set_memory.c::set_memory_uc",
+    "arch/x86/mm/pat/set_memory.c::set_memory_wc",
+    "arch/x86/mm/pat/set_memory.c::set_memory_wb",
+    "arch/x86/mm/pti.c::pti_parse_cmdline",
+    "arch/x86/mm/pti.c::pti_init",
+    "arch/x86/mm/pti.c::pti_finalize",
+    "arch/x86/virt/hw.c::x86_virt_get_ref",
+    "arch/x86/virt/hw.c::x86_virt_put_ref",
+    "arch/x86/virt/svm/sev.c::snp_prepare",
+    "arch/x86/virt/vmx/tdx/tdx.c::init_tdx_module",
+    "arch/x86/virt/vmx/tdx/tdx.c::init_tdmrs",
+    "arch/x86/virt/vmx/tdx/seamldr.c::module_update_state",
+    "arch/x86/virt/vmx/tdx/seamldr.c::ack_state"
+   ],
+   "text": "Fault retries, MMIOTrace/NUMA order, UC/WC/WB and PTI modes, virt count, SNP/TDX bringup."
+  }
+ ],
+ "structs": [
+  {
+   "sids": [
+    "arch/x86/coco/core.c::cc_flags",
+    "arch/x86/coco/sev/internal.h::sev_es_runtime_data",
+    "arch/x86/coco/sev/internal.h::ghcb_state",
+    "arch/x86/include/asm/sev-common.h::GHCB_MSR_INFO"
+   ],
+   "text": "CC flags hold SNP bit; SEV-ES keeps primary and backup GHCB; GHCB info carries kind and protocol."
+  },
+  {
+   "sids": [
+    "arch/x86/include/asm/desc_defs.h::desc_struct",
+    "arch/x86/include/asm/desc_defs.h::gate_struct",
+    "arch/x86/include/asm/e820/types.h::e820_entry",
+    "arch/x86/include/asm/cpu_entry_area.h::cpu_entry_area"
+   ],
+   "text": "Descriptors pack base; gates split handlers; E820 holds base/len/type; entry guards stacks."
+  },
+  {
+   "sids": [
+    "arch/x86/mm/kmmio.c::get_kmmio_fault_page",
+    "arch/x86/include/asm/apicdef.h::APIC_ID",
+    "arch/x86/include/asm/apicdef.h::APIC_ICR"
+   ],
+   "text": "Fault records hold address, armed flag and saved presence; APIC ID and command define routing."
+  },
+  {
+   "sids": [
+    "arch/x86/include/asm/kvm_host.h::kvm_mmu",
+    "arch/x86/include/asm/kvm_host.h::kvm_arch",
+    "arch/x86/include/asm/msr-index.h::MSR_EFER",
+    "arch/x86/include/asm/mpspec_def.h::mpf_intel"
+   ],
+   "text": "KVM keeps MMU roots, slots and vCPU state; EFER enables syscall/NX; MP uses sigs and checksums."
+  },
+  {
+   "sids": [
+    "arch/x86/include/asm/msr.h::msr_info",
+    "arch/x86/include/asm/mtrr.h::MTRR_CAP_VCNT"
+   ],
+   "text": "MSR info holds reg/value/per-CPU state; MTRR caps hold counts/enables."
+  },
+  {
+   "sids": [
+    "arch/x86/include/asm/pgtable_64_types.h::PGDIR_SHIFT",
+    "arch/x86/include/asm/pgtable_64_types.h::PTRS_PER_PGD",
+    "arch/x86/include/asm/pgtable_64_types.h::P4D_SHIFT",
+    "arch/x86/include/asm/pgtable_64_types.h::PUD_SHIFT",
+    "arch/x86/include/asm/pgtable_64_types.h::PMD_SHIFT",
+    "arch/x86/include/asm/pgtable_64_types.h::PTRS_PER_PMD",
+    "arch/x86/include/asm/pgtable_64_types.h::PTRS_PER_PTE",
+    "arch/x86/include/asm/pgtable_64_types.h::PMD_SIZE",
+    "arch/x86/include/asm/pgtable_64_types.h::PUD_SIZE"
+   ],
+   "text": "Tables hold 512 entries; shifts 21/30/39 with variable top."
+  },
+  {
+   "sids": [
+    "arch/x86/include/asm/tlbflush.h::tlb_context",
+    "arch/x86/include/asm/tlbflush.h::tlb_state",
+    "arch/x86/include/asm/tlbflush.h::tlb_state.anon_1",
+    "arch/x86/include/asm/tlbflush.h::tlb_state_shared",
+    "arch/x86/include/asm/tlbflush.h::flush_tlb_info",
+    "arch/x86/include/asm/tlbbatch.h::arch_tlbflush_unmap_batch"
+   ],
+   "text": "TLB state tracks owner/generation per CPU with lazy flag and batches."
+  },
+  {
+   "sids": [
+    "arch/x86/include/asm/vmx.h::vmcs_hdr",
+    "arch/x86/include/asm/vmx.h::vmcs_field",
+    "arch/x86/include/asm/vmx.h::VMCS_CONTROL_BIT",
+    "arch/x86/include/asm/vmx.h::CPU_BASED_ACTIVATE_SECONDARY_CONTROLS",
+    "arch/x86/include/asm/vmx.h::SECONDARY_EXEC_ENABLE_EPT",
+    "arch/x86/include/asm/vmx.h::TERTIARY_EXEC_IPI_VIRT",
+    "arch/x86/include/asm/vmx.h::PIN_BASED_NMI_EXITING",
+    "arch/x86/include/asm/vmx.h::VMFUNC_EPTP_ENTRIES"
+   ],
+   "text": "VMCS has revision/header/abort; controls are single-bit enables with masks."
+  },
+  {
+   "sids": [
+    "arch/x86/mm/init.c::map_range",
+    "arch/x86/mm/init.c::page_size_mask",
+    "arch/x86/mm/init.c::NR_RANGE_MR.alt_1",
+    "arch/x86/mm/init.c::NR_RANGE_MR.alt_2",
+    "arch/x86/virt/svm/sev.c::get_rmpentry",
+    "arch/x86/virt/svm/sev.c::dump_rmpentry",
+    "arch/x86/virt/svm/sev.c::get_raw_rmpentry",
+    "arch/x86/virt/svm/sev.c::RST_ENTRY_INDEX",
+    "arch/x86/virt/svm/sev.c::RMP_ENTRY_INDEX",
+    "arch/x86/mm/numa.c::__apicid_to_node",
+    "arch/x86/mm/numa.c::node_to_cpumask_map",
+    "arch/x86/mm/pat/memtype.c::_PGMT_WB",
+    "arch/x86/mm/pat/memtype.c::_PGMT_WC",
+    "arch/x86/mm/pat/set_memory.c::CPA_FLUSHTLB",
+    "arch/x86/mm/mmio-mod.c::trap_reason",
+    "arch/x86/mm/mmio-mod.c::remap_trace",
+    "arch/x86/mm/pat/set_memory.c::cpa_data",
+    "arch/x86/mm/pat/memtype.h::memtype",
+    "arch/x86/mm/tlb.c::last_mm_ctx_id",
+    "arch/x86/mm/tlb.c::MAX_ASID_AVAILABLE",
+    "arch/x86/virt/hw.c::x86_virt_ops",
+    "arch/x86/virt/svm/sev.c::rmpentry",
+    "arch/x86/virt/svm/sev.c::rmp_segment_desc",
+    "arch/x86/virt/svm/sev.c::RMP_ADDR_MASK",
+    "arch/x86/virt/vmx/tdx/seamldr.c::seamldr_params",
+    "arch/x86/virt/vmx/tdx/seamldr.c::tdx_image_header",
+    "arch/x86/virt/vmx/tdx/tdx.h::tdmr_info",
+    "arch/x86/virt/vmx/tdx/tdx.h::TDMR_INFO_ALIGNMENT",
+    "arch/x86/virt/vmx/tdx/tdx.h::TDH_MNG_CREATE",
+    "arch/x86/virt/vmx/tdx/tdx.h::TDH_MNG_INIT",
+    "arch/x86/virt/vmx/tdx/tdx.h::TDH_VP_CREATE",
+    "arch/x86/virt/vmx/tdx/tdx.h::TDH_VP_ENTER",
+    "arch/x86/virt/vmx/tdx/tdx.h::TDH_MEM_PAGE_ADD",
+    "arch/x86/virt/vmx/tdx/tdx.h::TDH_SYS_INIT",
+    "arch/x86/virt/vmx/tdx/tdx.h::TDH_SYS_SHUTDOWN",
+    "arch/x86/virt/vmx/tdx/tdx.h::TDH_SYS_TDMR_INIT"
+   ],
+   "text": "Ranges, RMP words, node maps, type flags, CPA bits, probe recs, TLB IDs, virt ops, TDMR, TDH leaves."
+  }
+ ],
+ "stubs": [
+  {
+   "sid": "include/linux/preempt.h::preemptible.alt_1",
+   "state": "stub",
+   "target_dossier": "D01"
+  },
+  {
+   "sid": "include/linux/spinlock.h::spin_lock",
+   "state": "stub",
+   "target_dossier": "D03"
+  },
+  {
+   "sid": "include/vdso/bits.h::BIT",
+   "state": "stub",
+   "target_dossier": "D04"
+  },
+  {
+   "sid": "include/linux/percpu-defs.h::this_cpu_read",
+   "state": "stub",
+   "target_dossier": "D05"
+  },
+  {
+   "sid": "include/linux/pgtable.h::pgd_offset_k",
+   "state": "stub",
+   "target_dossier": "D06"
+  },
+  {
+   "sid": "arch/x86/boot/compressed/misc.h::__pa",
+   "state": "stub",
+   "target_dossier": "D09"
+  },
+  {
+   "sid": "include/linux/smp.h::smp_processor_id.alt_1",
+   "state": "stub",
+   "target_dossier": "D12"
+  },
+  {
+   "sid": "include/linux/printk.h::printk",
+   "state": "stub",
+   "target_dossier": "D13"
+  },
+  {
+   "sid": "include/linux/minmax.h::min",
+   "state": "stub",
+   "target_dossier": "D14"
+  },
+  {
+   "sid": "include/linux/kconfig.h::IS_ENABLED",
+   "state": "stub",
+   "target_dossier": "D17"
+  }
+ ]
+}

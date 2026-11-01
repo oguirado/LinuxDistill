@@ -1,0 +1,1100 @@
+{
+ "dossier": "D03",
+ "entry_points": [
+  {
+   "sids": [
+    "include/asm-generic/qrwlock.h::queued_read_lock",
+    "include/asm-generic/qspinlock.h::queued_spin_lock",
+    "include/linux/atomic/atomic-instrumented.h::atomic_read",
+    "include/asm-generic/rwonce.h::READ_ONCE"
+   ],
+   "text": "Fast entries are queued read/write and spin lock with try and unlock, plus atomic read and single-access read."
+  },
+  {
+   "sids": [
+    "include/linux/spinlock.h::spin_lock_init.alt_1",
+    "include/linux/rwsem.h::init_rwsem.alt_1",
+    "include/linux/seqlock.h::seqlock_init",
+    "include/linux/lockref.h::lockref_init"
+   ],
+   "text": "Dynamic init covers spin, rwsem, seqlock with per-site key and lockref to count one; static forms start unlocked and zeroed."
+  },
+  {
+   "sids": [
+    "include/linux/percpu-rwsem.h::percpu_down_read",
+    "include/linux/refcount.h::refcount_read",
+    "include/linux/rtmutex.h::rt_mutex_lock",
+    "include/linux/rwlock.h::read_lock"
+   ],
+   "text": "Blocking entries include percpu shared acquire, refcount read, rt-mutex lock and generic rw shared and exclusive acquire with release."
+  },
+  {
+   "sids": [
+    "kernel/futex/core.c::__futex_hash",
+    "kernel/futex/core.c::get_futex_key",
+    "kernel/futex/waitwake.c::futex_wake",
+    "kernel/futex/syscalls.c::do_futex",
+    "kernel/futex/syscalls.c::sys_futex_wait"
+   ],
+   "text": "Hash returns bucket with private retry; key resolves private fast or pinned shared. Wake scans rejecting PI. Dispatcher branches wait, wake, requeue and PI."
+  },
+  {
+   "sids": [
+    "kernel/futex/requeue.c::futex_requeue",
+    "kernel/futex/requeue.c::futex_wait_requeue_pi",
+    "kernel/futex/syscalls.c::sys_get_robust_list",
+    "kernel/locking/lock_events.c::lockevent_read"
+   ],
+   "text": "Requeue moves waiters with prefix wake and value check, plain or PI proxy. Robust set and get enforce size and permissions. Lock events read sums CPUs."
+  },
+  {
+   "sids": [
+    "kernel/locking/lockdep.c::register_lock_class",
+    "kernel/locking/lockdep.c::find_usage_forwards",
+    "kernel/locking/lockdep.c::validate_chain.alt_1"
+   ],
+   "text": "Register/find classes by key/subclass; forward/backward usage search; chain validation gates learning on novel keys with deadlock/prev checks."
+  },
+  {
+   "sids": [
+    "kernel/locking/lockdep.c::lockdep_hardirqs_on_prepare",
+    "kernel/locking/lockdep.c::lock_acquire",
+    "kernel/locking/lockdep.c::lockdep_free_key_range"
+   ],
+   "text": "Irq prepare/commit hooks; acquire/release/sync with held/sequence queries; range free/reset picks sync versus deferred reclaim with held checks."
+  },
+  {
+   "sids": [
+    "kernel/locking/lockdep_proc.c::lc_start",
+    "kernel/locking/locktorture.c::lock_torture_init",
+    "kernel/locking/mutex.c::mutex_lock_nested"
+   ],
+   "text": "Proc chain/stats/detail reports; ww/torture init/workers loop acquire/hold/release; mutex nested/IO/try variants."
+  },
+  {
+   "sids": [
+    "kernel/locking/rwsem.c::__init_rwsem.alt_2",
+    "kernel/locking/rwsem.c::__down_read.alt_2",
+    "kernel/locking/rwsem.c::__down_read_interruptible.alt_2",
+    "kernel/locking/rwsem.c::__down_read_killable.alt_2",
+    "kernel/locking/rwsem.c::__down_read_trylock.alt_2",
+    "kernel/locking/rwsem.c::__down_write.alt_2",
+    "kernel/locking/rwsem.c::__down_write_killable.alt_2",
+    "kernel/locking/rwsem.c::__down_write_trylock.alt_2",
+    "kernel/locking/rwsem.c::__downgrade_write.alt_2"
+   ],
+   "text": "Realtime rwsem init establishes embedded base and dependency map with alloc validation. Shared exclusive try and downgrade delegate to base with caller sleep state forwarded."
+  }
+ ],
+ "exports": [
+  {
+   "sids": [
+    "include/linux/atomic/atomic-arch-fallback.h::raw_xchg.alt_1",
+    "include/linux/atomic/atomic-arch-fallback.h::raw_cmpxchg.alt_1",
+    "include/linux/atomic/atomic-arch-fallback.h::raw_atomic_fetch_add_release",
+    "include/linux/atomic/atomic-arch-fallback.h::raw_atomic64_fetch_add",
+    "include/linux/atomic/atomic-arch-fallback.h::raw_atomic64_xchg",
+    "include/linux/atomic/atomic-arch-fallback.h::raw_atomic64_cmpxchg_acquire"
+   ],
+   "text": "Raw atomics cover exchange, compare-exchange, add/sub, bitwise and fetch variants across full, acquire, release and relaxed orderings."
+  },
+  {
+   "sids": [
+    "include/linux/atomic.h::atomic_cond_read_acquire",
+    "include/linux/atomic/atomic-arch-fallback.h::raw_atomic_add_negative",
+    "include/linux/atomic/atomic-arch-fallback.h::raw_atomic_inc_not_zero",
+    "include/linux/atomic/atomic-arch-fallback.h::raw_atomic64_dec_if_positive",
+    "include/linux/atomic/atomic-arch-fallback.h::raw_atomic64_fetch_add_unless"
+   ],
+   "text": "Conditional polling reads plus zero, negativity and guarded add/inc/dec checks report status and skip store on guard failure."
+  },
+  {
+   "sids": [
+    "include/linux/atomic/atomic-instrumented.h::atomic_read_acquire",
+    "include/linux/atomic/atomic-instrumented.h::atomic_cmpxchg",
+    "include/linux/atomic/atomic-instrumented.h::atomic64_xchg",
+    "include/linux/atomic/atomic-instrumented.h::atomic_long_cmpxchg_acquire",
+    "include/linux/atomic/atomic-instrumented.h::xchg",
+    "include/linux/atomic/atomic-instrumented.h::cmpxchg64"
+   ],
+   "text": "Instrumented 32/64/long wrappers validate access then delegate with same shape; generic exchange and 64-bit compare-exchange add ordering forms."
+  },
+  {
+   "sids": [
+    "include/asm-generic/barrier.h::mb.alt_1",
+    "include/asm-generic/barrier.h::smp_mb.alt_1",
+    "include/asm-generic/barrier.h::smp_cond_load_acquire",
+    "include/asm-generic/rwonce.h::READ_ONCE",
+    "include/asm-generic/rwonce.h::WRITE_ONCE"
+   ],
+   "text": "Barriers give full, read, write, DMA, SMP, virt, pmem and IO ordering; conditional loads spin on predicates; single-access read/write helpers."
+  },
+  {
+   "sids": [
+    "include/linux/mutex.h::mutex_lock",
+    "include/linux/rtmutex.h::rt_mutex_lock",
+    "include/linux/percpu-rwsem.h::percpu_down_read",
+    "include/linux/rwsem.h::rwsem_is_locked.alt_2",
+    "include/linux/semaphore.h::sema_init"
+   ],
+   "text": "Blocking locks offer mutex and rt-mutex acquire, percpu shared acquire with release, semaphore init, and locked/contended queries."
+  },
+  {
+   "sids": [
+    "include/linux/spinlock.h::spin_lock",
+    "include/linux/rwlock.h::read_lock",
+    "include/linux/seqlock.h::write_seqlock",
+    "include/linux/refcount.h::refcount_inc",
+    "include/linux/local_lock.h::local_lock",
+    "include/linux/bit_spinlock.h::bit_spin_lock",
+    "include/linux/futex.h::futex_fixup_robust_unlock.alt_1"
+   ],
+   "text": "Spin, rw, seqlock, refcount, per-CPU, bit locks and robust futex fixup provide acquire, release, try, sampling and range correction."
+  },
+  {
+   "sids": [
+    "include/linux/spinlock.h::do_raw_spin_trylock",
+    "include/linux/spinlock_up.h::arch_spin_trylock.alt_1",
+    "kernel/locking/mutex.c::mutex_lock",
+    "kernel/locking/mutex.c::mutex_unlock",
+    "include/linux/ww_mutex.h::ww_mutex_init",
+    "kernel/locking/rtmutex_api.c::mutex_lock"
+   ],
+   "text": "Raw spin try reports success with ordered release. UP uses flag or no-op. Mutex sleeps via fast atomic plus slowpath; RT init tracks deps; ww member init and state."
+  },
+  {
+   "sids": [
+    "kernel/futex/pi.c::futex_lock_pi",
+    "kernel/futex/pi.c::__futex_unlock_pi",
+    "kernel/locking/rtmutex_api.c::rt_mutex_start_proxy_lock",
+    "kernel/futex/requeue.c::requeue_pi_wake_futex",
+    "kernel/futex/requeue.c::futex_requeue"
+   ],
+   "text": "PI acquire, release and repair with shared or private scope and timeout variants. RT proxy offers try, start with chain walk, wait and cleanup; requeue completes onto PI."
+  },
+  {
+   "sids": [
+    "kernel/futex/core.c::futex_mm_init",
+    "kernel/futex/core.c::futex_hash_allocate_default",
+    "kernel/locking/lockdep.c::lock_contended",
+    "kernel/locking/lockdep.c::lock_acquired",
+    "kernel/locking/rwsem.c::down_read_killable",
+    "kernel/locking/rwsem.c::up_read"
+   ],
+   "text": "Per-mm futex setup and teardown with auto sizing; hash publishes once. Lockdep reports contention and acquisition with irq history. Rwsem killable read acquire and release."
+  },
+  {
+   "sids": [
+    "kernel/locking/lockdep.c::lockdep_register_key",
+    "kernel/locking/lockdep.c::lockdep_count_forward_deps",
+    "kernel/locking/lockdep.c::lockdep_next_lockchain"
+   ],
+   "text": "Register dynamic keys with dup/static checks; count forward/backward reachable classes; iterate cached chains and map slots to classes."
+  },
+  {
+   "sids": [
+    "kernel/locking/lockdep.c::lockdep_hardirqs_on",
+    "kernel/locking/lockdep.c::lockdep_softirqs_on",
+    "kernel/locking/lockdep.c::lockdep_init_map_type"
+   ],
+   "text": "Hard/soft irq on/off plus prepare and dead-CPU cleanup track enabled state; map init names/registers keys and installs comparators."
+  },
+  {
+   "sids": [
+    "kernel/locking/locktorture.c::torture_raw_spin_lock_write_lock",
+    "kernel/locking/mutex.c::ww_mutex_lock.alt_1",
+    "kernel/locking/percpu-rwsem.c::percpu_down_write"
+   ],
+   "text": "Torture shims cover spin/raw/rw/mutex/rt/ww/percpu; ww tries then slow path with deadlock check; percpu writer acquires, releases, reclaims."
+  },
+  {
+   "sids": [
+    "kernel/locking/mcs_spinlock.h::mcs_spin_lock",
+    "kernel/locking/mutex.c::__mutex_init_generic",
+    "kernel/locking/qspinlock_paravirt.h::__pv_queued_spin_unlock"
+   ],
+   "text": "MCS queue acquire/release; mutex init plus nested/irq/try variants; PV unlock/hash/event helpers with traced release and inert defaults."
+  },
+  {
+   "sids": [
+    "kernel/locking/rwsem.c::down_read_interruptible",
+    "kernel/locking/rwsem.c::down_read_nested",
+    "kernel/locking/rwsem.c::down_read_killable_nested",
+    "kernel/locking/rwsem.c::down_read_non_owner",
+    "kernel/locking/rwsem.c::up_read_non_owner",
+    "kernel/locking/rwsem.c::down_write_killable",
+    "kernel/locking/rwsem.c::down_write_nested",
+    "kernel/locking/rwsem.c::down_write_killable_nested",
+    "kernel/locking/rwsem.c::_down_write_nest_lock",
+    "kernel/locking/rwsem.c::down_read_trylock",
+    "kernel/locking/rwsem.c::down_write_trylock",
+    "kernel/locking/rwsem.c::downgrade_write"
+   ],
+   "text": "Shared and exclusive rwsem takes with waits in uninterruptible interruptible and killable flavours; interruption fails with dependency released. Nested forms carry subclass or nest order. Try never sleeps. Downgrade converts to shared. Non-owner forms decouple release from owner."
+  },
+  {
+   "sids": [
+    "kernel/locking/semaphore.c::down",
+    "kernel/locking/semaphore.c::down_interruptible",
+    "kernel/locking/semaphore.c::sem_last_holder.alt_1",
+    "kernel/locking/semaphore.c::sem_last_holder.alt_2",
+    "kernel/locking/semaphore.c::down_killable",
+    "kernel/locking/semaphore.c::__down_killable",
+    "kernel/locking/semaphore.c::down_trylock",
+    "kernel/locking/semaphore.c::down_timeout",
+    "kernel/locking/semaphore.c::__down_timeout",
+    "kernel/locking/semaphore.c::up",
+    "kernel/locking/semaphore.c::__up"
+   ],
+   "text": "Counting semaphore acquire and release. Blocking takes wait uninterruptibly interruptibly killably or with timeout, else take inline under guard. Try never waits. Release returns unit when idle or hands to head waiter deferring wakeup past guard. Holder query aids diagnosis."
+  },
+  {
+   "sids": [
+    "kernel/locking/spinlock.c::_raw_spin_trylock",
+    "kernel/locking/spinlock.c::_raw_spin_trylock_bh",
+    "kernel/locking/spinlock.c::_raw_spin_lock",
+    "kernel/locking/spinlock.c::_raw_spin_lock_irqsave",
+    "kernel/locking/spinlock.c::_raw_spin_lock_irq",
+    "kernel/locking/spinlock.c::_raw_spin_lock_irq_disable",
+    "kernel/locking/spinlock.c::_raw_spin_lock_bh",
+    "kernel/locking/spinlock.c::_raw_spin_unlock",
+    "kernel/locking/spinlock.c::_raw_spin_unlock_irqrestore",
+    "kernel/locking/spinlock.c::_raw_spin_unlock_irq",
+    "kernel/locking/spinlock.c::_raw_spin_unlock_irq_enable",
+    "kernel/locking/spinlock.c::_raw_spin_unlock_bh",
+    "kernel/locking/spinlock.c::_raw_read_trylock",
+    "kernel/locking/spinlock.c::_raw_read_lock",
+    "kernel/locking/spinlock.c::_raw_read_lock_irqsave",
+    "kernel/locking/spinlock.c::_raw_read_lock_irq",
+    "kernel/locking/spinlock.c::_raw_read_lock_bh",
+    "kernel/locking/spinlock.c::_raw_read_unlock",
+    "kernel/locking/spinlock.c::_raw_read_unlock_irqrestore",
+    "kernel/locking/spinlock.c::_raw_read_unlock_irq",
+    "kernel/locking/spinlock.c::_raw_read_unlock_bh",
+    "kernel/locking/spinlock.c::_raw_write_trylock",
+    "kernel/locking/spinlock.c::_raw_write_lock",
+    "kernel/locking/spinlock.c::_raw_write_lock_irqsave",
+    "kernel/locking/spinlock.c::_raw_write_lock_irq",
+    "kernel/locking/spinlock.c::_raw_write_lock_bh",
+    "kernel/locking/spinlock.c::_raw_write_unlock",
+    "kernel/locking/spinlock.c::_raw_write_unlock_irqrestore",
+    "kernel/locking/spinlock.c::_raw_write_unlock_irq",
+    "kernel/locking/spinlock.c::_raw_write_unlock_bh",
+    "kernel/locking/spinlock.c::_raw_write_lock_nested",
+    "kernel/locking/spinlock.c::__raw_write_lock_nested",
+    "kernel/locking/spinlock.c::_raw_spin_lock_nested",
+    "kernel/locking/spinlock.c::_raw_spin_lock_irqsave_nested",
+    "kernel/locking/spinlock.c::_raw_spin_lock_nest_lock"
+   ],
+   "text": "Raw spin and reader-writer try lock and unlock in plain interrupt-save interrupt-mask bottom-half and nested forms. Blocking forms poll try with preemption suppressed and relax between attempts never sleeping. Unlock restores prior interrupt or bottom-half state."
+  },
+  {
+   "sids": [
+    "kernel/locking/spinlock_rt.c::RT_MUTEX_BUILD_SPINLOCKS",
+    "kernel/locking/spinlock_rt.c::RTLOCK_RESCHED_OFFSETS",
+    "kernel/locking/spinlock_rt.c::rtlock_might_resched",
+    "kernel/locking/spinlock_rt.c::rtlock_lock",
+    "kernel/locking/spinlock_rt.c::__rt_spin_lock",
+    "kernel/locking/spinlock_rt.c::rt_spin_lock",
+    "kernel/locking/spinlock_rt.c::rt_spin_lock_nested",
+    "kernel/locking/spinlock_rt.c::rt_spin_lock_nest_lock",
+    "kernel/locking/spinlock_rt.c::__rt_spin_trylock",
+    "kernel/locking/spinlock_rt.c::rt_spin_trylock",
+    "kernel/locking/spinlock_rt.c::rt_spin_trylock_bh",
+    "kernel/locking/spinlock_rt.c::rt_read_trylock",
+    "kernel/locking/spinlock_rt.c::rt_write_trylock",
+    "kernel/locking/spinlock_rt.c::rt_read_lock",
+    "kernel/locking/spinlock_rt.c::rt_write_lock",
+    "kernel/locking/spinlock_rt.c::rt_write_lock_nested",
+    "kernel/locking/spinlock_rt.c::rt_read_unlock",
+    "kernel/locking/spinlock_rt.c::rt_write_unlock",
+    "kernel/locking/spinlock_rt.c::__rt_spin_lock_init",
+    "kernel/locking/spinlock_rt.c::__rt_rwlock_init"
+   ],
+   "text": "Realtime sleeping spin and reader-writer guards over base mutexes with fast handoff and slow fallback. Acquisition allows reschedule then takes read-side and migration guards; release reverses with read-side exit last. Subclass nest try and bottom-half forms share the sequence."
+  },
+  {
+   "sids": [
+    "kernel/locking/ww_rt_mutex.c::ww_mutex_trylock",
+    "kernel/locking/ww_rt_mutex.c::ww_mutex_lock_interruptible"
+   ],
+   "text": "Wound-wait nonblocking and interruptible takes with optional context. Context-free try maps to base attempt; contextual path clears stale wound when idle then installs context on success with nesting recorded. Interruptible form forwards sleep state."
+  }
+ ],
+ "extracts": [
+  "00efcf7c59b1d462fcb9b1280b63ad1464c3fa5c4b5264720547a93829266c9e",
+  "07991c016b0b12768592420d9d1c59da2f74f4423851b52457f36881ceeab873",
+  "0eff35bb144fef47a6fa6b3e7567d9ef5cf71c583855fb0f8b50f460f65e2cb0",
+  "17b79e706e8a6712eec5a1aad209ed8ec46bd9d114a77d872283451e97b764b9",
+  "1cc1910e9e667687199fc59226d1a778b1b9f2041a809688ecdce2ad96ccb8a1",
+  "1d0cb534e39a7fcccf8f0608007ee0c16e504d100d84d932d4373e8e9fb78d3e",
+  "2d4b6a08c69cf54e6916af38e207979110b1ebd9562fe6a605df0e7029965b64",
+  "2fd66301acf86a9fd786a06250ad453f7aed7148a05dd27e06fe0dd0df3f9e9a",
+  "3209c707294a87a6bf5ead0ef9830d49938098375d335b88a38037e85c034d26",
+  "3711ceb69be5034dda1664eb984a842b381b3a77c7cdacbcb9bf74414bc04e54",
+  "38179f3be8a028c5a4c613ec7b2f95fd06d960d0a1d65a030d42a5278cac1043",
+  "40b94ead7ddab6796f0d9fe75345e777eae3c4e53a97779044781f0bb4f8e0a8",
+  "52bc10f11c1798b233c06feccdf2f43b777d356307307691a3e9a29faa8714b0",
+  "542ce9c9803680ebb5c19a8f78ad84fa61612a16bd67fe510ec40e7622026de2",
+  "55b1a27955da90fce5a21e07229789ba6dfd032847d03720cc6d597987722bd0",
+  "652fcd91578b14cffd68b2707b7a2f0a53cf59706032361e8b5855d83d29184e",
+  "665fd04dc26b14f480b194219d575407a48227066e4f045d06e992244d6232e8",
+  "669cf4d19f02238a54469066294321f5d584769d12ecc3fa3670eb0cfa3c7682",
+  "672426cab07c1ed6344fdab18a1f73373645db0f68553df5cefe484d24dfaeeb",
+  "6a02ed428306172949958ef34ea413767063db045cfd8e917597fdf5fb209ac8",
+  "761f237601f6a6fb38479966e5839fbf0bb01921659c455c7bafe4c436ff43ae",
+  "76f12898b223967f8c626749849f6309b7cfeb3394fba3cdd0dde3cce3fe2998",
+  "773218eb03f653b108674836bf6629ba0af347e9e59ffb3fd9a9928a68da879d",
+  "7a47105f65e8feeb68b35df91b2b534dc9086d115f4095dc7c291c1076e2be36",
+  "7edc9524f0119e9e6c4a7ba483ac6483b5c72e54305bf6e7b8c421746b647aea",
+  "7fe3668557c71da361d11998cd7245a9980e3e7158eb1dd2821512af348b6935",
+  "827139d2cd97399eda3442fd7108f036f26767f56e3570dcf11c6134590d6c7c",
+  "83e59a5f711f8933fa4db982221ac59b4b3a7afd21a0074ee289ff506fac9a39",
+  "99c2a1b504f3f849d4e5617468fb414a03d8be8ed184f54387dea8d8305b463e",
+  "9a99262900a39cca24970517bb1f744af394003d8211d45d313b980d6cca44f2",
+  "a543eafd2d2cb4887b5bbc6d2b1eeb177e639b4fcb95061857cd01c0aeeac6d9",
+  "a5f0f36745ccf73cff8ec80e05c00bdd3f53e590b048dd44f73bf1af0f22251f",
+  "c1e4734b1f4c11339717f8d06e1d7543f87486bc5899f078ca60e165a206e531",
+  "c79ddaee4b3feaaef3d5ae833570b125efe192d70a4a5eb4aa4f74e83689e126",
+  "cc422cbadd741be499baae2ce5059979528c74587cda0a24f25e19a88d7fd0f1",
+  "ceae7a47e0960d4156f643268a98793a41ee3412b9abd2b167703fd1a28c8357",
+  "d5e7cabd7428633dba6cee10bc3d3a7e9205a64b646d691ba9faa856289fc54a",
+  "dfabcf9d8d29adbb6ad21963af313c55bd0090ebc751fa18558b987c1af4b731",
+  "e21448ec48553d32cbea2210e7e51a320dbe84bfdd6296996e83cccb53af137e",
+  "e2813466030f3cb102bede5226cf43e0550167b8b2ccdcf2b0df1153c03a092b",
+  "e3eaabda0aeeff113161b45c090ed1728bae744ffd38df00b7e85918adeb6b89",
+  "ef9f0aa1fe8a4be31c908e2166f1f884a33cc3cece027b0a1d46952b1d51c150",
+  "f746a5d2ffe79ab93cfd1c85c19f35d19e6c8a5985a0fcb36e36235bc5c701f2"
+ ],
+ "gpl_spec": "PASS",
+ "hazards": [
+  {
+   "sids": [
+    "include/asm-generic/rwonce.h::read_word_at_a_time",
+    "include/linux/atomic/atomic-arch-fallback.h::raw_atomic64_fetch_or_acquire"
+   ],
+   "text": "Word-at-a-time loads may race stores and must not replace single-access use; some ordered bitwise fetch forms lack fallback and fail translation."
+  },
+  {
+   "sids": [
+    "include/linux/atomic/atomic-instrumented.h::atomic64_add_negative_acquire",
+    "include/linux/atomic/atomic-instrumented.h::atomic_try_cmpxchg"
+   ],
+   "text": "Ordering suffix selects delegated primitive and visibility; holder compare forms need valid writable holder with correct width and alignment."
+  },
+  {
+   "sids": [
+    "include/linux/refcount.h::refcount_dec_and_test",
+    "include/linux/bit_spinlock.h::bit_spin_unlock"
+   ],
+   "text": "Raising zero, exceeding max or releasing at zero saturates refcount and warns; releasing a clear bit lock is fatal."
+  },
+  {
+   "sids": [
+    "include/linux/rwsem.h::rwsem_is_contended.alt_1",
+    "include/linux/seqlock.h::__read_seqcount_begin",
+    "include/linux/seqlock.h::read_seqcount_retry"
+   ],
+   "text": "Unsynchronized contended checks are advisory; odd spinning can stall readers; unchecked retry lacks read ordering that callers must supply."
+  },
+  {
+   "sids": [
+    "include/linux/spinlock_up.h::arch_spin_lock.alt_1",
+    "include/linux/rwlock_rt.h::rwlock_is_contended",
+    "include/linux/spinlock_rt.h::spin_lock_irqsave"
+   ],
+   "text": "Uniprocessor acquire may be plain store; RT may ignore irq flags; contended queries may constantly report idle."
+  },
+  {
+   "sids": [
+    "include/linux/preempt.h::preempt_enable.alt_1",
+    "include/linux/bottom_half.h::local_bh_disable",
+    "include/linux/kcsan-checks.h::kcsan_mb.alt_1"
+   ],
+   "text": "Preemption, irq, bottom-half and sanitizer marking helpers are owned elsewhere and only referenced here."
+  },
+  {
+   "sids": [
+    "include/linux/spinlock_up.h::arch_spin_trylock.alt_2",
+    "include/linux/spinlock_api_up.h::__LOCK",
+    "include/linux/ww_mutex.h::ww_acquire_done",
+    "kernel/futex/core.c::futex_rehash_private"
+   ],
+   "text": "UP gives no exclusion; try always succeeds so contention never appears and misuse corrupts. Wound-wait warns on duplicate done and fini with held locks."
+  },
+  {
+   "sids": [
+    "kernel/futex/pi.c::fixup_pi_owner",
+    "kernel/futex/waitwake.c::__futex_wake_mark",
+    "kernel/locking/rtmutex.c::rt_mutex_adjust_prio_chain"
+   ],
+   "text": "Unresolvable user access leaves user immutable while kernel owner advances, causing later unlock rejection. Non-PI wake of PI waiter refuses. Walk bounded."
+  },
+  {
+   "sids": [
+    "kernel/locking/lockdep.c::register_lock_class",
+    "kernel/locking/lockdep.c::alloc_list_entry",
+    "kernel/locking/lockdep.c::print_circular_bug"
+   ],
+   "text": "Exhaustion of classes/entries/chains/ids disables checking with diagnostics; queue overflow advises larger bits."
+  },
+  {
+   "sids": [
+    "kernel/locking/lockdep.c::print_irq_inversion_bug",
+    "kernel/locking/lockdep.c::__lock_acquire",
+    "kernel/locking/lockdep.c::print_unlock_imbalance_bug"
+   ],
+   "text": "Reports use emergency console and one-way disable on freed/exit-held/RCU; depth overflow dumps; unlock/pin misuse warns."
+  },
+  {
+   "sids": [
+    "kernel/locking/locktorture.c::torture_lock_busted_write_lock",
+    "kernel/locking/mutex.c::ww_mutex_deadlock_injection",
+    "kernel/locking/rtmutex_api.c::max_lock_depth"
+   ],
+   "text": "Busted ops lack exclusion; injection tests wound path; irq stash shared; RT inert unless on; spin/depth capped via sysctl."
+  },
+  {
+   "sids": [
+    "kernel/locking/rwsem.c::rwsem_down_read_slowpath",
+    "kernel/locking/rwsem.c::rwsem_down_write_slowpath",
+    "kernel/locking/semaphore.c::___down_common"
+   ],
+   "text": "Signal and timeout exits must remove waiter under wait protection and propagate wake to successor when required, else stale records or lost wakes stall acquirers. Callers must not assume ownership on failure."
+  }
+ ],
+ "invariants": [
+  {
+   "sids": [
+    "include/linux/atomic.h::__atomic_op_acquire",
+    "include/linux/atomic.h::__atomic_op_release",
+    "include/linux/atomic.h::__atomic_pre_full_fence",
+    "include/linux/atomic.h::__atomic_post_full_fence"
+   ],
+   "text": "Acquire appends after-fence, release prepends before-fence; missing ordered forms combine relaxed ops with fences, preferring native ordered ops."
+  },
+  {
+   "sids": [
+    "include/linux/atomic/atomic-instrumented.h::atomic_fetch_and",
+    "include/linux/atomic/atomic-instrumented.h::atomic64_read",
+    "include/linux/atomic/atomic-instrumented.h::atomic_try_cmpxchg"
+   ],
+   "text": "Instrumented wrappers only mark read, write or read-write access and barrier flavor before delegating; they add no mutual exclusion."
+  },
+  {
+   "sids": [
+    "include/linux/atomic/atomic-long.h::raw_atomic_long_read",
+    "include/linux/atomic/atomic-long.h::raw_atomic_long_add_return",
+    "include/linux/atomic/atomic-arch-fallback.h::raw_atomic64_sub_and_test",
+    "include/linux/atomic/atomic-arch-fallback.h::raw_atomic64_add_negative"
+   ],
+   "text": "Long helpers preserve operation and ordering while selecting 64- or 32-bit implementation; masked, test and guarded forms reuse simpler primitives."
+  },
+  {
+   "sids": [
+    "include/linux/seqlock.h::raw_write_seqcount_begin",
+    "include/linux/seqlock.h::raw_write_seqcount_end",
+    "include/linux/refcount.h::__refcount_add_not_zero",
+    "include/linux/rtmutex.h::rt_mutex_owner"
+   ],
+   "text": "Even seqcount is stable and odd is updating; refcount warns and saturates on misuse; rt owner null means unlocked with waiter bit masked."
+  },
+  {
+   "sids": [
+    "include/linux/lockdep.h::__lockdep_enabled",
+    "include/asm-generic/qspinlock.h::arch_spin_lock",
+    "include/linux/futex_types.h::futex_mm_data.alt_2",
+    "include/linux/lockdep.h::lockdep_match_class"
+   ],
+   "text": "Lockdep runs only when globally enabled and recursion idle; arch spin aliases queued form; futex holders collapse to empty when unsupported."
+  },
+  {
+   "sids": [
+    "include/linux/spinlock_api_smp.h::__raw_spin_trylock",
+    "include/linux/spinlock.h::do_raw_spin_trylock",
+    "include/linux/spinlock_api_up.h::_raw_spin_trylock",
+    "include/linux/spinlock_up.h::arch_spin_trylock.alt_2"
+   ],
+   "text": "Try returns positive on success, zero on failure leaving lock unchanged. Failed MP undoes masking; UP try always succeeds with no exclusion."
+  },
+  {
+   "sids": [
+    "kernel/futex/futex.h::futex_key_is_private",
+    "kernel/futex/core.c::__futex_hash",
+    "kernel/futex/futex.h::futex_to_flags",
+    "kernel/futex/futex.h::futex_flags_valid",
+    "kernel/futex/core.c::exit_robust_list"
+   ],
+   "text": "Private key lacks shared markers; bucket prefers private table else global hash. Classic flags default 32-bit; only 32-bit width validates. Robust visits once."
+  },
+  {
+   "sids": [
+    "kernel/locking/mutex.c::__mutex_trylock_common",
+    "kernel/locking/ww_mutex.h::__ww_ctx_less",
+    "kernel/locking/rtmutex.c::try_to_take_rt_mutex",
+    "kernel/locking/rtmutex.c::rt_mutex_set_owner",
+    "kernel/locking/mutex.c::__mutex_set_flag"
+   ],
+   "text": "Mutex flags and try obey guards; wound-wait orders by stamp; RT try and steal need stable owner; stamped insertion preserves priority order."
+  },
+  {
+   "sids": [
+    "kernel/locking/rwsem.c::__up_read.alt_1",
+    "kernel/locking/rwsem.c::rwsem_mark_wake",
+    "kernel/locking/lockdep.c::prove_locking.alt_1",
+    "kernel/locking/lock_events.h::__lockevent_inc",
+    "kernel/locking/lockdep.c::hlock_id"
+   ],
+   "text": "Reader-owned needs no writer count with owner flag; grants bounded by bias and refuse readers under writer. Proving and stats default on; events count per CPU."
+  },
+  {
+   "sids": [
+    "kernel/locking/lockdep.c::check_lock_chain_key",
+    "kernel/locking/lockdep.c::__calc_dep_bit",
+    "kernel/locking/lockdep.c::usage_match"
+   ],
+   "text": "Classes sit in one list; deps back-reference owners; chain keys fold iteratively; edge strength encodes read modes with usage merge/lookup."
+  },
+  {
+   "sids": [
+    "kernel/locking/lockdep.c::lookup_chain_cache",
+    "kernel/locking/lockdep.c::add_chain_cache",
+    "kernel/locking/lockdep.c::chain_block_buckets"
+   ],
+   "text": "Chain cache probes unlocked then locked; id blocks come from shared array via buckets with splitting; per-context miss counts prefer hard."
+  },
+  {
+   "sids": [
+    "kernel/locking/lockdep.c::mark_lock",
+    "kernel/locking/lockdep.c::task_wait_context",
+    "kernel/locking/lockdep.c::within"
+   ],
+   "text": "Marking idempotent with read flavor; wait derives from irq context; range overlap half-open with RCU zap/reclaim."
+  },
+  {
+   "sids": [
+    "kernel/locking/percpu-rwsem.c::percpu_down_write",
+    "kernel/locking/qspinlock.h::encode_tail",
+    "kernel/locking/rtmutex.c::__waiter_less"
+   ],
+   "text": "Percpu writer moves announced/contended/draining/held with CPU-sum quiescence; qspin tail packs CPU; RT orders by prio/stamp."
+  },
+  {
+   "sids": [
+    "kernel/locking/lockdep_proc.c::lc_show",
+    "kernel/locking/locktorture.c::torture_type",
+    "kernel/locking/locktorture.c::lock_torture_writer"
+   ],
+   "text": "Chains show irq label and keyed levels with exhaustion flag; torture binds CPUs, scales holds, aggregates totals/extremes."
+  },
+  {
+   "sids": [
+    "kernel/locking/rwsem.c::rwsem_rspin_threshold",
+    "kernel/locking/rwsem.c::rwsem_spin_on_owner.alt_2",
+    "kernel/locking/rwsem.c::rwsem_can_spin_on_owner.alt_2",
+    "kernel/locking/rwsem.c::rwsem_optimistic_spin.alt_2"
+   ],
+   "text": "Reader-owned spin deadline is now plus scaled delay capped at thirty readers with sparse sampling; expiry ends spinning. Alternate build disables owner spinning with eligibility false and attempts always failing."
+  },
+  {
+   "sids": [
+    "kernel/locking/rwsem.c::__down_read_common",
+    "kernel/locking/rwsem.c::__down_read.alt_1",
+    "kernel/locking/rwsem.c::__down_read_interruptible.alt_1",
+    "kernel/locking/rwsem.c::__down_read_killable.alt_1",
+    "kernel/locking/rwsem.c::__down_read_trylock.alt_1",
+    "kernel/locking/rwsem.c::__down_write_common",
+    "kernel/locking/rwsem.c::__down_write.alt_1",
+    "kernel/locking/rwsem.c::__down_write_killable.alt_1",
+    "kernel/locking/rwsem.c::__down_write_trylock.alt_1"
+   ],
+   "text": "Wrappers disable preemption, try fast acquire then enter slowpath in requested sleep state mapping failure to interrupt error. Shared try validates identity, compares count against failure mask and adds reader bias with acquire ordering on success marking owned. Try wrappers never sleep."
+  },
+  {
+   "sids": [
+    "kernel/locking/test-ww_mutex.c::test_aa",
+    "kernel/locking/test-ww_mutex.c::test_abba_work",
+    "kernel/locking/test-ww_mutex.c::test_abba.alt_2"
+   ],
+   "text": "Owned wound-wait mutex rejects self reacquire with failure or already-owned signal. Opposite-order pairs expose deadlock to at least one side when unresolved, else both succeed via release and slow reacquire. Held mutex must point back to its own context."
+  }
+ ],
+ "locks": [
+  {
+   "sids": [
+    "include/asm-generic/qrwlock.h::queued_read_lock",
+    "include/asm-generic/qrwlock.h::queued_read_unlock",
+    "include/asm-generic/qrwlock.h::queued_write_lock",
+    "include/asm-generic/qrwlock.h::queued_write_unlock"
+   ],
+   "text": "Readers add bias and unwind on writer bits; writers take empty to held; unlock reverses; contention reflects waiter lock."
+  },
+  {
+   "sids": [
+    "include/asm-generic/qspinlock.h::queued_spin_lock",
+    "include/asm-generic/qspinlock.h::queued_spin_trylock",
+    "include/asm-generic/qspinlock.h::queued_spin_unlock"
+   ],
+   "text": "Spin fast path compare-exchanges zero to locked; any nonzero sample fails try; release clears locked byte with release ordering."
+  },
+  {
+   "sids": [
+    "include/linux/rwlock_api_smp.h::__raw_read_lock",
+    "include/linux/rwlock_api_smp.h::__raw_write_lock",
+    "include/linux/seqlock.h::write_seqlock_irq",
+    "include/linux/seqlock.h::write_sequnlock_irqrestore"
+   ],
+   "text": "SMP rw paths disable preemption, track dependencies then use arch primitives; seqlock writers hold embedded spin across counter open and close."
+  },
+  {
+   "sids": [
+    "include/linux/mutex.h::mutex_trylock",
+    "include/linux/mutex.h::mutex_lock_interruptible",
+    "include/linux/bit_spinlock.h::bit_spin_lock",
+    "include/linux/bit_spinlock.h::bit_spin_unlock"
+   ],
+   "text": "Mutex offers plain, interruptible, killable and try forms; bit locks use test-set with ordered clear after validating the bit is held."
+  },
+  {
+   "sids": [
+    "include/linux/local_lock_internal.h::__local_lock.alt_1",
+    "include/linux/local_lock_internal.h::__local_unlock.alt_1",
+    "include/linux/local_lock_internal.h::__local_lock.alt_2",
+    "include/linux/local_lock_internal.h::__local_unlock.alt_2"
+   ],
+   "text": "Non-RT local locks mask preemption or irqs around dep acquire; RT disables migration around spin; unlock reverses in opposite order."
+  },
+  {
+   "sids": [
+    "include/linux/percpu-rwsem.h::percpu_down_read_internal",
+    "include/linux/percpu-rwsem.h::percpu_up_read",
+    "include/linux/seqlock.h::read_seqbegin_or_lock",
+    "include/linux/seqlock.h::done_seqretry"
+   ],
+   "text": "Percpu readers use fast per-CPU count while writer idle else slow path; optimistic seqlock open validates even input or releases owned spin."
+  },
+  {
+   "sids": [
+    "include/asm-generic/barrier.h::__smp_mb__before_atomic",
+    "include/asm-generic/barrier.h::__smp_mb__after_atomic",
+    "include/linux/lockdep.h::lock_acquire_exclusive",
+    "include/linux/lockdep.h::lock_acquire_shared"
+   ],
+   "text": "Before/after helpers order around atomic updates; store-release and load-acquire pair ordering with access; lockdep distinguishes exclusive and shared."
+  },
+  {
+   "sids": [
+    "include/linux/spinlock_api_smp.h::__raw_spin_lock",
+    "include/linux/spinlock_api_smp.h::__raw_spin_unlock",
+    "include/linux/spinlock_api_smp.h::__raw_spin_unlock_irqrestore",
+    "include/linux/spinlock_rt.h::spin_lock_nested"
+   ],
+   "text": "MP lock masks context, disables preemption, records dependency then spins try until held. Unlock records release then restores in reverse. RT nested validates outer."
+  },
+  {
+   "sids": [
+    "kernel/futex/core.c::futex_q_lock",
+    "kernel/futex/futex.h::double_lock_hb",
+    "kernel/futex/pi.c::pi_state_update_owner",
+    "kernel/futex/requeue.c::futex_requeue",
+    "kernel/futex/waitwake.c::futex_wake_op"
+   ],
+   "text": "Futex insert counts before lock; enqueue holds both buckets; double orders by address. PI bucket precedes wait lock; faults drop both then reacquire in order."
+  },
+  {
+   "sids": [
+    "kernel/locking/mutex.c::__mutex_lock_common",
+    "kernel/locking/ww_mutex.h::lock_wait_lock.alt_1",
+    "kernel/locking/rtmutex.c::rt_mutex_slowunlock",
+    "kernel/locking/rtmutex.c::mark_wakeup_next_waiter"
+   ],
+   "text": "Mutex queue and waiter lock guard irq; spinning needs no preempt. RT mark under irqsave; next-waiter dequeues top with preempt disabled and deferred wake."
+  },
+  {
+   "sids": [
+    "kernel/locking/lockdep.c::register_lock_class",
+    "kernel/locking/lockdep.c::lock_acquire",
+    "kernel/locking/lockdep.c::debug_show_all_locks"
+   ],
+   "text": "Graph/chain mutation holds graph lock with irqs off across validation; wrappers mask irqs and guard recursion; dumps/removal use RCU."
+  },
+  {
+   "sids": [
+    "kernel/locking/locktorture.c::torture_spin_lock_write_lock",
+    "kernel/locking/mutex.c::ww_mutex_unlock",
+    "kernel/locking/percpu-rwsem.c::percpu_rwsem_wait"
+   ],
+   "text": "Torture uses one global per family with central irq stash; ww detaches ctx then unlocks; percpu readers fence then sample marker."
+  },
+  {
+   "sids": [
+    "kernel/locking/qspinlock.h::clear_pending.alt_1",
+    "kernel/locking/rwbase_rt.c::__rwbase_read_lock",
+    "kernel/locking/percpu-rwsem.c::__percpu_down_read"
+   ],
+   "text": "Pending has byte/atomic forms with relaxed tail publish; rwbase/percpu slow paths hold inner lock with irqs masked and preempt controlled."
+  },
+  {
+   "sids": [
+    "kernel/locking/rwsem.c::rwsem_cond_wake_waiter",
+    "kernel/locking/rwsem.c::rwsem_downgrade_wake",
+    "kernel/locking/rwsem.c::__downgrade_write.alt_1"
+   ],
+   "text": "Wake selection under wait lock suppresses wake on writer bits, requests reader wake on reader bits, else wakes any waiter and clears nonspinnable. Downgrade swaps writer lock for reader bias with release ordering. Locks use interrupt-save with batched wakes delivered after release."
+  },
+  {
+   "sids": [
+    "kernel/locking/spinlock.c::BUILD_LOCK_OPS",
+    "kernel/locking/spinlock.c::__raw_spin_lock_irq_disable"
+   ],
+   "text": "Generic blocking template suppresses preemption and for interrupt-aware forms interrupts while polling try with relax until success; bottom-half form layers masking over interrupt-save. Dedicated interrupt-disable form uses same poll loop."
+  },
+  {
+   "sids": [
+    "kernel/locking/spinlock_rt.c::rt_spin_unlock"
+   ],
+   "text": "Realtime exclusive release drops dependency, reenables migration, releases base mutex fast then slow and exits read-side last to prevent free mid-release."
+  },
+  {
+   "sids": [
+    "kernel/locking/spinlock_debug.c::debug_spin_lock_after",
+    "kernel/locking/spinlock_debug.c::debug_spin_unlock",
+    "kernel/locking/spinlock_debug.c::do_raw_spin_lock",
+    "kernel/locking/spinlock_debug.c::do_raw_spin_unlock",
+    "kernel/locking/spinlock_debug.c::do_raw_spin_trylock",
+    "kernel/locking/spinlock_debug.c::__raw_spin_lock_init",
+    "kernel/locking/spinlock_debug.c::__rwlock_init"
+   ],
+   "text": "Debug init sets primitives unlocked with type magic and sentinel owner; success records processor and context with release validating tag locked state and identity before clearing."
+  }
+ ],
+ "pass": 1,
+ "phase_map": [
+  {
+   "anchor": "HB-KPAPER-001/hb-s5.p14",
+   "crown": "A",
+   "phase": "F0"
+  },
+  {
+   "anchor": "HB-KPAPER-001/hb-s5.p04",
+   "crown": "A",
+   "phase": "F1"
+  },
+  {
+   "anchor": "HB-KPAPER-001/hb-s5.p05",
+   "crown": "A",
+   "phase": "F4"
+  }
+ ],
+ "schema": "lx.dossier.v1",
+ "state_machines": [
+  {
+   "sids": [
+    "include/asm-generic/qrwlock.h::queued_read_trylock",
+    "include/asm-generic/qrwlock.h::queued_write_trylock",
+    "include/asm-generic/qrwlock.h::queued_read_unlock",
+    "include/asm-generic/qrwlock.h::queued_write_unlock"
+   ],
+   "text": "Rw counter cycles empty, reader counts, write-held and waiting mixes; only empty reaches write-held directly; interfered reader bias rolls back."
+  },
+  {
+   "sids": [
+    "include/linux/atomic/atomic-arch-fallback.h::raw_atomic_fetch_add_unless",
+    "include/linux/atomic/atomic-arch-fallback.h::raw_atomic_dec_if_positive",
+    "include/linux/atomic/atomic-arch-fallback.h::raw_atomic64_try_cmpxchg"
+   ],
+   "text": "Guarded updates observe, exit on guard failure, else conditionally store successor and retry on loss; failed compare refreshes expectation."
+  },
+  {
+   "sids": [
+    "include/linux/seqlock.h::raw_write_seqcount_begin",
+    "include/linux/seqlock.h::__scoped_seqlock_next",
+    "include/linux/percpu-rwsem.h::percpu_down_read_internal"
+   ],
+   "text": "Seqcount moves even-odd-even with barrier and invalidate jumps; percpu uses fast bias while idle; scoped reads escalate to locked on retry failure."
+  },
+  {
+   "sids": [
+    "include/linux/refcount.h::__refcount_sub_and_test",
+    "include/linux/futex.h::anon_1",
+    "include/linux/local_lock_internal.h::__local_trylock.alt_1"
+   ],
+   "text": "Refcounts move owned positive, released zero and saturated error; futex tasks move healthy, exiting, dead; local try sets marker only when clear."
+  },
+  {
+   "sids": [
+    "include/linux/spinlock_api_smp.h::__raw_spin_trylock",
+    "kernel/locking/mutex.c::__mutex_lock_common",
+    "include/linux/ww_mutex.h::ww_acquire_init",
+    "include/linux/ww_mutex.h::ww_acquire_done"
+   ],
+   "text": "MP try masks then tests; success stays held, failure unmasks. Mutex goes fast retry to spin to queued sleep with handoff. Ww context init to done to fini."
+  },
+  {
+   "sids": [
+    "kernel/locking/rtmutex.c::__rt_mutex_slowlock",
+    "kernel/locking/rtmutex.c::rt_mutex_slowunlock",
+    "kernel/futex/pi.c::attach_to_pi_owner",
+    "kernel/futex/pi.c::put_pi_state"
+   ],
+   "text": "RT slowpath retries, blocks ordered, fixes waiter flag and cleans on failure. Slow unlock queues highest with deferred wake. PI attach validates; final put recycles."
+  },
+  {
+   "sids": [
+    "kernel/futex/waitwake.c::__futex_wait",
+    "kernel/futex/requeue.c::futex_requeue_pi_prepare",
+    "kernel/futex/core.c::handle_futex_death",
+    "kernel/futex/core.c::futex_cleanup_begin"
+   ],
+   "text": "Futex wait holds bucket, sleeps until wake, timeout or signal, then maps outcome with spurious retry. Requeue prepare refuses ignored; death checks owner. Cleanup brackets exit."
+  },
+  {
+   "sids": [
+    "kernel/locking/lockdep.c::init_data_structures_once",
+    "kernel/locking/lockdep.c::__bfs",
+    "kernel/locking/lockdep.c::check_deadlock"
+   ],
+   "text": "Init once prepares lists/pools/chains; BFS walks with skip/match and weak suppression; deadlock checks report detected, safe, or skip."
+  },
+  {
+   "sids": [
+    "kernel/locking/lockdep.c::lockdep_hardirqs_on",
+    "kernel/locking/lockdep.c::mark_usage.alt_1",
+    "kernel/locking/lockdep_proc.c::iterate_lock_classes"
+   ],
+   "text": "Irq flags binary with redundant counts; acquire commits/merges or fails, release truncates/replays; proc walks dense class array."
+  },
+  {
+   "sids": [
+    "kernel/locking/lockdep_proc.c::lock_stat_open",
+    "kernel/locking/locktorture.c::torture_ww_mutex_lock",
+    "kernel/locking/rwbase_rt.c::rwbase_write_unlock"
+   ],
+   "text": "Lockstat snapshots/sorts/emits, clears on zero; ww walks triple with unwind/slowpath/reorder; RT release drains readers then unlocks."
+  },
+  {
+   "sids": [
+    "kernel/locking/qspinlock.c::queued_spin_lock_slowpath.alt_2",
+    "kernel/locking/qspinlock_paravirt.h::pv_wait_node",
+    "kernel/locking/percpu-rwsem.c::percpu_rwsem_wake_function"
+   ],
+   "text": "Qspin waits pending then queues/tail-waits/hands off; PV spins/halts/hashes/kicks; percpu wake grants readers or stays queued."
+  },
+  {
+   "sids": [
+    "kernel/locking/rwsem.c::rwsem_optimistic_spin.alt_1"
+   ],
+   "text": "Writer optimistic spin secures slot then observes owner; nonspinnable ends attempt. Each observation tries unqueued acquire with success ending as taken. Reader-owned starts bounded window with periodic expiry checks. Reschedule need aborts unless running writer; slot always released."
+  },
+  {
+   "sids": [
+    "kernel/locking/rwsem.c::rwsem_down_read_slowpath"
+   ],
+   "text": "Reader slowpath refuses stealing when multi-reader owned without writer lock, else steals when neither writer-locked nor handoff marking owned and waking queued readers if first. Otherwise enqueues, adjusts bias, sets waiter, checks conditional wake then sleeps until grant or abort with removal."
+  },
+  {
+   "sids": [
+    "kernel/locking/rwsem.c::rwsem_down_write_slowpath"
+   ],
+   "text": "Writer slowpath tries optimistic first returning on success. On failure enqueues, ensures waiter with minimal hold, then loops acquiring under wait lock and sleeping outside. Null owner after handoff retries without sleep; signals abort with removal while success clears blocker."
+  },
+  {
+   "sids": [
+    "kernel/locking/semaphore.c::___down_common",
+    "kernel/locking/semaphore.c::sem_del_waiter"
+   ],
+   "text": "Semaphore waiter links at tail or as sole head then sleeps with timeout. Interruption and expiry remove record with distinct errors; grant flag from releaser ends wait with success. Removal updates first-waiter pointer for empty sole and interior cases."
+  }
+ ],
+ "structs": [
+  {
+   "sids": [
+    "include/asm-generic/qspinlock_types.h::qspinlock",
+    "include/asm-generic/qrwlock_types.h::qrwlock",
+    "include/asm-generic/qrwlock.h::_QW_LOCKED",
+    "include/asm-generic/qrwlock.h::_QR_BIAS",
+    "include/asm-generic/qspinlock_types.h::_Q_LOCKED_MASK"
+   ],
+   "text": "Queued rwlock pairs atomic counter with waiter spinlock; queued spinlock packs locked, pending and tail into one 32-bit word with masks."
+  },
+  {
+   "sids": [
+    "include/asm-generic/atomic64.h::atomic64_t",
+    "include/linux/refcount_types.h::refcount_t",
+    "include/linux/refcount.h::REFCOUNT_MAX",
+    "include/linux/atomic/atomic-long.h::atomic_long_t.alt_1"
+   ],
+   "text": "Atomic64 wraps aligned signed 64-bit counter; refcount wraps signed atomic with max and saturated markers; long aliases by word size."
+  },
+  {
+   "sids": [
+    "include/linux/mutex_types.h::context_lock_struct.alt_1",
+    "include/linux/rtmutex.h::rt_mutex",
+    "include/linux/rwlock_types.h::rwlock_t.alt_1",
+    "include/linux/rwsem.h::context_lock_struct.alt_1",
+    "include/linux/semaphore.h::semaphore"
+   ],
+   "text": "Mutex, rt-mutex, rwlock, rwsem and semaphore store owner, wait queue with guard or rt base; unlocked is zero with low bit for writer."
+  },
+  {
+   "sids": [
+    "include/linux/seqlock_types.h::seqcount",
+    "include/linux/seqlock_types.h::seqlock_t",
+    "include/linux/seqlock.h::seqcount_latch_t"
+   ],
+   "text": "Seqcount holds one sequence word with optional dep; seqlock pairs it with spin; latch wraps one word for alternating updates."
+  },
+  {
+   "sids": [
+    "include/linux/futex.h::futex_key",
+    "include/linux/futex_types.h::futex_mm_data.alt_1",
+    "include/linux/futex_types.h::futex_unlock_cs_ranges.alt_1"
+   ],
+   "text": "Futex key unions shared, private and combined address views; mm state pairs private hash with bounded robust unlock ranges."
+  },
+  {
+   "sids": [
+    "include/linux/lockdep_types.h::lock_class",
+    "include/linux/lockdep_types.h::lockdep_map.alt_1",
+    "include/linux/lockdep_types.h::held_lock",
+    "include/linux/lockdep_types.h::MAX_LOCKDEP_SUBCLASSES"
+   ],
+   "text": "Lockdep class tracks dependencies and masks; maps hold key and wait state; held entries record sharing and stamps; subclass limit is eight."
+  },
+  {
+   "sids": [
+    "include/asm-generic/mcs_spinlock.h::mcs_spinlock",
+    "include/linux/osq_lock.h::optimistic_spin_queue",
+    "include/linux/lockref.h::lockref",
+    "include/linux/local_lock_internal.h::local_lock_t.alt_2"
+   ],
+   "text": "MCS nodes link successor with locked flag; optimistic queue holds tail; lockref unions word with spin plus count; RT local guards alias spin."
+  },
+  {
+   "sids": [
+    "include/linux/spinlock_types_raw.h::__RAW_SPIN_LOCK_INITIALIZER",
+    "include/linux/ww_mutex.h::ww_class",
+    "kernel/locking/osq_lock.c::osq_lock",
+    "kernel/locking/osq_lock.c::osq_unlock"
+   ],
+   "text": "Generic spin holds raw or RT base plus depmap; raw holds arch ticket with debug. Wound-wait class tracks stamps and task. OSQ uses encoded tail and per-cpu nodes."
+  },
+  {
+   "sids": [
+    "kernel/futex/futex.h::futex_hash_bucket",
+    "kernel/futex/futex.h::futex_pi_state",
+    "kernel/futex/futex.h::futex_q",
+    "include/uapi/linux/futex.h::robust_list_head",
+    "include/uapi/linux/futex.h::futex_waitv"
+   ],
+   "text": "Bucket has count, lock and chain; PI links mutex, owner, refcount and key; waiter links task, locks, key and PI. Robust head and waitv entry included."
+  },
+  {
+   "sids": [
+    "include/uapi/linux/futex.h::FUTEX_WAIT",
+    "include/uapi/linux/futex.h::FUTEX_WAITERS",
+    "kernel/futex/futex.h::FLAGS_SHARED.alt_1",
+    "kernel/futex/requeue.c::futex_q_init",
+    "kernel/locking/lock_events.c::lockevents"
+   ],
+   "text": "Futex ops 0-13 with private, clock and robust flags; waiters top bit, owner-died next, low 30 tid. Sizes mask 0x3; waiter states 0-5; per-CPU event counters."
+  },
+  {
+   "sids": [
+    "kernel/locking/lockdep.c::MAX_CIRCULAR_QUEUE_SIZE",
+    "kernel/locking/lockdep.c::lock_chains",
+    "kernel/locking/lockdep_internals.h::LOCK_USAGE_READ_MASK"
+   ],
+   "text": "BFS queue is 2**bits with invalid/full/match/nomatch codes; chains store key/ctx/depth/base; read/dir/state bits fixed."
+  },
+  {
+   "sids": [
+    "kernel/locking/lockdep.c::mark_held_locks",
+    "kernel/locking/lockdep.c::lockdep_init_map_type",
+    "kernel/locking/locktorture.c::lock_torture_cxt"
+   ],
+   "text": "Task holds array/depth/irq/chain/seq with per-slot class/refs/pin; descriptors cache classes; torture ctx holds workers/ops."
+  },
+  {
+   "sids": [
+    "kernel/locking/mutex.h::mutex_waiter",
+    "kernel/locking/qspinlock.h::qnode",
+    "kernel/locking/mutex.h::MUTEX_FLAG_WAITERS"
+   ],
+   "text": "Waiters link task/prio/deadline/ctx/mode/handoff with OSQ/MCS/PV nodes; mutex wait/handoff/pickup flags fixed."
+  },
+  {
+   "sids": [
+    "kernel/locking/semaphore.c::semaphore_waiter",
+    "kernel/locking/semaphore.c::__up"
+   ],
+   "text": "Semaphore waiter holds queue linkage, waiting context and completion marker set before wakeup."
+  },
+  {
+   "sids": [
+    "kernel/locking/rwsem.c::RT_MUTEX_BUILD_MUTEX",
+    "kernel/locking/ww_mutex.h::MUTEX.alt_1",
+    "kernel/locking/ww_mutex.h::MUTEX_WAITER.alt_1",
+    "kernel/locking/ww_mutex.h::WAIT_LOCK.alt_1",
+    "kernel/locking/ww_mutex.h::MUTEX.alt_2",
+    "kernel/locking/ww_mutex.h::MUTEX_WAITER.alt_2",
+    "kernel/locking/ww_mutex.h::WAIT_LOCK.alt_2",
+    "kernel/locking/ww_rt_mutex.c::RT_MUTEX_BUILD_MUTEX",
+    "kernel/locking/ww_rt_mutex.c::WW_RT"
+   ],
+   "text": "Build selectors choose realtime mutex construction for rwsem and spinlocks. Aliases map generic mutex waiter and wait-lock names to plain or realtime counterparts with nested selection."
+  }
+ ],
+ "stubs": [
+  {
+   "sid": "include/linux/preempt.h::preempt_disable.alt_1",
+   "state": "stub",
+   "target_dossier": "D01"
+  },
+  {
+   "sid": "include/linux/sched.h::set_current_state",
+   "state": "stub",
+   "target_dossier": "D01"
+  },
+  {
+   "sid": "include/linux/irqflags.h::local_irq_save.alt_1",
+   "state": "stub",
+   "target_dossier": "D04"
+  },
+  {
+   "sid": "include/linux/jiffies.h::time_after",
+   "state": "stub",
+   "target_dossier": "D04"
+  },
+  {
+   "sid": "include/linux/rcupdate.h::rcu_dereference",
+   "state": "stub",
+   "target_dossier": "D02"
+  },
+  {
+   "sid": "include/linux/percpu-defs.h::this_cpu_ptr.alt_1",
+   "state": "stub",
+   "target_dossier": "D05"
+  },
+  {
+   "sid": "include/linux/mm.h::fixup_user_fault",
+   "state": "stub",
+   "target_dossier": "D06"
+  },
+  {
+   "sid": "include/linux/smp.h::smp_processor_id.alt_1",
+   "state": "stub",
+   "target_dossier": "D12"
+  },
+  {
+   "sid": "include/linux/list.h::list_add",
+   "state": "stub",
+   "target_dossier": "D14"
+  },
+  {
+   "sid": "include/linux/compiler.h::barrier",
+   "state": "stub",
+   "target_dossier": "D17"
+  }
+ ]
+}

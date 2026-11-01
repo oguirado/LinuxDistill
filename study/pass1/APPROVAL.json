@@ -1,0 +1,25 @@
+{
+ "schema": "lxroom.approval.v1",
+ "pass": 1,
+ "status": "APPROVED (operator ruling 2026-11-01)",
+ "ruling": "operator: 'en caso de que pase como aprobado (no debemos ser tan exigentes porque creo que ya se realizo un trabajo correcto)'",
+ "evidence": {
+  "dossiers": 17,
+  "findings": 1081,
+  "schema": "17/17",
+  "gpl_spec": "clean",
+  "citations_resolved": "5971/5973",
+  "argon_round2": {
+   "n": 136,
+   "SUPPORTED": 64,
+   "PARTIAL": 71,
+   "UNSUPPORTED": 1
+  }
+ },
+ "known_issues": [
+  "D11: 2 citations with hallucinated path arch/arm64/kernel/mm/ (correct arch/arm64/mm/)",
+  "D14: 1 UNSUPPORTED finding",
+  "~52% of sampled findings PARTIAL (minor detail errors or overstatements); verdicts kept in argon2/REVIEW.json and travel with the findings"
+ ],
+ "dossiers_dir": "finals_v2/dossiers"
+}

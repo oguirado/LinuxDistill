@@ -1,0 +1,641 @@
+{
+ "dossier": "D01",
+ "entry_points": [
+  {
+   "sids": [
+    "include/linux/sched.h::scheduler_ipi",
+    "include/linux/sched.h::set_need_resched_current",
+    "include/linux/sched.h::cond_resched",
+    "include/linux/sched.h::cond_resched_lock",
+    "include/linux/sched.h::need_resched"
+   ],
+   "text": "Remote reschedule IPI, current resched flag, conditional yields with and without lock, and pending test."
+  },
+  {
+   "sids": [
+    "kernel/sched/core.c::migration_cpu_stop",
+    "kernel/sched/core.c::push_cpu_stop",
+    "kernel/sched/core.c::migrate_swap",
+    "kernel/sched/core.c::wake_up_state",
+    "kernel/sched/syscalls.c::__sched_setaffinity"
+   ],
+   "text": "Migration and push stoppers, paired swap, state-filtered wakeup and affinity install."
+  },
+  {
+   "sids": [
+    "kernel/sched/core.c::__pick_next_task",
+    "kernel/sched/fair.c::sched_balance_newidle",
+    "kernel/sched/core.c::schedule_tail",
+    "kernel/sched/core.c::context_switch",
+    "kernel/sched/topology.c::build_sched_domains",
+    "kernel/sched/core.c::sched_init_smp"
+   ],
+   "text": "Tail fixup, class-ordered pick with idle fallback, newly-idle balance, domain build and SMP init."
+  },
+  {
+   "sids": [
+    "kernel/sched/ext/ext.c::enqueue_task_scx",
+    "kernel/sched/ext/ext.c::dequeue_task_scx",
+    "kernel/sched/ext/ext.c::wakeup_preempt_scx"
+   ],
+   "text": "SCX join marks runnable, leave clears; yields end slices; same-class ignored."
+  },
+  {
+   "sids": [
+    "kernel/sched/fair.c::enqueue_task_fair",
+    "kernel/sched/fair.c::dequeue_task_fair",
+    "kernel/sched/fair.c::find_energy_efficient_cpu"
+   ],
+   "text": "Fair join and leave via hierarchy; energy-aware placement picks efficient CPU."
+  },
+  {
+   "sids": [
+    "kernel/sched/rt.c::enqueue_task_rt",
+    "kernel/sched/rt.c::dequeue_task_rt",
+    "kernel/sched/rt.c::select_task_rq_rt",
+    "kernel/sched/rt.c::pick_task_rt"
+   ],
+   "text": "RT join and leave update accounting and pushable; placement redirects; pick highest."
+  }
+ ],
+ "exports": [
+  {
+   "sids": [
+    "include/linux/sched.h::task_nice",
+    "include/linux/sched.h::set_task_comm",
+    "include/linux/sched.h::get_task_comm",
+    "include/linux/sched.h::set_tsk_need_resched",
+    "include/linux/sched.h::test_tsk_need_resched",
+    "include/linux/sched.h::is_idle_task",
+    "include/linux/sched.h::set_task_cpu",
+    "include/linux/sched/task.h::get_task_struct",
+    "include/linux/sched/task.h::put_task_struct"
+   ],
+   "text": "Task identity, niceness, command name, reschedule flags, idle test, CPU field and lifetime refs."
+  },
+  {
+   "sids": [
+    "kernel/sched/completion.c::complete",
+    "kernel/sched/completion.c::wait_for_completion",
+    "kernel/sched/completion.c::try_wait_for_completion",
+    "kernel/sched/wait.c::__wake_up",
+    "kernel/sched/core.c::wake_up_state",
+    "kernel/sched/core.c::wake_up_process",
+    "kernel/sched/core.c::wake_q_add"
+   ],
+   "text": "Completions with single wake or broadcast; waits with timeout; runqueue wakeups and deferred queue add."
+  },
+  {
+   "sids": [
+    "kernel/sched/core.c::__set_cpus_allowed_ptr",
+    "kernel/sched/syscalls.c::__sched_setscheduler",
+    "kernel/sched/core.c::sched_fork",
+    "kernel/sched/core.c::wake_up_new_task",
+    "kernel/sched/core.c::pick_next_task.alt_1",
+    "kernel/sched/core.c::sched_init_smp",
+    "kernel/sched/deadline.c::sched_dl_overflow"
+   ],
+   "text": "Affinity and policy install, fork init, new-task placement, next-task pick, SMP boot and deadline admission."
+  },
+  {
+   "sids": [
+    "kernel/sched/cpufreq_schedutil.c::sugov_effective_cpu_perf",
+    "kernel/sched/fair.c::effective_cpu_util",
+    "kernel/sched/syscalls.c::sched_setattr_nocheck",
+    "kernel/sched/cpufreq_schedutil.c::cpufreq_default_governor"
+   ],
+   "text": "Perf bounds with headroom; util folds RT DL with IRQ scaling; unchecked setattr; default governor query."
+  },
+  {
+   "sids": [
+    "kernel/sched/ext/ext.c::scx_consume_dispatch_q",
+    "kernel/sched/ext/ext.c::scx_dsq_insert_commit",
+    "kernel/sched/ext/ext.c::scx_dsq_move"
+   ],
+   "text": "Consume moves one to local with retry; staged insert bounds and bypasses; moves tolerate null and migrated."
+  },
+  {
+   "sids": [
+    "kernel/sched/wait.c::__init_waitqueue_head",
+    "kernel/sched/wait.c::add_wait_queue",
+    "kernel/sched/wait.c::finish_wait",
+    "kernel/sched/wait_bit.c::wake_up_bit"
+   ],
+   "text": "Wait heads init, insert and remove, sleep setup and finish; bit waits address word with wake."
+  },
+  {
+   "sids": [
+    "kernel/sched/psi.c::psi_trigger_create",
+    "kernel/sched/psi.c::psi_show",
+    "kernel/sched/ext/sub.c::scx_bpf_sub_dispatch",
+    "kernel/sched/fair.c::sched_cpu_util"
+   ],
+   "text": "PSI triggers lifecycle with status show; parent dispatches child; util helper folds load."
+  }
+ ],
+ "extracts": [
+  "0028d063966c6acf98c8ac012de8599e83971a3efe34942dc28d42d58c0660ef",
+  "0338ff7f8233c416759b422905c4618c05fcf98a9e2c745afd4e7e559ec45c93",
+  "04b7bbd8620ead1c4d5fcd45aff8d463e9df8325f0d9c0c1b8cede901cdb838e",
+  "07cce4a5d883c1b0c8179d64d64b9fd5cba08720e74e3451eb6681945c5c7c33",
+  "098f0c976890056106c1826f2b1b28d3e4f86d23d4482f0e77c02af538bf77b0",
+  "132b7fb0c6e0509a2fd419f7c1d94e45ee48ecaf3cbf12f68b98b8735c107e24",
+  "148d56237210c4d176a1651ca4a302ab34e1363210ebde8e5e48a8659615615f",
+  "15dc703e0e9d1058b6559832fd63150204903ffd907f494567cafa24e5540a13",
+  "19c87797d9dcd014423ff00f8e2749965f44be7817fd97fb1d9dfa882575d0e2",
+  "2629350258da9401f6f2e229f2d054f4511aa1ff799745637ea7cc756cc86b37",
+  "29d6b5c994968a0eeb66db4b0d01d713077d0e56f951f837a3a67c07a2e9b3ca",
+  "29f05392f5a96cbeb76a8eeea097a339ff3dd2d553c38a6eb9481fae5fe37ce7",
+  "2a2a504ec751a529a517c98a36f520a42ed868b8c2f2d075def3c4e8658c365c",
+  "2a8a23ea932bfd5f09e7fbca893f431ffc149313d0950f52e471d7ae0db5fccf",
+  "2dd485723f2d4d197a89b45d85421ae8c6473ab98adc49a3a24e933859232574",
+  "2fc2b8d2c98592a00ad4f1e5a33af74f1a3cf38d18abbc81994bcc29ebb77031",
+  "3113b9a3bdbfe1e13e508b42d5ff42cd45b7a30e3584415eef272ba6652feeff",
+  "33ddb44768519df0a6b9110deefd6860cba6831a7a359af477f4a06bea9f7ab4",
+  "359e04c0e7a5d266d1f6ec0605cf70e3b6e0dbc70a6c7aaa2815cbb0b43a3672",
+  "361d23b782eb41d32ca26c43da312b886f5fe398508713cdeaf154f11a176a79",
+  "389ad1b5abbccdc23a7006664d2209587877b7a93e7b3d2496994671133e0e93",
+  "3acbf119aa1b14bca60502ba87ab7dac6e7d7a3481d1f46b59c2c99851f2302b",
+  "3b7dc252da6d1af75f8e734dd92c627e2ecc4173e7d423eba30c43e74f293379",
+  "3bd55b9171db2febf29f9de8d7938d3692ae59989a4c25760986bf6041f2f337",
+  "3dbee066133c28ac30521748f2896aa78b6b9506b55a45443abf3c9e5d936906",
+  "403f93476c06fd08bb00303d731d273a0523085cfb215fe8e55aed7f51ead6ad",
+  "4190a8f28c9dcbfcb54cd6805e10f9950a08ee5b0ca648cd9a1aa11cd847c2ec",
+  "41edeea364a50b23680ae07c52d1befedb85736dc9b95ca4507964f8d8993866",
+  "439d4bedb59559008375b8fbd8c5a8277c71599e4db8c98f31258e0d712eeed2",
+  "45e47ccbf09af604d0bb9a7183ee1178a6dd568774b7c4b0c8e5624883654f22",
+  "46730ba6f4a050e661d78791adde77bf869b5fcd3da23d1ed63f70cbf0fe3c4b",
+  "48610f05eeb05fe6ba2e4b5725bef649ea678609550e2475a8f53069ebff303c",
+  "4f9ffe63e97539d15d9feb148f5b25a55f0a3252932558f0edc55b78e27def88",
+  "50c2a8e3d59af15df0dee6b0667985ed8e702ee2d6b3ffc6c94311e56a02585e",
+  "521f626ec4ef4f0fc77413d83dd0f7adeb0adb891471e02702a88a6770c2295d",
+  "560b0b140945f69d4a3eb31d187b72e84ed8f944f90b35d0bb81ba01115b1287",
+  "5d28c645cc9967ace1303910a0548bbd562506396fc9128f5b614e8f63e5faed",
+  "63d9ef2e4ae8e29ce2f16d1902677457b3516e738eadf031f38f6af07c899a5f",
+  "665268f84ca88fba851dbe8170cfc8a9a6a661d78858ab94d8169d5d567b29f4",
+  "66c29da151fb0af1d7e63c0a87706851c343d54b20e0434476158fc465542f00",
+  "6847c09c49f380e31053ab6e912f8af0c803b4364b14fbfd9aed21cfb2cbf28e",
+  "6fdc41e4fd7995db12bfb44a22455e6f260b3632d04eac803faa9090f6c39429",
+  "72f51b2465d3845e1639f6825c7eb87f3ce5d344fe7dab65812bd30889b8462d",
+  "78bb8a2b07d3739745398eece76e30b78c695def275a5d2f9d513347aa1203dc",
+  "79dad2433d930b403ef472e69ebd1e7625ee31ad81f645bae057c30abfbcdb33",
+  "7fc6f6508041b27fa46e544331a005b83f801ed65756a3bf4a381708ce831ccc",
+  "809ab3247a1d130b5ab13e2b1a5e46b618909cf2e1a38420813025f91f315dc4",
+  "839f0864b49f79701777e61a95949871e9f55d5be3b74fbc56b1389784fb9036",
+  "86665adb003c117161c477e0a095544d68ea244b664c054b8cd9bb415fafb2a9",
+  "8831d579b8e0014d3b21796d1bee7b65423dfb32c6d116a83eb48e85d9682ccb",
+  "8930271f90bcebfa3bc32f01815e842d8c927497ab6ae1a92072d66b3c15075b",
+  "99822d0af0e4bddfad0fdb6039204baa3ac98633287f143e9f44f68c1076050d",
+  "9c9f01225e860bf7f3904ed3bd0653503effa2dfd3ef52b8374b4adcc60713bd",
+  "9e05ce665eda04d7f2949867d37c1479c60ce39836711e45f503a2d1580750df",
+  "a11274887a4971e30cb7093bba6baa6c518d8e57d3825b07a003a3bb14ccd761",
+  "a4af877326df6be218927f771e25123ea755fb25ae2f23e384a2e3195f4ed7b9",
+  "a61939a87a00076e1ab4e0d3d729af512aefbd4e4bebbf18335f8103baa2fd73",
+  "a8cdf2ab0437db5f417cc3b160cc4fd0e8d0e13d995cec93a9338eea6855d2d2",
+  "a93cc2060e9d099464aca01583639832d88ea199446ed1ca7068e17b02f8b222",
+  "a999ec8c2950b92de57ab3b53b15b6a67e9834b999aaa63db55263bb60761c3f",
+  "ab0786f76773348487ea60311ae9e01977163f03759c63f391eb2d33d64da40a",
+  "af4fb10483659ee72f495fdd6ae883285b5867f22a19fea94efa42559be77dc8",
+  "b0d027d2efb8ec3981980efa06c2436e6fcc6212d7d3ad4d78aadd481e47bff5",
+  "b16b2876795a2c999f73d89576f5d8aca72122e335d36ccdb40e20087cdb0607",
+  "b923696c4e7ea4b61ff140aec6f3ed05d3e03143cc631f13c40b902015496939",
+  "bbb4723a67642f6ae83320d67d13bdd4c82589ccc256a931d9a0c4ea703faa01",
+  "bbd95dfefb05ed1119e1a34987891c18d1c475150f49aa9ae7bc60b33437a340",
+  "cac1bd79084fc76b0b2575d405452cb9aac5152363068cf227bbf8f16b8fac0c",
+  "ce9f9ee6201c12a7ec7a215650cb57cb89e418b3fa6e716fbb39ceebf276a4e9",
+  "d06616ddbade3b94049b4478c63645a40a4738d7a852a3a942aae2441ac10690",
+  "d2c48e2ac01a63eb3ee352f3269dca66a11b792686fa60fd514a988341e75c09",
+  "d53175ad66b98a61f5f45212b068f1408bde01444632c960dacd09ad63c4e64a",
+  "d5c3ec876a5260198e1573ff872c0403256e911974da0ab33f5d14df73922a1b",
+  "d9592edc9cfb17d223cbffcd77764fd8a6282882dbfae6890c54860a3554bc1f",
+  "dddbe8286e0f2ba1aedfde89d7e93f564b0537a5446d9782dfe19e7fc8413e2e",
+  "de45c31926ac63474fe44c1a47055317d64608294b827620f2b746e8a571be52",
+  "e1cd73f625ba51a379136b96706d242b378dae2a6e617a79219a1869685b67c3",
+  "e39facd7ec4156bb7ff3364b9c5e128a80d7354ffecf4d9aa870631df4a34398",
+  "e63804d62e57aca3fdc6e2e7ce56530009b3059a85efab30b27213fa816d06dd",
+  "e658dc8d5f4c9d272aae6531538aeaff2f06d17c8bd9603f2ed6ffef4beb6887",
+  "eb20a10cd3dba80f4b989dad1548bde954507f60a8c5f4679549a287eb29d3f6",
+  "f0aaf068de2a0d6b8c603dcea5f906bfc579081c0c7010d666a8d0583f156f64",
+  "f0f72d58dac369516a5ddac17d95b2e0afe9d48fcc8c200d3b36923a59eeb158",
+  "f52b980e5fa53a2d6f25b02d388db4a6d2ebd6bb04f1bcd8eb4c7328aa92d847",
+  "f5d8b880f145ff8a9cb01a50f73d471d8b4fda331d135205e5c4ac92fa8face2",
+  "fc11ed4f076cac7633537f73cd83636b26393a21dcd9478061a2b8fa3677d931",
+  "fc1940b034ffab576e8d029f5e6ac1d0b9e5a224381e9055d767f3875ff12ab3",
+  "fc1bd3b0cc0f838937c178e2741a69f69b6aa93beb7323e0804666a9b85cc1a5",
+  "fce0fa475524840e8fd3a0e7cb3dc024ebd16592379ee53e59054c3a5868274e"
+ ],
+ "gpl_spec": "PASS",
+ "hazards": [
+  {
+   "sids": [
+    "include/linux/preempt.h::PREEMPT_BITS",
+    "include/linux/preempt.h::PREEMPT_MASK",
+    "include/linux/sched.h::SCHED_CAPACITY_SCALE",
+    "include/linux/sched.h::MAX_SCHEDULE_TIMEOUT",
+    "include/linux/sched.h::TASK_RUNNING",
+    "include/linux/sched.h::TASK_INTERRUPTIBLE",
+    "include/linux/sched.h::TASK_UNINTERRUPTIBLE",
+    "include/linux/sched.h::TASK_DEAD"
+   ],
+   "text": "ABI fixes preempt layout, capacity scale, timeout value and core task states."
+  },
+  {
+   "sids": [
+    "include/linux/sched/loadavg.h::FSHIFT",
+    "include/linux/sched/loadavg.h::FIXED_1",
+    "include/linux/sched/prio.h::MAX_NICE",
+    "include/linux/sched/prio.h::MIN_NICE",
+    "include/linux/sched/prio.h::MAX_RT_PRIO",
+    "include/linux/sched/rt.h::RR_TIMESLICE",
+    "kernel/sched/sched.h::rq_pin_lock",
+    "kernel/sched/core.c::wait_task_inactive",
+    "kernel/sched/core.c::__task_needs_rq_lock"
+   ],
+   "text": "Fixed-point load, nice and realtime bounds, slice length; torn reads and post-release touch corrupt."
+  },
+  {
+   "sids": [
+    "kernel/sched/core.c::__might_sleep",
+    "kernel/sched/core.c::__might_resched",
+    "kernel/sched/core.c::__cant_sleep",
+    "kernel/sched/core.c::context_switch",
+    "kernel/sched/ext/ext.c::scx_set_task_state",
+    "kernel/sched/deadline.c::start_dl_timer",
+    "kernel/sched/core.c::tg_set_bandwidth"
+   ],
+   "text": "Sleep and migration misuse reported; switch needs barriers; bad SCX transitions and past timers warn."
+  },
+  {
+   "sids": [
+    "kernel/sched/cpufreq_schedutil.c::sugov_start",
+    "kernel/sched/deadline.c::find_later_rq",
+    "kernel/sched/sched.h::get_push_task"
+   ],
+   "text": "Publish hooks after records cleared; later rejects pinned; refs held during search."
+  },
+  {
+   "sids": [
+    "kernel/sched/ext/ext.c::destroy_dsq",
+    "kernel/sched/ext/ext.c::scx_sched_free_rcu_work",
+    "kernel/sched/ext/ext.c::scx_dump_cpu"
+   ],
+   "text": "Destroy refuses non-empty and defers free under RCU; teardown after inactivity; dump skips on overflow."
+  },
+  {
+   "sids": [
+    "kernel/sched/fair.c::LBF_ALL_PINNED",
+    "kernel/sched/fair.c::LBF_ACTIVE_LB",
+    "kernel/sched/fair.c::MAX_PINNED_INTERVAL",
+    "kernel/sched/fair.c::max_load_balance_interval"
+   ],
+   "text": "Balance flags and pinned intervals bound retry and batch."
+  }
+ ],
+ "invariants": [
+  {
+   "sids": [
+    "include/linux/preempt.h::in_atomic",
+    "include/linux/preempt.h::in_interrupt",
+    "include/linux/sched.h::task_is_running",
+    "include/linux/sched.h::task_is_runnable",
+    "include/linux/sched/deadline.h::dl_prio",
+    "include/linux/sched/rt.h::rt_prio",
+    "include/linux/sched/prio.h::NICE_TO_PRIO",
+    "include/linux/sched/loadavg.h::calc_load"
+   ],
+   "text": "Atomic and interrupt context from counters; running versus queued; deadline and realtime cutoffs; nice mapping."
+  },
+  {
+   "sids": [
+    "kernel/sched/core.c::try_to_wake_up",
+    "kernel/sched/core.c::set_task_cpu",
+    "kernel/sched/core.c::is_cpu_allowed",
+    "kernel/sched/core.c::select_fallback_rq",
+    "kernel/sched/core.c::sched_move_task",
+    "kernel/sched/core.c::move_queued_task"
+   ],
+   "text": "Wakeups prefer current then validate state and affinity; grouping resolves cgroup then autogroup; moves under lock."
+  },
+  {
+   "sids": [
+    "kernel/sched/sched.h::valid_policy",
+    "kernel/sched/sched.h::dl_policy",
+    "kernel/sched/deadline.c::__dl_overflow",
+    "kernel/sched/core.c::tg_set_bandwidth",
+    "kernel/sched/core.c::__cfs_schedulable",
+    "kernel/sched/topology.c::sd_degenerate",
+    "kernel/sched/topology.c::topology_span_sane",
+    "kernel/sched/core.c::sched_can_stop_tick"
+   ],
+   "text": "Policies split fair, realtime, deadline and ext; bandwidth and schedulability checked; degenerate domains pruned."
+  },
+  {
+   "sids": [
+    "kernel/sched/cpufreq_schedutil.c::sugov_update_next_freq",
+    "kernel/sched/cpufreq_schedutil.c::get_next_freq",
+    "kernel/sched/cpufreq_schedutil.c::get_capacity_ref_freq",
+    "kernel/sched/cpufreq_schedutil.c::sugov_next_freq_shared"
+   ],
+   "text": "Commit on change or force; ref prefers arch max with headroom; shared keeps max."
+  },
+  {
+   "sids": [
+    "kernel/sched/cputime.c::account_user_time",
+    "kernel/sched/cputime.c::account_system_time",
+    "kernel/sched/cputime.c::account_steal_time",
+    "kernel/sched/cputime.c::task_cputime"
+   ],
+   "text": "User system steal advance counters; steal clamps; observation adds pending."
+  },
+  {
+   "sids": [
+    "kernel/sched/deadline.c::__dl_less",
+    "kernel/sched/deadline.c::pick_next_dl_entity",
+    "kernel/sched/deadline.c::pick_next_pushable_dl_task",
+    "kernel/sched/deadline.c::DL_MAX_TRIES"
+   ],
+   "text": "Earlier deadline wins; pushable first migratable non-running; retries bounded."
+  },
+  {
+   "sids": [
+    "kernel/sched/fair.c::max_vruntime",
+    "kernel/sched/fair.c::min_vruntime",
+    "kernel/sched/fair.c::__entity_less",
+    "kernel/sched/fair.c::__enqueue_entity"
+   ],
+   "text": "Fair orders by vruntime with cached min; enqueue folds and guards early."
+  },
+  {
+   "sids": [
+    "kernel/sched/rt.c::inc_rt_tasks",
+    "kernel/sched/rt.c::dec_rt_tasks",
+    "kernel/sched/rt.c::rt_set_overload",
+    "kernel/sched/rt.c::rt_clear_overload"
+   ],
+   "text": "RT counts aggregate at top; first insert sets overload, last clears."
+  }
+ ],
+ "locks": [
+  {
+   "sids": [
+    "kernel/sched/sched.h::rq_lock_irq",
+    "kernel/sched/sched.h::rq_pin_lock",
+    "kernel/sched/sched.h::rq_unpin_lock",
+    "kernel/sched/sched.h::rq_unlock_irq",
+    "kernel/sched/core.c::raw_spin_rq_lock_nested",
+    "kernel/sched/sched.h::lockdep_assert_rq_held"
+   ],
+   "text": "Runqueue take disables interrupts, pins, validates callbacks; release invalidates and restores interrupts."
+  },
+  {
+   "sids": [
+    "kernel/sched/sched.h::task_rq_lock",
+    "kernel/sched/core.c::_task_rq_lock",
+    "kernel/sched/core.c::double_rq_lock",
+    "kernel/sched/core.c::sched_core_lock",
+    "include/linux/sched/task.h::task_lock"
+   ],
+   "text": "Task runqueue pin revalidates CPU on migration; double lock orders by core then CPU; short task lock."
+  },
+  {
+   "sids": [
+    "kernel/sched/core.c::splice_balance_callbacks",
+    "kernel/sched/wait.c::__wake_up_common_lock",
+    "kernel/sched/completion.c::__wait_for_common",
+    "kernel/sched/core.c::cfs_constraints_mutex",
+    "kernel/sched/core.c::tg_set_cfs_bandwidth",
+    "include/linux/sched/signal.h::unlock_task_sighand"
+   ],
+   "text": "Balance callbacks splice under lock then run after release; bandwidth under constraints mutex; sighand IRQ-safe."
+  },
+  {
+   "sids": [
+    "kernel/sched/cpufreq_schedutil.c::sugov_update_shared",
+    "kernel/sched/cpufreq_schedutil.c::sugov_work",
+    "kernel/sched/cpufreq_schedutil.c::sugov_limits",
+    "kernel/sched/cpufreq_schedutil.c::sugov_kthread_stop"
+   ],
+   "text": "Shared under raw spinlock; handler snapshots irq-safe then driver under mutex; work once."
+  },
+  {
+   "sids": [
+    "kernel/sched/sched.h::double_lock_balance",
+    "kernel/sched/deadline.c::dl_task_offline_migration",
+    "kernel/sched/deadline.c::find_lock_later_rq",
+    "kernel/sched/deadline.c::migrate_task_rq_dl"
+   ],
+   "text": "Paired rq ordered irq-off with revalidation; offline migration adds bandwidth lock."
+  },
+  {
+   "sids": [
+    "kernel/sched/ext/ext.c::kick_one_cpu",
+    "kernel/sched/ext/ext.c::scx_dsq_move",
+    "kernel/sched/ext/ext.c::kick_sync_wait_bal_cb"
+   ],
+   "text": "Kick and move take target rq irq-saved nesting dsq lock; waiters drop rq while spinning."
+  },
+  {
+   "sids": [
+    "kernel/sched/sched.h::_raw_spin_rq_lock_irqsave",
+    "kernel/sched/sched.h::_this_rq_lock_irq",
+    "kernel/sched/sched.h::double_lock",
+    "kernel/sched/sched.h::double_raw_lock",
+    "kernel/sched/sched.h::rt_bandwidth"
+   ],
+   "text": "Local rq uses irq-saving raw acquire; paired locks order by address; bandwidth nests inside."
+  }
+ ],
+ "pass": 1,
+ "phase_map": [
+  {
+   "anchor": "HB-KPAPER-001/hb-s5.p14",
+   "crown": "A",
+   "phase": "F0"
+  },
+  {
+   "anchor": "HB-KPAPER-001/hb-s5.p04",
+   "crown": "A",
+   "phase": "F1"
+  },
+  {
+   "anchor": "HB-KPAPER-001/hb-s5.p05",
+   "crown": "A",
+   "phase": "F4"
+  }
+ ],
+ "schema": "lx.dossier.v1",
+ "state_machines": [
+  {
+   "sids": [
+    "include/linux/preempt.h::preempt_disable.alt_1",
+    "include/linux/preempt.h::preempt_enable.alt_1",
+    "include/linux/preempt.h::preempt_count_add",
+    "include/linux/preempt.h::preempt_count_sub",
+    "include/linux/sched.h::__migrate_disable.alt_1",
+    "include/linux/sched.h::__migrate_enable.alt_1"
+   ],
+   "text": "Preempt and migration counts rise and fall with barriers; checked enables may reschedule."
+  },
+  {
+   "sids": [
+    "kernel/sched/core.c::schedule",
+    "kernel/sched/core.c::__schedule_loop",
+    "kernel/sched/core.c::context_switch",
+    "kernel/sched/core.c::prepare_task",
+    "kernel/sched/core.c::finish_task_switch",
+    "kernel/sched/core.c::do_balance_callbacks"
+   ],
+   "text": "Schedule loops while work pending; switch claims CPU, samples state, releases previous and reaps dead."
+  },
+  {
+   "sids": [
+    "include/linux/wait.h::___wait_event",
+    "include/linux/wait.h::__wait_event",
+    "kernel/sched/completion.c::do_wait_for_common",
+    "kernel/sched/ext/ext.c::scx_set_task_state",
+    "kernel/sched/ext/ext.c::__scx_enable_task",
+    "kernel/sched/deadline.c::enqueue_dl_entity",
+    "kernel/sched/deadline.c::replenish_dl_entity"
+   ],
+   "text": "Waits loop prepare, test, sleep and finish; completions consume; SCX and deadline entities progress states."
+  },
+  {
+   "sids": [
+    "kernel/sched/cpufreq_schedutil.c::sugov_init",
+    "kernel/sched/cpufreq_schedutil.c::sugov_exit",
+    "kernel/sched/cpufreq_schedutil.c::sugov_stop"
+   ],
+   "text": "Init allocates and unwinds on fail; exit drops refs and frees; stop removes and syncs."
+  },
+  {
+   "sids": [
+    "kernel/sched/ext/ext.c::scx_root_enable_workfn",
+    "kernel/sched/ext/ext.c::scx_root_disable",
+    "kernel/sched/ext/ext.c::bpf_scx_reg"
+   ],
+   "text": "Enable moves disabled enabling enabled with task states; disable bypasses drains and exits."
+  },
+  {
+   "sids": [
+    "kernel/sched/idle.c::do_idle",
+    "kernel/sched/idle.c::cpuidle_idle_call",
+    "kernel/sched/idle.c::cpu_idle_poll",
+    "kernel/sched/idle.c::play_idle_precise"
+   ],
+   "text": "Idle sleeps then schedules; poll and precise modes with enter exit accounting."
+  }
+ ],
+ "structs": [
+  {
+   "sids": [
+    "include/linux/sched.h::sched_param",
+    "include/linux/sched.h::load_weight",
+    "include/linux/sched.h::sched_avg",
+    "include/linux/sched.h::sched_entity",
+    "include/linux/sched.h::sched_rt_entity",
+    "include/linux/sched.h::sched_dl_entity",
+    "include/linux/sched.h::uclamp_se"
+   ],
+   "text": "Scheduler parameters, weights, averages and fair, realtime, deadline entities with utilization clamps."
+  },
+  {
+   "sids": [
+    "include/linux/completion.h::completion",
+    "include/linux/wait.h::wait_queue_entry",
+    "include/linux/wait.h::wait_queue_head",
+    "include/linux/wait_bit.h::wait_bit_key",
+    "include/linux/sched/wake_q.h::wake_q_head",
+    "include/linux/swait.h::swait_queue"
+   ],
+   "text": "Completions, wait heads and entries, bit keys, deferred wake heads and simple wait queues."
+  },
+  {
+   "sids": [
+    "include/linux/sched/topology.h::sched_domain",
+    "include/linux/sched/topology.h::sched_domain_shared",
+    "kernel/sched/clock.c::sched_clock_data",
+    "include/linux/psi_types.h::psi_group_cpu",
+    "kernel/sched/cpudeadline.h::cpudl",
+    "kernel/sched/autogroup.h::autogroup"
+   ],
+   "text": "Scheduling domains, per-CPU clock data, pressure groups, deadline heap and autogroup identity."
+  },
+  {
+   "sids": [
+    "kernel/sched/cpufreq_schedutil.c::sugov_tunables",
+    "kernel/sched/cpufreq_schedutil.c::sugov_policy",
+    "kernel/sched/cpufreq_schedutil.c::sugov_cpu.alt_1"
+   ],
+   "text": "Tunables attr plus limit; policy lock stamps work flags; per-CPU util and boosts."
+  },
+  {
+   "sids": [
+    "kernel/sched/sched.h::rq",
+    "kernel/sched/sched.h::rt_rq",
+    "kernel/sched/sched.h::dl_rq",
+    "kernel/sched/sched.h::cfs_rq"
+   ],
+   "text": "RQ centers class queues and clocks; RT DL fair track runnable and throttle."
+  },
+  {
+   "sids": [
+    "kernel/sched/ext/ext.c::scx_bpf_dispatch_nr_slots",
+    "kernel/sched/ext/ext.c::scx_dump_cpu",
+    "kernel/sched/ext/idle.c::scx_idle_global_masks"
+   ],
+   "text": "Per-CPU dispatch bounded buffer with cursor; dump stream with truncation; idle sets global node cpu."
+  }
+ ],
+ "stubs": [
+  {
+   "sid": "include/linux/rcupdate.h::rcu_dereference_check",
+   "state": "stub",
+   "target_dossier": "D02"
+  },
+  {
+   "sid": "include/asm-generic/rwonce.h::READ_ONCE",
+   "state": "stub",
+   "target_dossier": "D03"
+  },
+  {
+   "sid": "include/linux/spinlock.h::raw_spin_lock",
+   "state": "stub",
+   "target_dossier": "D03"
+  },
+  {
+   "sid": "include/linux/spinlock.h::raw_spin_unlock",
+   "state": "stub",
+   "target_dossier": "D03"
+  },
+  {
+   "sid": "include/linux/irqflags.h::local_irq_disable.alt_1",
+   "state": "stub",
+   "target_dossier": "D04"
+  },
+  {
+   "sid": "include/linux/hrtimer.h::hrtimer_start",
+   "state": "stub",
+   "target_dossier": "D04"
+  },
+  {
+   "sid": "include/linux/percpu-defs.h::per_cpu",
+   "state": "stub",
+   "target_dossier": "D05"
+  },
+  {
+   "sid": "include/linux/pgtable.h::arch_start_context_switch",
+   "state": "stub",
+   "target_dossier": "D06"
+  },
+  {
+   "sid": "include/linux/cpumask.h::cpumask_test_cpu",
+   "state": "stub",
+   "target_dossier": "D12"
+  },
+  {
+   "sid": "include/linux/cpumask.h::cpu_active.alt_1",
+   "state": "stub",
+   "target_dossier": "D12"
+  }
+ ]
+}

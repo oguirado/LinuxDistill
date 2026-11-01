@@ -1,0 +1,617 @@
+{
+ "dossier": "D11",
+ "entry_points": [
+  {
+   "sids": [
+    "arch/arm64/kernel/cpu_ops.c::init_cpu_ops",
+    "arch/arm64/include/asm/current.h::get_current"
+   ],
+   "text": "Per-CPU operation binding resolves the boot method for the CPU, and the current task accessor reads the SP_EL0 register to obtain the current thread."
+  },
+  {
+   "sids": [
+    "arch/arm64/kernel/traps.c::force_signal_inject",
+    "arch/arm64/kernel/traps.c::die"
+   ],
+   "text": "Faults taken in user mode force delivery of a signal to the faulting task, while faults taken in kernel mode serialize reporting and taint handling through the die path."
+  },
+  {
+   "sids": [
+    "arch/arm64/mm/ioremap.c::__ioremap_prot",
+    "arch/arm64/include/asm/processor.h::start_thread"
+   ],
+   "text": "Device mapping creates a protected I/O mapping for a physical range and rejects invalid requests, while thread start clears registers, sets the program counter and prepares user state for a new execution context."
+  },
+  {
+   "sids": [
+    "arch/arm64/kernel/head.S::primary_entry",
+    "arch/arm64/kernel/head.S::secondary_entry",
+    "arch/arm64/kernel/head.S::__primary_switched",
+    "arch/arm64/kernel/entry.S::vectors",
+    "arch/arm64/kernel/entry.S::tramp_vectors"
+   ],
+   "text": "Primary and secondary boot entries provide the initial execution points, with switched code establishing the runtime environment and exception vector tables including trampoline vectors installed for kernel entry."
+  },
+  {
+   "sids": [
+    "arch/arm64/kernel/entry-common.c::el1h_64_sync_handler",
+    "arch/arm64/kernel/entry-common.c::el1_interrupt",
+    "arch/arm64/kernel/entry-common.c::__el1_irq",
+    "arch/arm64/kernel/entry-common.c::__el1_pnmi"
+   ],
+   "text": "Synchronous exceptions from EL1 are dispatched by exception class, with separate paths for IRQ, FIQ and NMI and pseudo-NMI interrupts."
+  },
+  {
+   "sids": [
+    "arch/arm64/kernel/entry-common.c::el0t_64_sync_handler",
+    "arch/arm64/kernel/entry-common.c::el0t_32_sync_handler",
+    "arch/arm64/kernel/entry-common.c::el0_svc",
+    "arch/arm64/kernel/syscall.c::do_el0_svc_compat"
+   ],
+   "text": "Synchronous exceptions from EL0 for 64-bit and 32-bit tasks are dispatched by class, with SVC handling routed to native and compatibility syscall dispatch including compat handling."
+  },
+  {
+   "sids": [
+    "arch/arm64/kernel/setup.c::smp_setup_processor_id",
+    "arch/arm64/kernel/setup.c::setup_arch",
+    "arch/arm64/kernel/smp.c::acpi_parse_and_init_cpus.alt_1"
+   ],
+   "text": "Early setup records the identifier for CPU zero and performs the ordered architecture bring-up sequence, including ACPI-based CPU enumeration and parsing."
+  },
+  {
+   "sids": [
+    "arch/arm64/kernel/rsi.c::arm64_rsi_init",
+    "arch/arm64/kernel/rsi.c::arm64_create_dummy_rsi_dev",
+    "arch/arm64/kernel/rsi.c::rsi_dev",
+    "arch/arm64/kernel/sdei.c::sdei_arch_get_entry_point"
+   ],
+   "text": "Realm services initialization establishes configuration hooks and a dummy device when needed, while SDEI support validates the entry point and stack for event delivery."
+  }
+ ],
+ "exports": [
+  {
+   "sids": [
+    "arch/arm64/include/asm/barrier.h::__mb",
+    "arch/arm64/include/asm/cmpxchg.h::arch_cmpxchg"
+   ],
+   "text": "Memory ordering is provided by barrier primitives that enforce full ordering, with sized atomic exchange and compare-and-swap operations covering byte, halfword, word and doubleword accesses."
+  },
+  {
+   "sids": [
+    "arch/arm64/include/asm/arch_gicv3.h::gic_read_iar",
+    "arch/arm64/include/asm/daifflags.h::local_daif_save"
+   ],
+   "text": "Interrupt controller access uses CPU system registers to acknowledge interrupts with required ordering side effects, while DAIF flag helpers snapshot, mask and restore asynchronous exception state."
+  },
+  {
+   "sids": [
+    "arch/arm64/mm/mmu.c::set_swapper_pgd",
+    "arch/arm64/include/asm/tlb.h::tlb_flush.alt_2"
+   ],
+   "text": "Installation of the swapper page table uses ordered semantics to publish the new root, while translation lookaside buffer management defers freeing of tables through gather batching and provides alternate flush paths."
+  },
+  {
+   "sids": [
+    "arch/arm64/include/asm/uaccess.h::get_user",
+    "arch/arm64/kernel/cpufeature.c::init_cpu_features"
+   ],
+   "text": "User memory access uses checked loads that report faults through a dedicated fault path, while early boot seeds the CPU feature set and merges capabilities reported across CPUs."
+  },
+  {
+   "sids": [
+    "arch/arm64/kernel/cpufeature.c::cpu_set_feature",
+    "arch/arm64/kernel/cpufeature.c::cpu_have_feature",
+    "arch/arm64/kernel/cpufeature.c::cpu_get_elf_hwcap",
+    "arch/arm64/kernel/cpufeature.c::do_emulate_mrs",
+    "arch/arm64/kernel/cpufeature.c::try_emulate_mrs",
+    "arch/arm64/kernel/cpufeature.c::emulate_id_reg"
+   ],
+   "text": "CPU capability state is managed through masks that set and test features, exported as ELF hardware capabilities, with MRS emulation intercepting ID register reads and emulating values or injecting faults for unhandled accesses."
+  },
+  {
+   "sids": [
+    "arch/arm64/mm/context.c::get_cpu_asid_bits",
+    "arch/arm64/mm/mmu.c::kpti_install_ng_mappings",
+    "arch/arm64/kernel/efi.c::efi_create_mapping",
+    "arch/arm64/kernel/efi.c::efi_set_mapping_permissions"
+   ],
+   "text": "Address space identifier width is detected from hardware capability, kernel page-table isolation installs separate non-global mappings when required, and EFI support creates mappings and then tightens permissions on code and data regions."
+  },
+  {
+   "sids": [
+    "arch/arm64/kernel/entry.S::cpu_switch_to",
+    "arch/arm64/kernel/fpsimd.c::fpsimd_save_and_flush_current_state",
+    "arch/arm64/kernel/fpsimd.c::cpu_enable_fpsimd",
+    "arch/arm64/kernel/fpsimd.c::sve_set_current_vl"
+   ],
+   "text": "CPU context switching swaps register state between tasks, while floating-point and SIMD handling saves and flushes live state, enables the unit per CPU, and validates requested vector lengths for scalable vector extension."
+  },
+  {
+   "sids": [
+    "arch/arm64/mm/fixmap.c::early_fixmap_init",
+    "arch/arm64/mm/init.c::arm64_memblock_init",
+    "arch/arm64/mm/init.c::bootmem_init",
+    "arch/arm64/mm/mmu.c::paging_init"
+   ],
+   "text": "Early boot establishes fixed mappings, initializes the memblock allocator view of memory, reserves and prepares boot memory, and then builds the full paging structures."
+  }
+ ],
+ "extracts": [
+  "01c77b4558408e798e0984abff55cf297d3131654b9e86a1955e46c178fe7f74",
+  "04c32279e6716ae62aab1f1d89e9ccca6347661a2ceda40ca8cb53938cbfe010",
+  "073fa09b3eb13996d69f28b4287f78ca19f0265d4b3aec185c355a5ab217209b",
+  "0c28d5f37fb53ab95f3cb7107e34c93dfcbd31873f97b97e5bb246e4f8f47bf7",
+  "0c6f83880244979f7c15308cae4fc486f6898fdc9eaf19f48c48afe7cf9ff96b",
+  "0d32e9e2775f7b971f915a56549342acd0f3a1bd2e2d8fb04bff2fbd81a1b8fe",
+  "0d43523a8d0f4c7fecc4f51b212da6c7e7f061d4d1e1e297b526af5db0df7b02",
+  "1250b3c8000a0debd60bec32abe908c9f1ce2991f935fb7e059c3ba207548a99",
+  "12548070148f7162a09c5b9915ecb75a4c3bf80718e28ef65d37d3346d196628",
+  "15eababf353562a3e8f8c9890bfb3a96f6f21f67f725b468f140604e0f38a266",
+  "1cf43135e7cead1d88969509107d76d1e82a157404ac4628eb8197942e84ecc6",
+  "217a28e70de2f37dfe592a586c54e89e6d531d2c574f869886ba87b658045a70",
+  "246cdc10881365c3ca94bd0d4d6c562b613e138de23bbd1afde97bfca8018c9d",
+  "24fc75df027aad44eb5d0b3bd121a78486b74702417d6e2134d38abcb11da47b",
+  "2506f74028215162771662188d2991fa2dfa2a893278a0c892a69b4044928a8c",
+  "25481abe42d7c4259ad3cce51609c4a3f2134a62120a0a1ebced94b4eed7389a",
+  "27509d7c48d9321285b77efffcd611112bc90a55b4280038cfe7ade7051b00be",
+  "2ac82c1ada98a89c104e061995d04233e4a37fd16871e47bbd75cd74172d5432",
+  "2b8f6252eb1cc8e3ae1e7bc4f0eb60b44eec4d6e000db075d640dc39f5312b1c",
+  "2c569c642f7e6be76b54fabfdeeb89a4b48ddabcfc546b83f16c1ccb65a1ce3a",
+  "30449d9927dbace51776199b8c2e97a6873664d9c384104898cccba4962e1ca6",
+  "327e8dfaa59625ef4ec1abb2d3d8a457f88e0cfe12f2e9218d04a22d880d1604",
+  "338176ff96b060b8320fa416b5fc7c2485b64ad37241caa3b8a4e997d5183514",
+  "34faf69d72a3a306e448fe35d9989a0bfa4d147c11ef286f6443bd204026f992",
+  "3752c7e68e2466840854d09c660ab49202dfa78e433cd64bc6df2f6c5233c257",
+  "3c817c451fa74e46fd6973f4e4b71be782a5732ab70a421132124860f35e8363",
+  "3d0f956b8a60eee0c9a94584cd03ee5c264c042f5c96848c96a2323fb8d409ba",
+  "412d0e530fca5669095d3c774c83ff5eec10c96380da1a4df886fa19641f132f",
+  "42c50b260d9b69ef84bdc5b1c70365aaf6f195c1c4277436c864626dcfb0f3b5",
+  "43eabc8a3e0c383aadca8cca0a5071eaca6a27b1386ba50aea204cb837e389a5",
+  "49517ffb6db117b584f9f5c4aa737e768b19d550424e69f43a9288ce031852b6",
+  "4b18ee7eef2feeda887511db3de44622ad108d52c618db38a9011030228a048e",
+  "4e43c87ed99f6a4c51f6f7c69047d07ccb1e3352ba818d750b27545d3786e535",
+  "506684e4b24d6e29cebc370c4c13c47def906db7730a5db2d2f91c41b5e6c1ad",
+  "57f7f29dc34bc19bd200bf08aa2101a98c8a71d4aac00765268840262a9317bd",
+  "5b9b8d27f5fb3f6d7caa2709d367001aaf1407a802026069f1bbc7d9ed62fbf6",
+  "5e3a8730146600a43b1b89c2319da791fd75cebe0069ba66264af2180f20c618",
+  "621f9a985d6b732aa5a90385c9811f157bc17d62f759b92e69097557097dcdc6",
+  "717ee4271825d0d8eccaa5d12e30f27f314220f00f1e4447711b778bbec7ba41",
+  "7256398c3422a4812facc111e6619bf340cb64553e5adc8f4bc831bb0c59d004",
+  "7bdcb7a3b4b2383e847447d7a2072a51759ad5fd12330d5b52af34d9b1f42d70",
+  "7ea90bd05b58dfd8489ba612e3a01cebc8a9c198ac4788d0f51fb40272a31045",
+  "7f462b552fcf16a12bac102359957f3741bf709455fe94939bcb0b01cd112222",
+  "8013559fd39fba2af614184992606f2aad637b85873acbc2a182e6721e6a7a89",
+  "81d27f22dc64cf0cebca5ddc074b78d7ca9531de062e1dcfb75075742ffff343",
+  "896b7af63f77dc1f4519d68264d1b65d8ad8313f66494a3cd363484daaea7a11",
+  "92fc21008c93924a568fa6d4c8d5573807de3db01f0a62c7522651ad659f8c74",
+  "946268d31d4597a86e847a80b8c4d5053d54e11bf574f2d3a4e79928747bfb87",
+  "953914f57ede38a8b5b2a0ff157ddfbe582311545831647224f27ad3a2e8c3f9",
+  "a016a8870eed3223bef7a95b10639289db5a320d05ea8d43319abc5266b2f26a",
+  "a4da38d846164bd246c05d6807cb41d5eb2a250cc8bd357acabefcd23bd55292",
+  "a5034ce98e1722d71f1ba2cc2f8c50fbf16611a8f5f873e575aeea23820c8c9c",
+  "a56a77d1aced55d31d1e0654d885db85d85dc4c43c653c4796edbb23a19a3835",
+  "a5e777667aa9557d892ccf7314413279e69a6996df6d626cb84dc7369f2491c7",
+  "ac669569f37cb436aa51a56bda809e0ee5dc9c72d081fd131d58b49e8a8aef9a",
+  "b30a90bc56dbedabddee2589aaa5d22113172e0c9fe5c1c53ea240eb3ca52318",
+  "b32c6c538be19fce1d4b7d086aa6a718253f60cd75bd200b372a52a6ffdcf5e9",
+  "b72be487044c739a25b612ade8d969af981c74c3a0fd76c398f0328042a36157",
+  "b7ca77f3fa259f7070432c8326c4dd73dacae8440e9330c550b8e30864373b8d",
+  "b9f5180a2a30f83da2717fca0c4fb1a43ebe5d9bcc15466436370e7762bb1846",
+  "bdf4429556a536fae6bf26a077942214160a1495def16d42294f442618829ad5",
+  "bec3eb98fe7bae2e06801908ad0e291a26b4bcaa381746c103d8ab48c6f3d8d0",
+  "bef912781aea74975f8c2eabb77596b10994a6814865fbd018daa18287336d9d",
+  "bfa3eb4913e20699e3ea3d4661f24f6266f33251374c1e36e8e8155b820f42c5",
+  "c45c5914585fb4a4c3c70460ac18fc0aee6f737f00e4d31c236e755f1dd5b465",
+  "c5fd4b768141425e64caab16414e81471f2a663b88ec179e017218ab69b04b1c",
+  "c645953ca044ff32feb9e4b69f28f4a719b343e8ff44957230d54c743c98ac6c",
+  "c9164b2d6317c106378a1021ebaa2494dd6a4849da9fca589ccd5d426688d842",
+  "d744df038a4da94890d610bd00faf48d22d608dcff509cf14133fbfc0a811ef1",
+  "d82edd587119520c03c19af91d9397b3ff07803dc67e10b58c4302f2b3919e09",
+  "dd4630439f95daa03fd1ceb3cdb1995a381cca61fcd9324871093d2797253d16",
+  "de8b1b71f982e54b7ab42a930203da4f53722b3b34195ee06ab435f97b8678e5",
+  "df246a8a2a9ce6ce9c303adc8c0788dfed132c0afda17ee0b30c18cdfa07299d",
+  "e03b5b7d88cb7f969393917c9323349bafce37e906a36544e914f071a2211f1e",
+  "e0e38d49acdae091c72ba5959bffddb1414d96467b91c5c139f78b1e7211c126",
+  "e20b6394c0eb89f8506786f51db1456e0f00a4a2103e6c060a41ffbaa9f0debc",
+  "e36fe567cb00b79d22d935ae4c61c785613232d6bf62aa1a9a9ea09f00fb33df",
+  "e66e2cabdeb84f19f23d1b5881a99dbc5288ed80783a3781f656a30c108db130",
+  "e6beb9eb087cb7ba80ad60d229d0667fcd667e809fc38c49e6cb22210d7ac210",
+  "ea057823d62ea487e34060e4941be6f46469206698ed76a95d1899f3773f349c",
+  "edd1e035b8184524ab812742d15c34bd4ed162ac6d9302ffc9502c4ba9c5511f",
+  "f614398f8403e3ac3f6a66a43ba3e4e0ec4687c66292f5ef23d25697644794f0",
+  "f6a15daff079a14817bd953b2fea1e3d74c63814f5b5d6522e969aa11b5986e4",
+  "f8650b62ad8764abfd9dd2d7cc214c38a57971291c692e5ca59be8ed140843c4",
+  "f9a66a8264f0fb9e59383590b5b10ab83679a44b8ca0c0ce2dc0082449e28dc6",
+  "faa1d8af228887f8bf4be89b6f54a7f752c53265631d8a6ab3cd1153bc8703bb",
+  "fb20db50da738c85481e247528537b44683fc7dad20109657b7309e773163a87",
+  "fdf20d88e190677a5b220ffe90536dadfcbbd1d86595de42cf0c248ede0b3b7d"
+ ],
+ "gpl_spec": "PASS",
+ "hazards": [
+  {
+   "sids": [
+    "arch/arm64/kernel/cpufeature.c::this_cpu_has_cap",
+    "arch/arm64/include/asm/archrandom.h::arch_get_random_longs"
+   ],
+   "text": "Testing local CPU capability without proper context warns and returns false when preemptible, and early random-number requests are refused before firmware and CPU support are ready."
+  },
+  {
+   "sids": [
+    "arch/arm64/include/asm/simd.h::may_use_simd.alt_1",
+    "arch/arm64/include/asm/uaccess.h::__uaccess_ttbr0_enable"
+   ],
+   "text": "Kernel use of SIMD requires finalized floating-point state and non-interrupt context, while enabling the TTBR0 user window requires interrupts to be off to avoid exposure."
+  },
+  {
+   "sids": [
+    "arch/arm64/include/asm/pgtable.h::__check_safe_pte_update",
+    "arch/arm64/mm/mmu.c::pgattr_change_is_safe"
+   ],
+   "text": "Updating live valid page-table entries with unsafe attribute changes warns, and swapper updates require a dedicated barrier to order table publication."
+  },
+  {
+   "sids": [
+    "arch/arm64/kernel/cpu_errata.c::erratum_speculative_at_list",
+    "arch/arm64/kernel/cpu_errata.c::cavium_erratum_23154_cpus"
+   ],
+   "text": "Listed Cortex, Kryo, Neoverse and ThunderX parts require errata workarounds for speculative address-translation and interconnect issues."
+  },
+  {
+   "sids": [
+    "arch/arm64/kernel/head.S::__no_granule_support",
+    "arch/arm64/kernel/head.S::__secondary_too_slow",
+    "arch/arm64/kernel/signal.c::sigframe_alloc"
+   ],
+   "text": "Granule size mismatch parks the boot CPU, slow secondary startup parks the secondary, and signal-frame allocation fails with out-of-memory when the user stack cannot grow."
+  },
+  {
+   "sids": [
+    "arch/arm64/mm/fault.c::show_pte",
+    "arch/arm64/kernel/traps.c::arm64_serror_panic",
+    "arch/arm64/kernel/traps.c::do_el0_bti",
+    "arch/arm64/kernel/entry.S::__bad_stack"
+   ],
+   "text": "Fault-status reporting walks tables locklessly and only in interrupt context, SError handling parks on unrecoverable errors, branch-target-identification faults deliver signals, and bad stacks panic."
+  },
+  {
+   "sids": [
+    "arch/arm64/kernel/setup.c::setup_machine_fdt",
+    "arch/arm64/mm/mmu.c::create_mapping_noalloc",
+    "arch/arm64/kernel/setup.c::boot_args"
+   ],
+   "text": "A missing or invalid device-tree description spins the boot CPU, low mappings without allocation support are rejected, and trailing boot arguments indicate a firmware defect."
+  },
+  {
+   "sids": [
+    "arch/arm64/kernel/setup.c::check_mmu_enabled_at_boot",
+    "arch/arm64/mm/mmu.c::early_pgtable_alloc",
+    "arch/arm64/mm/mmu.c::linear_map_split_to_ptes"
+   ],
+   "text": "Booting with the MMU unexpectedly enabled aborts, and early page-table allocation or linear-map splitting failures panic when memory cannot be secured."
+  }
+ ],
+ "invariants": [
+  {
+   "sids": [
+    "arch/arm64/include/asm/alternative-macros.h::__ALTERNATIVE_CFG",
+    "arch/arm64/kernel/alternative.c::ALT_CAP"
+   ],
+   "text": "Alternative patching reserves space for both the original instruction sequence and a replacement entry, and capability flags gate whether a site is rewritten at boot or module load."
+  },
+  {
+   "sids": [
+    "arch/arm64/include/asm/cpufeature.h::FTR_STRICT",
+    "arch/arm64/kernel/cpufeature.c::arm64_ftr_regs"
+   ],
+   "text": "CPU feature fields carry strictness attributes that control matching across CPUs, and the registry of feature registers is kept sorted to allow binary search."
+  },
+  {
+   "sids": [
+    "arch/arm64/include/asm/esr.h::ESR_ELx_EC_SHIFT",
+    "arch/arm64/include/asm/cputype.h::MIDR_PARTNUM"
+   ],
+   "text": "Exception syndrome encoding places the exception class field at shift 26, while the MIDR register identifies implementor and part number for CPU matching."
+  },
+  {
+   "sids": [
+    "arch/arm64/mm/context.c::asid_gen_match",
+    "arch/arm64/include/asm/mmu.h::ASID"
+   ],
+   "text": "Process context combines an address-space identifier with a generation counter, and a generation-match check determines whether the cached context remains valid."
+  },
+  {
+   "sids": [
+    "arch/arm64/include/asm/pgtable.h::pgtable_l5_enabled.alt_1",
+    "arch/arm64/mm/contpte.c::__contpte_try_fold"
+   ],
+   "text": "Disabled page-table levels are folded so walks skip them, and contiguous-bit folding is permitted only for user mappings with uniform protection attributes."
+  },
+  {
+   "sids": [
+    "arch/arm64/kernel/mm/mmu.c::__create_pgd_mapping_locked",
+    "arch/arm64/mm/mmu.c::init_pmd",
+    "arch/arm64/mm/mmu.c::init_pte",
+    "arch/arm64/kernel/efi.c::set_permissions",
+    "arch/arm64/mm/mmu.c::alloc_init_cont_pmd"
+   ],
+   "text": "Initial page-table creation rejects overlapping mappings, reuses existing tables when possible, and otherwise allocates zeroed pages with appropriate permissions including EFI permission updates."
+  },
+  {
+   "sids": [
+    "arch/arm64/kernel/entry-common.c::arm64_enter_from_kernel_mode",
+    "arch/arm64/kernel/entry-common.c::arm64_exit_to_user_mode",
+    "arch/arm64/kernel/entry-common.c::arm64_enter_el1_dbg",
+    "arch/arm64/kernel/entry-common.c::fpsimd_syscall_enter"
+   ],
+   "text": "Entry to and exit from kernel mode are paired operations that track interrupt, preemption and debug state, tag handling and syscall floating-point context."
+  },
+  {
+   "sids": [
+    "arch/arm64/kernel/irq.c::default_handle_irq",
+    "arch/arm64/kernel/irq.c::default_handle_fiq",
+    "arch/arm64/kernel/irq.c::handle_arch_irq",
+    "arch/arm64/kernel/irq.c::handle_arch_fiq",
+    "arch/arm64/kernel/irq.c::set_handle_irq",
+    "arch/arm64/kernel/irq.c::set_handle_fiq"
+   ],
+   "text": "IRQ and FIQ delivery use default handlers until replaced, with a single early installer for the architecture handlers and no additional locking around installation."
+  },
+  {
+   "sids": [
+    "arch/arm64/mm/mmu.c::map_mem",
+    "arch/arm64/mm/mmu.c::__map_memblock",
+    "arch/arm64/mm/mmu.c::create_idmap",
+    "arch/arm64/mm/mmu.c::force_pte_mapping"
+   ],
+   "text": "Boot memory mapping clips to available ranges, reserves firmware and kernel regions, forces small pages where required, and builds the identity map used during enablement."
+  },
+  {
+   "sids": [
+    "arch/arm64/mm/fault.c::is_write_abort",
+    "arch/arm64/mm/fault.c::do_tag_recovery",
+    "arch/arm64/mm/context.c::asids_init",
+    "arch/arm64/mm/context.c::asids_update_limit",
+    "arch/arm64/mm/flush.c::flush_dcache_page",
+    "arch/arm64/mm/flush.c::flush_dcache_folio"
+   ],
+   "text": "Data and instruction faults classify write versus read aborts and memory-tag recovery, ASID allocation tracks initialization and limits, and data-cache maintenance flushes pages and folios to maintain coherence."
+  }
+ ],
+ "locks": [
+  {
+   "sids": [
+    "arch/arm64/kernel/traps.c::die",
+    "arch/arm64/mm/context.c::check_and_switch_context"
+   ],
+   "text": "Fatal trap reporting serializes with interrupts saved, while slow-path context switching holds a spinlock to protect generation and active-context state."
+  },
+  {
+   "sids": [
+    "arch/arm64/include/asm/uaccess.h::__uaccess_ttbr0_enable",
+    "arch/arm64/kernel/fpsimd.c::get_cpu_fpsimd_context"
+   ],
+   "text": "User-access window toggling for TTBR0 masks interrupts while swapping translation bases and merging ASID state, and floating-point context acquisition guards the per-CPU state against concurrent use."
+  },
+  {
+   "sids": [
+    "arch/arm64/kernel/patching.c::__aarch64_insn_write",
+    "arch/arm64/mm/mmu.c::split_kernel_leaf_mapping"
+   ],
+   "text": "Instruction patching for single stores holds a lock with interrupts saved, while splitting of large kernel leaf mappings uses a mutex with lazy invalidation."
+  },
+  {
+   "sids": [
+    "arch/arm64/kernel/fpsimd.c::fpsimd_thread_switch",
+    "arch/arm64/kernel/mm/mmu.c::__create_pgd_mapping",
+    "arch/arm64/kernel/entry-common.c::debug_exception_enter",
+    "arch/arm64/kernel/proton-pack.c::update_mitigation_state"
+   ],
+   "text": "Floating-point thread switching runs with interrupts disabled, page-table creation takes the mapping lock, debug entry disables preemption, and mitigation state updates use compare-and-swap."
+  },
+  {
+   "sids": [
+    "arch/arm64/kernel/patching.c::__text_poke",
+    "arch/arm64/kernel/patching.c::text_poke_f",
+    "arch/arm64/kernel/patching.c::text_poke_memcpy",
+    "arch/arm64/kernel/patching.c::text_poke_memset"
+   ],
+   "text": "Runtime text patching serializes with a raw spinlock, installs a temporary mapping for the target, copies or fills the new instructions, and then flushes instruction caches."
+  },
+  {
+   "sids": [
+    "arch/arm64/mm/context.c::arm64_mm_context_get",
+    "arch/arm64/mm/context.c::arm64_mm_context_put",
+    "arch/arm64/mm/mmu.c::swapper_pgdir_lock",
+    "arch/arm64/mm/mmu.c::fixmap_lock"
+   ],
+   "text": "Address-space reference counting for shared contexts is protected by a global spinlock, with separate page-directory and fixed-map locks guarding swapper updates and temporary mappings."
+  }
+ ],
+ "pass": 1,
+ "phase_map": [
+  {
+   "anchor": "HB-KPAPER-001/hb-s5.p14",
+   "crown": "A",
+   "phase": "F0"
+  },
+  {
+   "anchor": "HB-KPAPER-001/hb-s5.p04",
+   "crown": "A",
+   "phase": "F2"
+  }
+ ],
+ "schema": "lx.dossier.v1",
+ "state_machines": [
+  {
+   "sids": [
+    "arch/arm64/include/asm/mmu_context.h::__switch_mm",
+    "arch/arm64/mm/context.c::flush_context"
+   ],
+   "text": "Context switching installs new translation bases and user state, while a generation rollover triggers a flush that reseeds contexts and invalidates stale entries."
+  },
+  {
+   "sids": [
+    "arch/arm64/kernel/fpsimd.c::fpsimd_bind_task_to_cpu",
+    "arch/arm64/kernel/fpsimd.c::fpsimd_save_user_state"
+   ],
+   "text": "Floating-point binding attaches saved state to the current CPU and task, and saving user state aborts with a fatal error if the live CPU state does not match the expected owner."
+  },
+  {
+   "sids": [
+    "arch/arm64/kernel/alternative.c::__apply_alternatives",
+    "arch/arm64/kernel/acpi.c::acpi_boot_table_init"
+   ],
+   "text": "Alternative patching applies replacements for capabilities present on the boot CPU set, and firmware-table initialization selects ACPI when tables validate and otherwise falls back to device tree."
+  },
+  {
+   "sids": [
+    "arch/arm64/include/asm/tlbflush.h::__do_flush_tlb_range",
+    "arch/arm64/include/asm/futex.h::arch_futex_atomic_op_inuser"
+   ],
+   "text": "Translation flush for a range folds to a full invalidation when oversized and otherwise synchronizes per-entry, while in-user atomic futex operations retry up to a bound before reporting failure."
+  },
+  {
+   "sids": [
+    "arch/arm64/kernel/head.S::init_kernel_el",
+    "arch/arm64/kernel/head.S::__primary_switch",
+    "arch/arm64/kernel/pi/map_kernel.c::map_kernel",
+    "arch/arm64/kernel/pi/map_kernel.c::set_ttbr0_for_lpa2",
+    "arch/arm64/kernel/pi/map_kernel.c::remap_idmap_for_lpa2"
+   ],
+   "text": "Early boot fixes the current exception level, switches translation tables, maps the kernel image with large-page and LPA2 handling, and remaps the identity map for the new address size."
+  },
+  {
+   "sids": [
+    "arch/arm64/kernel/psci.c::cpu_psci_cpu_init",
+    "arch/arm64/kernel/psci.c::cpu_psci_cpu_prepare",
+    "arch/arm64/kernel/psci.c::cpu_psci_cpu_boot",
+    "arch/arm64/kernel/psci.c::cpu_psci_cpu_die",
+    "arch/arm64/kernel/psci.c::cpu_psci_cpu_kill"
+   ],
+   "text": "Power-state coordination moves a CPU through init, prepare, boot and die states, with kill polling until the target reaches the off state."
+  },
+  {
+   "sids": [
+    "arch/arm64/kernel/smp.c::boot_secondary",
+    "arch/arm64/kernel/smp.c::op_cpu_kill.alt_1",
+    "arch/arm64/kernel/smp.c::arm64_nmi_cpu_stop",
+    "arch/arm64/kernel/smp.c::do_handle_IPI"
+   ],
+   "text": "Secondary CPU bring-up publishes the idle task, waits a bounded interval for startup, and provides non-maskable-interrupt stop and inter-processor-interrupt handling that parks the CPU."
+  },
+  {
+   "sids": [
+    "arch/arm64/kernel/signal.c::setup_sigframe",
+    "arch/arm64/kernel/signal.c::setup_rt_frame",
+    "arch/arm64/kernel/signal.c::handle_signal",
+    "arch/arm64/kernel/signal.c::setup_return"
+   ],
+   "text": "Signal delivery flushes pending state, allocates a frame, builds native or real-time frames with return trampolines, and enters the handler with blocked-mask and register state prepared."
+  }
+ ],
+ "structs": [
+  {
+   "sids": [
+    "arch/arm64/include/asm/extable.h::exception_table_entry",
+    "arch/arm64/include/asm/image.h::arm64_image_header"
+   ],
+   "text": "Exception-table entries store relative offsets to faulting instruction and fixup with a type field, while the boot image header carries magic, flags and load metadata."
+  },
+  {
+   "sids": [
+    "arch/arm64/include/asm/cpu_ops.h::cpu_operations",
+    "arch/arm64/include/asm/cpufeature.h::arm64_cpu_capabilities"
+   ],
+   "text": "CPU operation tables list per-boot-method callbacks for init, prepare, boot and power control, and capability descriptors pair matches with feature bits to drive detection."
+  },
+  {
+   "sids": [
+    "arch/arm64/include/asm/processor.h::cpu_context",
+    "arch/arm64/include/asm/processor.h::thread_struct"
+   ],
+   "text": "Low-level CPU context stores callee-saved registers with stack and program counters, extended by thread state holding thread-pointer, TLS, fault address and tag controls."
+  },
+  {
+   "sids": [
+    "arch/arm64/include/asm/kvm_pgtable.h::kvm_pgtable",
+    "arch/arm64/include/asm/kvm_host.h::kvm_hyp_memcache"
+   ],
+   "text": "KVM page-table structures use 64-bit entries with permission and shareability attributes, and hypervisor memcaches maintain LIFO lists of pages with counts for allocation."
+  },
+  {
+   "sids": [
+    "arch/arm64/kernel/cpufeature.c::arm64_features.alt_2",
+    "arch/arm64/kernel/cpufeature.c::arm64_elf_hwcaps",
+    "arch/arm64/kernel/cpuinfo.c::hwcap_str"
+   ],
+   "text": "Feature catalogues list capabilities with ELF hardware-capability mappings, and string tables provide human-readable names for hardware capabilities."
+  },
+  {
+   "sids": [
+    "arch/arm64/kernel/sys.c::sys_call_table",
+    "arch/arm64/kernel/sys32.c::compat_sys_call_table"
+   ],
+   "text": "Native and compatibility syscall tables are indexed by syscall number and prefilled with a not-implemented handler for unused slots."
+  },
+  {
+   "sids": [
+    "arch/arm64/kernel/irq.c::nmi_contexts",
+    "arch/arm64/kernel/irq.c::irq_stack_ptr",
+    "arch/arm64/kernel/irq.c::irq_shadow_call_stack_ptr"
+   ],
+   "text": "Per-CPU interrupt state records NMI entry context, with dedicated pointers for IRQ stacks and shadow call stacks."
+  }
+ ],
+ "stubs": [
+  {
+   "sid": "include/linux/preempt.h::preemptible.alt_1",
+   "state": "stub",
+   "target_dossier": "D01"
+  },
+  {
+   "sid": "include/asm-generic/rwonce.h::READ_ONCE",
+   "state": "stub",
+   "target_dossier": "D03"
+  },
+  {
+   "sid": "include/linux/irqflags.h::local_irq_disable.alt_1",
+   "state": "stub",
+   "target_dossier": "D04"
+  },
+  {
+   "sid": "include/linux/percpu-defs.h::this_cpu_ptr.alt_1",
+   "state": "stub",
+   "target_dossier": "D05"
+  },
+  {
+   "sid": "include/linux/mm.h::PAGE_ALIGN",
+   "state": "stub",
+   "target_dossier": "D06"
+  },
+  {
+   "sid": "include/linux/smp.h::smp_processor_id.alt_1",
+   "state": "stub",
+   "target_dossier": "D12"
+  },
+  {
+   "sid": "include/linux/printk.h::printk",
+   "state": "stub",
+   "target_dossier": "D13"
+  },
+  {
+   "sid": "include/linux/bitops.h::test_bit",
+   "state": "stub",
+   "target_dossier": "D14"
+  },
+  {
+   "sid": "include/asm-generic/bug.h::WARN_ON.alt_1",
+   "state": "stub",
+   "target_dossier": "D17"
+  },
+  {
+   "sid": "include/linux/kconfig.h::IS_ENABLED",
+   "state": "stub",
+   "target_dossier": "D17"
+  }
+ ]
+}

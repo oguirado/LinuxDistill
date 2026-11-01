@@ -1,0 +1,1205 @@
+{
+ "dossier": "D02",
+ "entry_points": [
+  {
+   "sids": [
+    "include/linux/rcupdate_trace.h::rcu_read_lock_tasks_trace",
+    "include/linux/rcupdate_trace.h::rcu_read_unlock_tasks_trace"
+   ],
+   "text": "Tasks-trace enter acquires the dedicated domain fast with tracking and exit releases it symmetrically."
+  },
+  {
+   "sids": [
+    "include/linux/rcutiny.h::rcu_end_inkernel_boot",
+    "include/linux/rcutiny.h::exit_rcu",
+    "kernel/rcu/rcu.h::rcu_stall_is_suppressed_at_boot"
+   ],
+   "text": "Tiny boot end is always true; task exit is empty; stall suppression applies only pre-boot while flagged."
+  },
+  {
+   "sids": [
+    "kernel/rcu/rcuscale.c::rcu_scale_reader",
+    "kernel/rcu/rcuscale.c::rcu_scale_writer",
+    "kernel/rcu/rcuscale.c::kfree_scale_thread",
+    "kernel/rcu/rcuscale.c::kfree_scale_init"
+   ],
+   "text": "Scale reader loops read pairs, writer loops waits with barriers, kfree thread batches deferred frees."
+  },
+  {
+   "sids": [
+    "kernel/rcu/tiny.c::synchronize_rcu",
+    "kernel/rcu/tree.c::synchronize_rcu"
+   ],
+   "text": "Tiny sync advances seq twice outside read sections; tree sync warns inside, uses expedited or normal if blocking else vacuous."
+  },
+  {
+   "sids": [
+    "kernel/rcu/rcutorture.c::rcu_torture_writer",
+    "kernel/rcu/rcutorture.c::rcu_torture_reader",
+    "kernel/rcu/rcutorture.c::rcu_torture_updown",
+    "kernel/rcu/rcutorture.c::rcu_torture_stats"
+   ],
+   "text": "Torture threads setup boot affinity then loop to shutdown: writer publishes, readers read, updown scans, stats prints."
+  },
+  {
+   "sids": [
+    "kernel/rcu/refscale.c::ref_scale_init",
+    "kernel/rcu/refscale.c::ref_scale_reader"
+   ],
+   "text": "Refscale init matches name setup typesafe normalizes counts starts readers coordinator; readers time one iteration and signal."
+  },
+  {
+   "sids": [
+    "kernel/rcu/srcutiny.c::srcu_tiny_irq_work",
+    "kernel/rcu/srcutree.c::srcu_delay_timer",
+    "kernel/rcu/srcutree.c::srcu_irq_work",
+    "kernel/rcu/tree_stall.h::rcu_stall_notifier_call_chain"
+   ],
+   "text": "Tiny IRQ work schedules grace; delay timer requeues same CPU; SRCU IRQ work samples delay and queues; stall notifier forwards."
+  },
+  {
+   "sids": [
+    "kernel/rcu/tree.c::rcu_gp_kthread",
+    "kernel/rcu/tree.c::rcu_check_quiescent_state",
+    "kernel/rcu/tree.c::rcu_sched_clock_irq",
+    "kernel/rcu/tree.c::rcu_core",
+    "kernel/rcu/tree.c::rcu_core_si",
+    "kernel/rcu/tree.c::strict_work_handler"
+   ],
+   "text": "Grace thread waits, inits, forces, cleans; tick checks quiescence and drives core; core advances, invokes, checks stalls, wakes offload."
+  },
+  {
+   "sids": [
+    "kernel/rcu/tree.c::rcu_init",
+    "kernel/rcu/tree.c::rcu_spawn_gp_kthread",
+    "kernel/rcu/tree.c::rcu_scheduler_starting",
+    "kernel/rcu/tree.c::rcu_boot_init_percpu_data",
+    "kernel/rcu/tree.c::rcutree_online_cpu",
+    "kernel/rcu/tree.c::rcutree_report_cpu_starting"
+   ],
+   "text": "Boot builds baselines, geometry and grace thread, then enables scheduling; online/starting joins masks and forces late quiescence."
+  },
+  {
+   "sids": [
+    "kernel/rcu/tree_exp.h::rcu_exp_handler.alt_1",
+    "kernel/rcu/tree_exp.h::rcu_exp_handler.alt_2",
+    "kernel/rcu/tree_nocb.h::rcu_nocb_gp_kthread",
+    "kernel/rcu/tree_nocb.h::rcu_nocb_cb_kthread",
+    "kernel/rcu/tasks.h::rcu_tasks_kthread",
+    "kernel/rcu/tasks.h::rcu_tasks_one_gp"
+   ],
+   "text": "Expedited handlers report by nesting; nocb group/callback threads persist; task thread loops grace iterations with idle sleeps."
+  },
+  {
+   "sids": [
+    "kernel/rcu/tree_plugin.h::rcu_cpu_kthread_setup",
+    "kernel/rcu/update.c::rcu_end_inkernel_boot",
+    "kernel/rcu/update.c::rcu_set_runtime_mode"
+   ],
+   "text": "Per-cpu thread setup records the cpu control block, optionally raises to FIFO realtime priority under boosting and stamps activity; end of in-kernel boot relaxes nesting, optionally selects normal grace handling and marks boot ended, while runtime-mode init exercises sync primitives around scheduler-running notification."
+  },
+  {
+   "sids": [
+    "kernel/rcu/tree_stall.h::rcu_panic",
+    "kernel/rcu/tree_stall.h::rcu_panic_block",
+    "kernel/rcu/tree_stall.h::check_cpu_stall_init",
+    "kernel/rcu/tree_stall.h::sysrq_show_rcu",
+    "kernel/rcu/tree_stall.h::sysrq_rcudump_op",
+    "kernel/rcu/tree_stall.h::rcu_sysrq_init",
+    "kernel/rcu/tree_stall.h::sysrq_rcu"
+   ],
+   "text": "Panic notifier forces stall suppression on and returns handled with its block registered at init; sysrq key y shows grace threads via a key operation with help and action strings, registered at init only when enabled."
+  },
+  {
+   "sids": [
+    "kernel/rcu/update.c::get_completed_synchronize_rcu"
+   ],
+   "text": "Polling-style synchronize interfaces use a query helper reporting a completed-state cookie that always indicates completion."
+  }
+ ],
+ "exports": [
+  {
+   "sids": [
+    "include/linux/rculist.h::list_for_each_rcu",
+    "include/linux/rculist.h::list_entry_rcu",
+    "include/linux/rculist.h::list_first_or_null_rcu",
+    "include/linux/rculist_bl.h::hlist_bl_first_rcu",
+    "include/linux/rculist_nulls.h::hlist_nulls_for_each_entry_rcu"
+   ],
+   "text": "Traversal loads forward links and entries once, returns null at end, and iterates to head, marker or null."
+  },
+  {
+   "sids": [
+    "include/linux/rculist.h::list_add_rcu",
+    "include/linux/rculist.h::list_del_rcu",
+    "include/linux/rculist.h::list_replace_rcu",
+    "include/linux/rculist.h::hlist_add_head_rcu",
+    "include/linux/rculist.h::hlist_del_rcu"
+   ],
+   "text": "List update links privately, publishes predecessor with release, then fixes successors; removal unlinks and marks."
+  },
+  {
+   "sids": [
+    "include/linux/rcupdate.h::__rcu_dereference_check",
+    "include/linux/rcupdate.h::rcu_dereference",
+    "include/linux/rcupdate.h::rcu_replace_pointer",
+    "include/linux/rcupdate.h::rcu_assign_pointer",
+    "include/linux/rcupdate.h::RCU_INIT_POINTER"
+   ],
+   "text": "Dereference is one checked load with flavor wrappers; replace publishes new and returns protected old."
+  },
+  {
+   "sids": [
+    "include/linux/rcupdate.h::kfree_rcu",
+    "include/linux/rcupdate.h::kvfree_rcu",
+    "kernel/rcu/tree.c::call_rcu",
+    "kernel/rcu/tiny.c::call_rcu"
+   ],
+   "text": "Deferred free tolerates null; tree and tiny enqueue callbacks with lazy allowance and bounded repeat diagnostics."
+  },
+  {
+   "sids": [
+    "include/linux/srcu.h::srcu_read_lock",
+    "include/linux/srcu.h::srcu_read_unlock",
+    "include/linux/srcu.h::srcu_dereference",
+    "include/linux/srcu.h::srcu_read_lock_fast",
+    "include/linux/srcu.h::srcu_dereference_check"
+   ],
+   "text": "SRCU offers indexed, fast and NMI entries with matching exits plus checked dereference under hold."
+  },
+  {
+   "sids": [
+    "include/linux/rcupdate_trace.h::rcu_read_lock_trace.alt_1",
+    "include/linux/rcupdate_trace.h::rcu_read_unlock_trace.alt_1",
+    "include/linux/rcupdate_trace.h::call_rcu_tasks_trace.alt_1",
+    "include/linux/rcupdate_trace.h::synchronize_rcu_tasks_trace",
+    "include/linux/rcupdate_trace.h::rcu_barrier_tasks_trace"
+   ],
+   "text": "Tasks trace gives reader enter and exit, async queue, blocking wait and barrier; disabled builds trap."
+  },
+  {
+   "sids": [
+    "include/linux/srcutiny.h::srcu_barrier",
+    "kernel/rcu/tree.c::rcu_barrier",
+    "kernel/rcu/tree.c::get_state_synchronize_rcu_full",
+    "kernel/rcu/tree.c::poll_state_synchronize_rcu_full",
+    "include/linux/rcutiny.h::cond_synchronize_rcu"
+   ],
+   "text": "Barrier serializes and waits for all CPUs; polling snapshots normal plus expedited counters with conditional wait."
+  },
+  {
+   "sids": [
+    "kernel/rcu/rcu.h::rcu_first_leaf_node",
+    "kernel/rcu/rcu.h::rcu_is_leaf_node",
+    "kernel/rcu/rcu.h::rcu_for_each_leaf_node",
+    "kernel/rcu/tree.c::rcu_init_geometry",
+    "kernel/rcu/tree.c::rcu_get_root"
+   ],
+   "text": "Geometry publishes levels and nodes once; leaf tests and breadth-first or per-CPU walks cover the tree."
+  },
+  {
+   "sids": [
+    "include/linux/rcuwait.h::rcuwait_wait_event",
+    "include/linux/rcuref.h::rcuref_get",
+    "include/linux/rcuref.h::rcuref_put",
+    "include/linux/rcupdate_wait.h::synchronize_rcu_mult",
+    "include/linux/rcupdate_wait.h::wait_rcu_gp"
+   ],
+   "text": "Single waiter publish and sleep with timeout; refcount get and put; multi-wait covers several flavors."
+  },
+  {
+   "sids": [
+    "kernel/rcu/update.c::rcu_read_lock_bh_held",
+    "kernel/rcu/update.c::rcu_read_lock_sched_held",
+    "kernel/rcu/update.c::rcu_expedite_gp",
+    "kernel/rcu/update.c::rcu_unexpedite_gp"
+   ],
+   "text": "BH held means softirq or IRQs disabled; sched held means owned or nonpreemptible; expedite requests nest by counter."
+  },
+  {
+   "sids": [
+    "kernel/rcu/srcutree.c::start_poll_synchronize_srcu",
+    "kernel/rcu/srcutree.c::poll_state_synchronize_srcu",
+    "kernel/rcu/srcutiny.c::poll_state_synchronize_srcu"
+   ],
+   "text": "SRCU poll returns cookie; done on marker or sequence match; tiny tolerates small lag."
+  },
+  {
+   "sids": [
+    "kernel/rcu/tree_nocb.h::rcu_nocb_cpu_offload",
+    "kernel/rcu/tree_nocb.h::rcu_nocb_cpu_deoffload",
+    "kernel/rcu/tree_plugin.h::rcu_preempt_deferred_qs_irqrestore"
+   ],
+   "text": "CPU offload mode changes with status; deferred quiescence clears or forwards via hierarchy with diagnostics."
+  },
+  {
+   "sids": [
+    "kernel/rcu/tree_exp.h::synchronize_rcu_expedited",
+    "kernel/rcu/tree.c::rcu_blocking_is_gp"
+   ],
+   "text": "Expedited wait rejects read-side and atomic use; vacuous when blocking implies quiescence else coalesces and sleeps."
+  },
+  {
+   "sids": [
+    "kernel/rcu/sync.c::rcu_sync_init",
+    "kernel/rcu/sync.c::rcu_sync_enter",
+    "kernel/rcu/sync.c::rcu_sync_exit",
+    "kernel/rcu/sync.c::rcu_sync_dtor",
+    "kernel/rcu/tree.c::call_rcu_hurry",
+    "kernel/rcu/tree.c::cond_synchronize_rcu"
+   ],
+   "text": "Sync init/enter/exit/destroy; first entrant sync, rest sleep a grace; hurry and conditional wait skip done work."
+  },
+  {
+   "sids": [
+    "kernel/rcu/tiny.c::poll_state_synchronize_rcu",
+    "kernel/rcu/tree.c::poll_state_synchronize_rcu",
+    "kernel/rcu/tree.c::get_completed_synchronize_rcu_full",
+    "kernel/rcu/tree.c::start_poll_synchronize_rcu_full",
+    "kernel/rcu/tree_exp.h::start_poll_synchronize_rcu_expedited"
+   ],
+   "text": "Polling snapshots sequence and reports done on marker or advance with ordering; normal and expedited start helpers exposed."
+  },
+  {
+   "sids": [
+    "kernel/rcu/tasks.h::synchronize_rcu_tasks",
+    "kernel/rcu/tasks.h::rcu_barrier_tasks",
+    "kernel/rcu/tasks.h::synchronize_rcu_tasks_rude",
+    "kernel/rcu/tasks.h::rcu_tasks_trace_batches_completed",
+    "kernel/rcu/tasks.h::get_rcu_tasks_gp_kthread"
+   ],
+   "text": "Classic and rude task flavours give blocking waits, barriers, thread handles and progress; tracing reports completed batches."
+  },
+  {
+   "sids": [
+    "kernel/rcu/tree.c::rcutree_online_cpu",
+    "kernel/rcu/tree.c::rcutree_migrate_callbacks",
+    "kernel/rcu/tree.c::rcutree_offline_cpu",
+    "kernel/rcu/tree.c::rcu_init",
+    "kernel/rcu/tree.c::rcu_scheduler_starting",
+    "kernel/rcu/tree.c::rcu_softirq_qs"
+   ],
+   "text": "Hotplug online/migrate/offline moves callbacks and masks; boot builds geometry and threads; softirq reports quiescence."
+  },
+  {
+   "sids": [
+    "kernel/rcu/tree_plugin.h::__rcu_read_lock",
+    "kernel/rcu/tree_plugin.h::RCU_NEST_PMAX",
+    "kernel/rcu/tree_plugin.h::rcu_preempt_read_enter",
+    "kernel/rcu/tree_plugin.h::__rcu_read_unlock",
+    "kernel/rcu/tree_plugin.h::rcu_preempt_read_exit",
+    "kernel/rcu/tree_plugin.h::exit_rcu.alt_1",
+    "kernel/rcu/tree_plugin.h::exit_rcu.alt_2",
+    "kernel/rcu/tree_plugin.h::rcu_preempt_depth_set"
+   ],
+   "text": "Preemptible read entry increments per-task nesting and on strict builds with a grace thread requests a near-term quiescent state with a very large depth check; exit decrements and only at outermost level processes pending special work, while exiting tasks either do nothing or force one nesting level with blocked flag set as needed then run normal outermost unlock handling."
+  },
+  {
+   "sids": [
+    "kernel/rcu/tree_plugin.h::rcu_read_unlock_special",
+    "kernel/rcu/tree_plugin.h::rcu_unlock_needs_exp_handling",
+    "kernel/rcu/tree_plugin.h::rcu_read_unlock_strict",
+    "kernel/rcu/tree_plugin.h::rcu_all_qs",
+    "kernel/rcu/tree_plugin.h::rcu_note_context_switch.alt_2"
+   ],
+   "text": "Outermost unlock with pending work returns in non-maskable context, otherwise defers via soft interrupt or reschedule plus irq work when preemption, bottom halves or interrupts were disabled and reports immediately when fully enabled; strict unlocks skip reporting when disabled or without grace thread, while urgent and context-switch paths drain a per-cpu urgent flag with heavy-flag extended periods before reporting."
+  },
+  {
+   "sids": [
+    "kernel/rcu/tree_plugin.h::rcu_boost",
+    "kernel/rcu/tree_plugin.h::rcu_is_task_rcu_boosted",
+    "kernel/rcu/tree_stall.h::rcu_check_boost_fail"
+   ],
+   "text": "Boosting prefers expedited-blocked tasks over normal-blocked ones, builds a locked proxy mutex owned by the chosen task and briefly acquires it to raise priority while counting boosts; current-task boosted state compares the node boost mutex owner, and failure diagnosis scans leaf nodes to attribute holdouts to cpus or blocked tasks."
+  },
+  {
+   "sids": [
+    "kernel/rcu/tree_stall.h::__read_mostly.alt_1",
+    "kernel/rcu/tree_stall.h::__read_mostly.alt_2",
+    "kernel/rcu/tree_stall.h::rcu_stall_sysctl_table",
+    "kernel/rcu/tree_stall.h::init_rcu_stall_sysctl",
+    "kernel/rcu/tree_stall.h::rcu_stall_count",
+    "kernel/rcu/tree_stall.h::rcu_stall_count_show",
+    "kernel/rcu/tree_stall.h::rcu_stall_count_attr",
+    "kernel/rcu/tree_stall.h::kernel_rcu_stall_sysfs_init",
+    "kernel/rcu/tree_stall.h::rcu_cpu_stall_reset",
+    "kernel/rcu/tree_stall.h::check_slow_task",
+    "kernel/rcu/tree_stall.h::rcu_stall_chk_rdr"
+   ],
+   "text": "Stall control exposes sysctl switches for panic on stall and max count, a read-only sysfs stall counter, a reset that shortens force-quiescent allowance and pushes the deadline to maximum time, and slow-task inspection that refuses running tasks and otherwise snapshots nesting, special state and blocked membership."
+  },
+  {
+   "sids": [
+    "kernel/rcu/update.c::rcu_read_lock_held",
+    "kernel/rcu/update.c::rcu_read_lock_any_held",
+    "kernel/rcu/update.c::wakeme_after_rcu",
+    "kernel/rcu/update.c::__wait_rcu_gp",
+    "kernel/rcu/update.c::finish_rcuwait"
+   ],
+   "text": "Held queries consult a common helper then lockdep with broader acceptance for any flavor; generic waits deduplicate queue functions to register at most one stack callback each then block and destroy, wakeup completes the enclosing record, and wait finish clears the waiter and marks runnable."
+  },
+  {
+   "sids": [
+    "kernel/rcu/update.c::__read_mostly.alt_4",
+    "kernel/rcu/update.c::__read_mostly.alt_5",
+    "kernel/rcu/update.c::__read_mostly.alt_6",
+    "kernel/rcu/update.c::__read_mostly.alt_7",
+    "kernel/rcu/update.c::__read_mostly.alt_8"
+   ],
+   "text": "Mostly-read stall tunables cover normal and expedited timeouts, steady-state and boot warning suppression, and inclusion of blocked-task detail for expedited stalls."
+  }
+ ],
+ "extracts": [
+  "09f9312272d740a0d078432fb37a4146bedf7e5760f765a8131e43d3d6123955",
+  "0f8c6ad507fbb4bd7d7c13c1d200e9627425669ac930f340de7d46f2d7170aed",
+  "13ae46831f2deafbeed7c37ae39e6b3a9544f2c1ab4c41093a539044f963b50e",
+  "15933c8933da949da7bae66d284ef797ffc91d3bd7109fa7fc3a512110336c84",
+  "1e4d65d2c34668c59af88c4325604c96f86d8428345d459e8ee2caf90c26ca9e",
+  "244a6319cc071474f97693c85c93606729e3403f6f2217ec089dcad70cd8db81",
+  "3cb9a31d817303f9bc56a7e5a8ce782bee6ee4049a05ba26c347f62abff03991",
+  "3d5ea89ba8e8f6f8d5ca71fa359bcf797012c1e07aeb72b62985977fd4c2a401",
+  "3e487910b1d9cc735e3c1610afee8441f5c8092181436682e9095d5bda63ead8",
+  "520bba82094594f92cc4ba516c921b0537f41b78cbeb2dd308cc4fd8cd6294cf",
+  "5eb5dce21e83093c13fda77a648f9f0af10027b584c517b160f555b55c535787",
+  "6237a517278fbec96404dc4798b6f95aacf750cc7894db7cb8963d78afd56b50",
+  "6805baa693a52001fe1b6e51cc2103913a1f7d94cd65ea0284cdbce18eeffd08",
+  "745ec12c2aa4db02040d26626778d7dd7949afe7338a74de0365a7f394aac320",
+  "7f477c258ef95c6f5dcc0234ad171a20c58f192175d08d2479a5688d1786323d",
+  "834a29b21e8afc385419873ff0b77f1a64e780513ef8ad899b526ec60a1729cb",
+  "87b7215b09eb20f4a8ffe9fefaad0cc206bdfff4e9f8186969902f0f8dd4b5a5",
+  "8b859f2faaeebf2f2bf5719408302f4797e0cd01cad41ed80962370e3a0a5ae8",
+  "8d661542fbb81e2502ddb51fd3259b5c6d08b8e35e9975479712cbdbab465763",
+  "8fcde7316c4b93ba415b99d8f81a7b7b6ce8fff1f4a8000e0ea6ad174325103b",
+  "9bd8c513a0025d580d24d8cc94ed16c8b5039d421fecd18636abf784ad139e6e",
+  "b3b1e2960a96c23fb84f7fcb486a68f1f09c3e91d1b9689851abc287e4682137",
+  "b3f3b75c64279dcd7c3008f77c3890e1b53c108cca1f4665a0008d036e848a29",
+  "bcd6a0c42a83df8f8da6c61ab00a27e03636c6ec2dcac77410ff1fa6de45aee6",
+  "c1bff5f2e9b2dd17443d76846510cf36e06e9f5a1c78cd36536f1f6330e40814",
+  "c1df691852dcc57585b2d97e99b9ad2a8c1123c4964e1269618d653ec002d0e5",
+  "d66a638fb575aaf66dc86689791505c0097af214306612587c35c77daaee8a30",
+  "e880003b5e5ecb7bd6bc60482f3bd548126acd0984552266f57ce66303751a51",
+  "ed6fab7907135cecc4d9cb3edd8697fd584f1dd0ee384d3d24cd56eebc91c58e",
+  "ef2943e9b96ea64793d2340b54d6dae88837a12082610f168b41243f3f4deea5",
+  "ef76780859a1cbd7aa0cf70b07830b4e7852d6fb032eb8ce33b8d117ce542fec",
+  "f1cd5798c21e0658db32430686841be2b35a34941a630a2867f37524be12b3b7",
+  "f5dcc990addabfb4a82306f834aa4221640dd7554af797d34dfc8da1acda4994",
+  "ff7e60c39c626beac8cb7bc7031aef4a667cdff1b72dd5c03120de4c9a940d69"
+ ],
+ "gpl_spec": "PASS",
+ "hazards": [
+  {
+   "sids": [
+    "include/linux/rculist.h::list_del_rcu",
+    "include/linux/rculist.h::hlist_del_rcu",
+    "include/linux/rculist.h::hlists_swap_heads_rcu",
+    "include/linux/rculist.h::hlist_add_tail_rcu"
+   ],
+   "text": "Removed nodes carry poison and need a grace period before reuse; swap needs non-empty lists and exclusive writer."
+  },
+  {
+   "sids": [
+    "include/linux/rcupdate.h::rcu_preempt_sleep_check.alt_1",
+    "include/linux/rcupdate.h::kvfree_rcu_arg_2",
+    "include/linux/srcu.h::srcu_read_unlock",
+    "kernel/rcu/rcu.h::rcu_seq_set_state"
+   ],
+   "text": "Sleeping inside read regions is forbidden; oversized free offsets, bad indexes and misordered sequence are warned."
+  },
+  {
+   "sids": [
+    "include/linux/rcupdate_trace.h::call_rcu_tasks_trace.alt_2",
+    "include/linux/rcutiny.h::synchronize_rcu_expedited",
+    "kernel/rcu/srcutree.c::call_srcu",
+    "kernel/rcu/tiny.c::call_rcu"
+   ],
+   "text": "Disabled trace traps; tiny expedited does not block; duplicate enqueue warns once then leaks and drops."
+  },
+  {
+   "sids": [
+    "kernel/rcu/tree_nocb.h::rcu_nocb_lock.alt_2",
+    "kernel/rcu/tree_nocb.h::wake_nocb_gp.alt_2",
+    "kernel/rcu/tree_stall.h::show_rcu_gp_kthreads",
+    "kernel/rcu/tree.c::__call_rcu_common"
+   ],
+   "text": "Without offload guards are no-ops and wake claims none; diagnostics are racy and unfit for control."
+  },
+  {
+   "sids": [
+    "kernel/rcu/tree_stall.h::panic_on_rcu_stall",
+    "kernel/rcu/srcutree.c::__srcu_check_read_flavor",
+    "kernel/rcu/srcutree.c::srcu_leak_callback"
+   ],
+   "text": "Stall panic counts past threshold; flavor checker warns on NMI-unsafe multi-bit and CPU mismatch; leak drops without reclaim."
+  },
+  {
+   "sids": [
+    "kernel/rcu/tree_plugin.h::rcu_preempt_deferred_qs_irqrestore",
+    "kernel/rcu/tree.c::rcu_report_qs_rsp",
+    "kernel/rcu/rcutorture.c::rcu_test_debug_objects"
+   ],
+   "text": "Warnings flag wrong nodes readers left stale reports wrong CPU torn versions; duplicate check may hang on single-element deadlock."
+  },
+  {
+   "sids": [
+    "kernel/rcu/rcutorture.c::rcu_torture_writer",
+    "kernel/rcu/tree_nocb.h::rcu_nocb_rdp_offload",
+    "kernel/rcu/rcutorture.c::rcu_torture_stats_print"
+   ],
+   "text": "Writer stagnation with empty lists freezes tracing warns dumps; re-offload warns on online nonempty; stats alert on memory boost pipes."
+  },
+  {
+   "sids": [
+    "kernel/rcu/srcutree.c::srcu_module_coming",
+    "kernel/rcu/srcutree.c::srcu_module_going",
+    "kernel/rcu/sync.c::rcu_sync_func",
+    "kernel/rcu/sync.c::rcu_sync_dtor",
+    "kernel/rcu/tasks.h::rcu_spawn_tasks_kthread_generic",
+    "kernel/rcu/tasks.h::rcu_tasks_wait_gp",
+    "kernel/rcu/tasks.h::rcu_barrier_tasks_generic"
+   ],
+   "text": "Warn once on alloc failure, residual readers, idle completion, bad nesting, destroy with users and thread failure; grace/barrier may sleep."
+  },
+  {
+   "sids": [
+    "kernel/rcu/tree_stall.h::check_cpu_stall",
+    "kernel/rcu/tree_stall.h::rcu_dump_cpu_stacks",
+    "kernel/rcu/tree.c::rcu_do_batch",
+    "kernel/rcu/tree.c::rcu_gp_init",
+    "kernel/rcu/tree.c::rcu_sr_normal_gp_cleanup",
+    "kernel/rcu/tree_exp.h::rcu_exp_handler.alt_1",
+    "kernel/rcu/tree_exp.h::rcu_exp_need_qs"
+   ],
+   "text": "Stalls dump with panic option; start precedes hotplug scan; sync cleanup bounds completions; expedited uses mask rechecks."
+  },
+  {
+   "sids": [
+    "kernel/rcu/tree_nocb.h::rcu_spawn_cpu_nocb_kthread.alt_1",
+    "kernel/rcu/tree.c::rcutree_migrate_callbacks",
+    "kernel/rcu/tree.c::rcu_init",
+    "kernel/rcu/tree_nocb.h::nocb_gp_wait",
+    "kernel/rcu/tree_nocb.h::nocb_cb_wait",
+    "kernel/rcu/tree_nocb.h::lazy_rcu_shrink_count",
+    "kernel/rcu/tree_nocb.h::lazy_rcu_shrink_scan"
+   ],
+   "text": "Bringup warns on geometry and migration leftovers; concurrent deoffload needs rescan; reclaim never blocks and revalidates under trylocks."
+  },
+  {
+   "sids": [
+    "kernel/rcu/tree_plugin.h::rcu_preempt_deferred_qs_handler"
+   ],
+   "text": "Deferred quiescent irq work executing inside a new read section must clear its pending marker to force later requeue rather than reporting completion, avoiding lost wakeups."
+  },
+  {
+   "sids": [
+    "kernel/rcu/update.c::synchronize_rcu_trivial_preempt"
+   ],
+   "text": "Trivial preempt synchronization orders prior accesses, holds a read section while scanning threads, skips the caller to avoid self deadlock and spins on other threads trivial nesting with acquire ordering."
+  },
+  {
+   "sids": [
+    "kernel/rcu/update.c::rcu_verify_early_boot_tests"
+   ],
+   "text": "Callback count mismatch warns with negative status while failed SRCU completion poll warns once without changing counted stages."
+  },
+  {
+   "sids": [
+    "include/asm-generic/bug.h::WARN_ON.alt_1",
+    "include/asm-generic/bug.h::WARN_ON.alt_2",
+    "include/asm-generic/bug.h::WARN_ON.alt_3",
+    "include/asm-generic/bug.h::WARN_ON_ONCE.alt_1",
+    "include/asm-generic/bug.h::WARN_ON_ONCE.alt_2",
+    "include/asm-generic/bug.h::WARN_ON_ONCE.alt_3",
+    "include/linux/printk.h::pr_info"
+   ],
+   "text": "Early-boot verification and self-test callback depend on cross-dossier warning, once-only warning and informational logging helpers whose internals live elsewhere."
+  }
+ ],
+ "invariants": [
+  {
+   "sids": [
+    "include/linux/rcu_node_tree.h::RCU_FANOUT.alt_1",
+    "include/linux/rcu_node_tree.h::RCU_FANOUT_LEAF.alt_1",
+    "include/linux/rcu_node_tree.h::RCU_NUM_LVLS.alt_1",
+    "kernel/rcu/rcu.h::rcu_fanout_exact",
+    "kernel/rcu/rcu.h::rcu_fanout_leaf"
+   ],
+   "text": "Fanout from build with 64/32 fallback and 16 at leaves; depth one to four from a single root."
+  },
+  {
+   "sids": [
+    "include/linux/rcupdate.h::RCU_SEQ_CTR_SHIFT",
+    "include/linux/rcupdate.h::RCU_SEQ_STATE_MASK",
+    "include/linux/rcupdate.h::ULONG_CMP_GE",
+    "kernel/rcu/rcu.h::rcu_seq_ctr",
+    "kernel/rcu/rcu.h::rcu_seq_state",
+    "kernel/rcu/rcu.h::rcu_seq_snap"
+   ],
+   "text": "Sequence packs counter above two state bits; grace pairs normal and expedited with wrap-tolerant order."
+  },
+  {
+   "sids": [
+    "include/linux/rcupdate.h::__rcu_guarded",
+    "include/linux/rcupdate.h::__unrcu_pointer",
+    "include/linux/rcupdate.h::RCU_LOCKDEP_WARN.alt_1",
+    "include/linux/rcupdate.h::rcu_check_sparse.alt_1"
+   ],
+   "text": "Publication is release ordered with plain null store; guarded address space can be stripped; warnings fire once."
+  },
+  {
+   "sids": [
+    "include/linux/srcu.h::SRCU_READ_FLAVOR_NORMAL",
+    "include/linux/srcu.h::SRCU_READ_FLAVOR_FAST",
+    "include/linux/srcutree.h::SRCU_SIZE_SMALL",
+    "include/linux/srcutree.h::SRCU_SIZE_BIG",
+    "include/linux/srcutree.h::__SRCU_STRUCT_INIT"
+   ],
+   "text": "SRCU flavors are bits 1,2,4,8; tiny starts empty and tree pairs usage with per-CPU state; sizes small 0 big 8."
+  },
+  {
+   "sids": [
+    "include/linux/rcuref.h::RCUREF_ONEREF",
+    "include/linux/rcuref.h::RCUREF_MAXREF",
+    "include/linux/rcuref.h::RCUREF_SATURATED",
+    "include/linux/rcuref.h::RCUREF_RELEASED",
+    "include/linux/rcuref.h::RCUREF_DEAD",
+    "include/linux/rcuref.h::RCUREF_NOREF"
+   ],
+   "text": "One live ref stores as zero across max, saturated, released, dead and absent bands with slow path on negative."
+  },
+  {
+   "sids": [
+    "kernel/rcu/rcu_segcblist.c::rcu_segcblist_add_len",
+    "kernel/rcu/rcu_segcblist.c::rcu_segcblist_ready_cbs",
+    "kernel/rcu/rcu_segcblist.c::rcu_segcblist_pend_cbs",
+    "kernel/rcu/rcu_segcblist.c::rcu_segcblist_first_cb",
+    "kernel/rcu/rcu_segcblist.h::rcu_segcblist_restempty"
+   ],
+   "text": "Segment lengths support set, add and move; ready needs done, pending needs rest; emptiness by tail equality."
+  },
+  {
+   "sids": [
+    "kernel/rcu/rcu.h::rcu_gp_is_normal",
+    "kernel/rcu/rcu.h::rcu_gp_is_expedited",
+    "include/linux/rcutiny.h::same_state_synchronize_rcu_full",
+    "include/linux/rcutiny.h::NUM_ACTIVE_RCU_POLL_FULL_OLDSTATE",
+    "kernel/rcu/srcutree.c::srcu_should_expedite"
+   ],
+   "text": "This build reports normal only; full equality needs both counters in tree; tiny expedited aliases normal."
+  },
+  {
+   "sids": [
+    "kernel/rcu/tree.c::check_cb_ovld",
+    "kernel/rcu/tree.c::rcu_rdp_cpu_online",
+    "kernel/rcu/tree.c::rcu_accelerate_cbs",
+    "kernel/rcu/tree.c::rcu_gp_in_progress",
+    "kernel/rcu/tree.c::rcu_advance_cbs_nowake"
+   ],
+   "text": "Overload tracks group length with lockless fast path; online reads group bits once; accelerate may start grace."
+  },
+  {
+   "sids": [
+    "kernel/rcu/srcutree.c::__srcu_read_lock",
+    "kernel/rcu/srcutree.c::__srcu_read_unlock",
+    "kernel/rcu/srcutree.c::srcu_flip"
+   ],
+   "text": "SRCU lock samples set and bumps lock count; unlock orders then bumps unlock count; flip publishes alternate set."
+  },
+  {
+   "sids": [
+    "kernel/rcu/tree_exp.h::rcu_exp_gp_seq_snap",
+    "kernel/rcu/tree_exp.h::rcu_exp_gp_seq_done",
+    "kernel/rcu/tree_exp.h::__sync_rcu_exp_select_node_cpus"
+   ],
+   "text": "Expedited sequence monotonic with snapshot and done; selection excuses local and nonparticipating CPUs."
+  },
+  {
+   "sids": [
+    "kernel/rcu/tree.c::rcu_disable_urgency_upon_qs",
+    "kernel/rcu/tree_plugin.h::rcu_preempt_blocked_readers_cgp.alt_1",
+    "kernel/rcu/tree_plugin.h::rcu_qs.alt_1"
+   ],
+   "text": "Normal reports clear urgency and tick hold on tickless CPUs; blocked readers stay on first leaf with split heads."
+  },
+  {
+   "sids": [
+    "kernel/rcu/srcutree.c::srcu_advance_state",
+    "kernel/rcu/srcutree.c::srcu_gp_end",
+    "kernel/rcu/srcutree.c::srcu_reschedule"
+   ],
+   "text": "SRCU advance idle-first-second needs one then two quiets with flips; end completes sequence and schedules next."
+  },
+  {
+   "sids": [
+    "kernel/rcu/tree_nocb.h::rcu_nocb_rdp_deoffload",
+    "kernel/rcu/tree_nocb.h::rcu_nocb_rdp_offload",
+    "kernel/rcu/tree_nocb.h::rcu_nocb_queue_toggle_rdp"
+   ],
+   "text": "Deactivation needs offline target and empty queues after barrier with atomic toggle; re-offload needs boot thread."
+  },
+  {
+   "sids": [
+    "kernel/rcu/rcutorture.c::rcu_torture_pipe_update_one",
+    "kernel/rcu/rcutorture.c::rcu_torture_one_read",
+    "kernel/rcu/refscale.c::ref_scale_ops"
+   ],
+   "text": "Torture pipe publishes with clamp and hist; reads validate segments; refscale binds flavors to init and delay hooks."
+  },
+  {
+   "sids": [
+    "kernel/rcu/srcutree.c::srcu_init",
+    "kernel/rcu/srcutree.c::srcu_module_coming",
+    "kernel/rcu/srcutree.c::srcu_module_going",
+    "kernel/rcu/sync.c::rcu_sync_enter",
+    "kernel/rcu/sync.c::rcu_sync_exit",
+    "kernel/rcu/sync.c::rcu_sync_func",
+    "kernel/rcu/sync.c::rcu_sync_dtor"
+   ],
+   "text": "Boot sizes then drains once; module arrival installs banks, departure frees only with no grace/readers; nesting zero iff idle."
+  },
+  {
+   "sids": [
+    "kernel/rcu/tree.c::rcu_gp_init",
+    "kernel/rcu/tree.c::rcu_gp_fqs_loop",
+    "kernel/rcu/tree.c::rcu_gp_cleanup",
+    "kernel/rcu/tree.c::force_qs_rnp",
+    "kernel/rcu/tree.c::rcu_sr_normal_gp_init",
+    "kernel/rcu/tree.c::rcu_sr_normal_gp_cleanup"
+   ],
+   "text": "Init validates, inserts separator, advances sequence and reconciles leaves; forcing probes leaves; cleanup publishes completed and re-arms."
+  },
+  {
+   "sids": [
+    "kernel/rcu/tasks.h::rcu_tasks_pregp_step",
+    "kernel/rcu/tasks.h::rcu_tasks_postgp",
+    "kernel/rcu/tasks.h::rcu_tasks_is_holdout",
+    "kernel/rcu/tasks.h::rcu_tasks_pertask",
+    "kernel/rcu/tasks.h::rcu_tasks_postscan",
+    "kernel/rcu/tasks.h::rcu_tasks_wait_gp"
+   ],
+   "text": "Classic grace brackets scan with waits, refs holdouts, snapshots switches, merges exits; holdout excludes sleepers and offline."
+  },
+  {
+   "sids": [
+    "kernel/rcu/tree.c::rcutree_online_cpu",
+    "kernel/rcu/tree.c::rcutree_migrate_callbacks",
+    "kernel/rcu/tree_nocb.h::rcu_organize_nocb_kthreads",
+    "kernel/rcu/tree_nocb.h::nocb_gp_wait",
+    "kernel/rcu/tree_nocb.h::nocb_cb_wait",
+    "kernel/rcu/tree_nocb.h::rcu_init_nohz"
+   ],
+   "text": "Online joins masks and tick deps; migration merges validated; nocb groups and tracks smallest pending sequences, resetting after cycles."
+  },
+  {
+   "sids": [
+    "kernel/rcu/tree_plugin.h::rcu_preempt_read_enter",
+    "kernel/rcu/tree_plugin.h::rcu_preempt_read_exit",
+    "kernel/rcu/tree_plugin.h::rcu_preempt_depth_set",
+    "kernel/rcu/tree_plugin.h::rcu_unlock_needs_exp_handling"
+   ],
+   "text": "Nesting helpers centralize increment, decrement-return and explicit assignment; expedited treatment is needed when the task has a node with expedited waiters, local mask overlaps node expedited mask, strict builds still show pending quiescent need or blocked state, or boosting builds were interrupt-disabled while blocked."
+  },
+  {
+   "sids": [
+    "kernel/rcu/tree_stall.h::rcu_sysrq_start",
+    "kernel/rcu/tree_stall.h::rcu_sysrq_end",
+    "kernel/rcu/tree_stall.h::csd_lock_suppress_rcu_stall",
+    "kernel/rcu/tree_stall.h::sysrq_rcu",
+    "kernel/rcu/update.c::__read_mostly.alt_2",
+    "kernel/rcu/update.c::__read_mostly.alt_3",
+    "kernel/rcu/update.c::__read_mostly.alt_4",
+    "kernel/rcu/update.c::__read_mostly.alt_5",
+    "kernel/rcu/update.c::__read_mostly.alt_6",
+    "kernel/rcu/update.c::__read_mostly.alt_8"
+   ],
+   "text": "Sysrq suppression moves only between clear and value two leaving panic suppression untouched; nonzero values suppress stall warnings with separate boot control, timeouts start from build settings, and local flags gate cross-subsystem suppression, sysrq dumps and optional notifier and ftrace output."
+  },
+  {
+   "sids": [
+    "kernel/rcu/update.c::rcu_async_hurry_nesting",
+    "kernel/rcu/update.c::rcu_expedited_nesting",
+    "kernel/rcu/update.c::__read_mostly.alt_1",
+    "kernel/rcu/update.c::init_rcu_head",
+    "kernel/rcu/update.c::destroy_rcu_head",
+    "kernel/rcu/update.c::rcuhead_is_static_object",
+    "kernel/rcu/update.c::rcuhead_debug_descr"
+   ],
+   "text": "Async-hurry and expedited nesting start at one for boot state with a mostly-read in-kernel-boot flag; callback heads have init and free debug helpers under a head-type descriptor whose static-object check always succeeds."
+  },
+  {
+   "sids": [
+    "kernel/rcu/update.c::test_callback",
+    "kernel/rcu/update.c::rcu_self_test_counter",
+    "kernel/rcu/update.c::rcu_verify_early_boot_tests",
+    "kernel/rcu/update.c::rcu_self_test"
+   ],
+   "text": "Self-test callback increments a global counter with an informational message and the verifier passes only when the counter matches the number of exercised barrier stages."
+  }
+ ],
+ "locks": [
+  {
+   "sids": [
+    "include/linux/rcupdate.h::rcu_read_lock",
+    "include/linux/rcupdate.h::rcu_read_unlock",
+    "include/linux/rcupdate.h::rcu_read_lock_bh",
+    "include/linux/rcupdate.h::rcu_read_unlock_bh",
+    "include/linux/rcupdate.h::rcu_read_lock_sched",
+    "include/linux/rcupdate.h::rcu_read_unlock_sched"
+   ],
+   "text": "Read regions need paired enter and exit and forbid blocking; BH suppresses softirqs and dont-migrate pins CPU."
+  },
+  {
+   "sids": [
+    "include/linux/rcupdate.h::rcu_read_lock_held",
+    "include/linux/rcupdate.h::rcu_read_lock_bh_held",
+    "include/linux/rcupdate.h::lockdep_assert_in_rcu_read_lock.alt_1",
+    "include/linux/srcu.h::__srcu_read_lock_must_hold"
+   ],
+   "text": "Held queries affirm presence and scheduler held mirrors non-preemptible; dereference requires hold."
+  },
+  {
+   "sids": [
+    "kernel/rcu/rcu.h::raw_spin_lock_rcu_node",
+    "kernel/rcu/rcu.h::raw_spin_unlock_rcu_node",
+    "kernel/rcu/rcu.h::raw_spin_lock_irq_rcu_node",
+    "kernel/rcu/rcu.h::raw_spin_unlock_irq_rcu_node",
+    "kernel/rcu/srcutree.c::srcu_gp_start_if_needed"
+   ],
+   "text": "Node lock offers plain, irq and try forms with ordered acquire; tree grace start runs under per-CPU lock."
+  },
+  {
+   "sids": [
+    "kernel/rcu/tree_nocb.h::rcu_nocb_lock.alt_1",
+    "kernel/rcu/tree_nocb.h::rcu_nocb_unlock.alt_1",
+    "kernel/rcu/tree_nocb.h::rcu_lockdep_assert_cblist_protected.alt_1",
+    "kernel/rcu/tree.c::rcu_barrier_entrain"
+   ],
+   "text": "Offloaded list access needs disabled irqs plus nocb lock; bypass has its own guard; barrier entrain needs its guard."
+  },
+  {
+   "sids": [
+    "kernel/rcu/tree.c::rcu_report_qs_rnp",
+    "kernel/rcu/tree.c::rcu_report_qs_rsp"
+   ],
+   "text": "Each level holds node lock with IRQs disabled, passes child to parent, releases root before waking grace thread."
+  },
+  {
+   "sids": [
+    "kernel/rcu/tree_exp.h::exp_funnel_lock",
+    "kernel/rcu/tree_exp.h::sync_exp_reset_tree",
+    "kernel/rcu/tree_exp.h::rcu_exp_wait_wake"
+   ],
+   "text": "Expedited uses raw node locks for masks, per-node spin for desires, global mutex for one period, wake mutex to publish."
+  },
+  {
+   "sids": [
+    "kernel/rcu/srcutree.c::srcu_gp_end",
+    "kernel/rcu/srcutree.c::srcu_invoke_callbacks"
+   ],
+   "text": "SRCU end holds callback mutex across completion; invocation advances list under per-CPU lock with invoking flag."
+  },
+  {
+   "sids": [
+    "kernel/rcu/tree_nocb.h::rcu_nocb_cpu_toggle_offload",
+    "kernel/rcu/tree.h::rcu_nocb_lock_irqsave.alt_1",
+    "kernel/rcu/rcutorture.c::rcu_torture_fwd_cb_cr"
+   ],
+   "text": "Offload orders CPU exclusion then mutex then short sections with IRQ mask; forwarder enqueue holds spinlock with IRQs saved."
+  },
+  {
+   "sids": [
+    "kernel/rcu/sync.c::anon_1",
+    "kernel/rcu/sync.c::rcu_sync_func",
+    "kernel/rcu/sync.c::rcu_sync_enter",
+    "kernel/rcu/tiny.c::rcu_qs",
+    "kernel/rcu/tiny.c::rcu_process_callbacks"
+   ],
+   "text": "Sync state uses wait-queue guard with IRQs off; tiny sequence and lists use IRQ save/restore against interrupts and softirq."
+  },
+  {
+   "sids": [
+    "kernel/rcu/tasks.h::rcu_tasks_percpu",
+    "kernel/rcu/tasks.h::rcu_tasks",
+    "kernel/rcu/tasks.h::rcu_tasks_need_gpcb",
+    "kernel/rcu/tasks.h::rcu_tasks_invoke_cbs",
+    "kernel/rcu/tasks.h::rcu_tasks_one_gp",
+    "kernel/rcu/tasks.h::rcu_barrier_tasks_generic"
+   ],
+   "text": "Each task queue has raw guard with IRQ exclusion, dropped across sleeps; global and barrier mutexes serialize collapse/entrainment."
+  },
+  {
+   "sids": [
+    "kernel/rcu/tree.c::rcu_gp_init",
+    "kernel/rcu/tree.c::rcu_cleanup_dead_rnp",
+    "kernel/rcu/tree.c::force_qs_rnp",
+    "kernel/rcu/tree.c::rcu_gp_cleanup",
+    "kernel/rcu/tree_stall.h::check_cpu_stall",
+    "kernel/rcu/tree.c::rcu_do_batch"
+   ],
+   "text": "Root guards start with IRQs off, leaves add hotplug exclusion; forcing holds one leaf; batch under nocb lock; stall drops before slow output."
+  },
+  {
+   "sids": [
+    "kernel/rcu/tree_plugin.h::rcu_boost"
+   ],
+   "text": "Boosting selects list and task under the node lock with interrupts saved, revalidates emptiness, installs a proxy lock tied to the task, then releases so the task cannot vanish mid boost."
+  },
+  {
+   "sids": [
+    "kernel/rcu/tree_stall.h::rcu_iw_handler"
+   ],
+   "text": "Stall irq work derives per-cpu and node state from the work item then under the node lock snapshots the grace sequence and clears pending, warning when nothing was pending."
+  },
+  {
+   "sids": [
+    "kernel/rcu/update.c::rcu_lock_key",
+    "kernel/rcu/update.c::rcu_lock_map",
+    "kernel/rcu/update.c::rcu_bh_lock_key",
+    "kernel/rcu/update.c::rcu_bh_lock_map",
+    "kernel/rcu/update.c::rcu_sched_lock_key",
+    "kernel/rcu/update.c::rcu_sched_lock_map",
+    "kernel/rcu/update.c::rcu_callback_key",
+    "kernel/rcu/update.c::rcu_callback_map"
+   ],
+   "text": "Three lockdep maps separate normal, bottom-half and scheduler read flavors with outer-free-wait type and differing inner types, plus a dedicated callback-execution map."
+  }
+ ],
+ "pass": 1,
+ "phase_map": [
+  {
+   "anchor": "HB-KPAPER-001/hb-s5.p14",
+   "crown": "A",
+   "phase": "F0"
+  },
+  {
+   "anchor": "HB-KPAPER-001/hb-s5.p04",
+   "crown": "A",
+   "phase": "F1"
+  },
+  {
+   "anchor": "HB-KPAPER-001/hb-s5.p05",
+   "crown": "A",
+   "phase": "F4"
+  }
+ ],
+ "schema": "lx.dossier.v1",
+ "state_machines": [
+  {
+   "sids": [
+    "include/linux/rculist.h::list_splice_init_rcu",
+    "include/linux/rculist.h::list_splice_tail_init_rcu",
+    "include/linux/rculist.h::INIT_LIST_HEAD_RCU"
+   ],
+   "text": "Splice resets source to empty reader-safely, caller waits out readers, then publishes the detached body."
+  },
+  {
+   "sids": [
+    "include/linux/rcupdate.h::rcu_tasks_qs.alt_1",
+    "include/linux/rcupdate.h::rcu_head_init",
+    "include/linux/srcutiny.h::__srcu_read_lock_fast",
+    "include/linux/srcutiny.h::__srcu_read_lock"
+   ],
+   "text": "Tasks quiescence clears per-task flags on switch or checkpoint; tiny sleepable toggles an index over two counters."
+  },
+  {
+   "sids": [
+    "kernel/rcu/rcu.h::rcu_seq_start",
+    "kernel/rcu/rcu.h::rcu_seq_end",
+    "kernel/rcu/rcu.h::STATE_RCU_HEAD_READY",
+    "kernel/rcu/rcu.h::STATE_RCU_HEAD_QUEUED"
+   ],
+   "text": "Sequence moves idle to busy to next idle; callback heads move ready to queued on enqueue."
+  },
+  {
+   "sids": [
+    "kernel/rcu/tree.c::rcu_start_this_gp",
+    "kernel/rcu/tree.c::note_gp_changes",
+    "kernel/rcu/tree.c::rcu_advance_cbs",
+    "kernel/rcu/tree.c::rcu_gp_kthread_wake"
+   ],
+   "text": "Grace initiation publishes need to root and wakes once; noting syncs position and completion advances ready callbacks."
+  },
+  {
+   "sids": [
+    "kernel/rcu/tree_nocb.h::rcu_nocb_try_bypass",
+    "kernel/rcu/tree_nocb.h::call_rcu_nocb.alt_1",
+    "kernel/rcu/tree_nocb.h::__call_rcu_nocb_wake.alt_1",
+    "kernel/rcu/tree_nocb.h::wake_nocb_gp.alt_1"
+   ],
+   "text": "Offloaded enqueue picks direct, bypass or flush; wakeup picks immediate, deferred timer or lazy delay."
+  },
+  {
+   "sids": [
+    "kernel/rcu/tree.c::rcu_report_qs_rnp",
+    "kernel/rcu/tree.c::rcu_report_qs_rsp",
+    "kernel/rcu/tree.c::rcu_report_qs_rdp"
+   ],
+   "text": "Normal completion clears bits upward ignoring stale seq, marks drained nodes quiescent, wakes thread only at quiescent root."
+  },
+  {
+   "sids": [
+    "kernel/rcu/tree_exp.h::sync_rcu_exp_select_cpus",
+    "kernel/rcu/tree_exp.h::rcu_exp_wait_wake",
+    "kernel/rcu/tree_exp.h::synchronize_rcu_expedited_wait"
+   ],
+   "text": "Expedited coalesces on desires with followers on snaps; select inline early else workers; completion advances and wakes; wait backs off."
+  },
+  {
+   "sids": [
+    "kernel/rcu/srcutiny.c::srcu_drive_gp",
+    "kernel/rcu/srcutree.c::srcu_flip"
+   ],
+   "text": "Tiny worker detaches flips polls for old readers flips again invokes and requeues."
+  },
+  {
+   "sids": [
+    "kernel/rcu/tree_nocb.h::rcu_nocb_cpu_toggle_offload",
+    "kernel/rcu/tree_nocb.h::rcu_nocb_rdp_offload",
+    "kernel/rcu/tree_nocb.h::rcu_nocb_rdp_deoffload"
+   ],
+   "text": "Toggle moves CPUs offloaded-direct ignoring redundant rejecting online; re-offload validates waits unparks; deactivation drains parks."
+  },
+  {
+   "sids": [
+    "kernel/rcu/rcutorture.c::rcu_torture_writer",
+    "kernel/rcu/rcutorture.c::rcu_torture_one_read",
+    "kernel/rcu/rcutorture.c::rcu_torture_fwd_prog_cb"
+   ],
+   "text": "Writer cycles wait modes then advances pipe; reads prepare access validate; forward requeues unless stop."
+  },
+  {
+   "sids": [
+    "kernel/rcu/sync.c::anon_1",
+    "kernel/rcu/sync.c::rcu_sync_func",
+    "kernel/rcu/sync.c::rcu_sync_enter",
+    "kernel/rcu/sync.c::rcu_sync_exit",
+    "kernel/rcu/tasks.h::rcu_barrier_tasks_generic",
+    "kernel/rcu/tasks.h::rcu_barrier_tasks_generic_cb"
+   ],
+   "text": "Sync cycles idle-enter-passed-exit with replay; readers sleep till passed; barrier entrains markers and sleeps till last completes."
+  },
+  {
+   "sids": [
+    "kernel/rcu/tree.c::rcu_gp_init",
+    "kernel/rcu/tree.c::rcu_gp_fqs_loop",
+    "kernel/rcu/tree.c::rcu_gp_cleanup",
+    "kernel/rcu/tree.c::rcu_gp_kthread",
+    "kernel/rcu/tree.c::rcu_gp_fqs_check_wake",
+    "kernel/rcu/tree.c::force_qs_rnp"
+   ],
+   "text": "Grace moves idle-reconcile-init-forcing-cleanup; thread brackets init and cleanup, looping forcing with deadlines."
+  },
+  {
+   "sids": [
+    "kernel/rcu/tasks.h::RTGS_INIT",
+    "kernel/rcu/tasks.h::set_tasks_gp_state",
+    "kernel/rcu/tasks.h::rcu_tasks_one_gp",
+    "kernel/rcu/tasks.h::rcu_tasks_need_gpcb",
+    "kernel/rcu/tasks.h::rcu_tasks_invoke_cbs",
+    "kernel/rcu/tasks.h::rcu_tasks_wait_gp"
+   ],
+   "text": "Task thread walks init, waits, scan, holdout rescans, post-grace, invoke with stamps; queues advance enqueue to invoke."
+  },
+  {
+   "sids": [
+    "kernel/rcu/tree.h::RCU_KTHREAD_STOPPED",
+    "kernel/rcu/tree.h::RCU_GP_IDLE",
+    "kernel/rcu/tree.h::RCU_GP_INIT",
+    "kernel/rcu/tree_nocb.h::nocb_gp_wait",
+    "kernel/rcu/tree_nocb.h::nocb_cb_wait",
+    "kernel/rcu/tree_plugin.h::rcu_preempt_ctxt_queue"
+   ],
+   "text": "Threads track stopped and grace idle/init; group scans then sleeps, callback batches; blocked insert uses ordered slots."
+  },
+  {
+   "sids": [
+    "kernel/rcu/tree_plugin.h::rcu_boost_kthread"
+   ],
+   "text": "Per-node boost thread waits for either blocked list to become non-empty, runs a boost pass, and after many consecutive passes with remaining work voluntarily sleeps briefly before continuing."
+  },
+  {
+   "sids": [
+    "kernel/rcu/update.c::rcu_self_test",
+    "kernel/rcu/update.c::rcu_verify_early_boot_tests",
+    "kernel/rcu/update.c::early_srcu_cookie",
+    "kernel/rcu/update.c::rcu_self_test_counter",
+    "kernel/rcu/update.c::test_callback"
+   ],
+   "text": "Early-boot verification gated on a self-test flag runs an RCU barrier stage then an SRCU barrier stage, polls the saved SRCU cookie expecting success, releases the early SRCU instance, then evaluates the callback counter for pass or fail."
+  }
+ ],
+ "structs": [
+  {
+   "sids": [
+    "include/linux/rcu_segcblist.h::rcu_cblist",
+    "include/linux/rcu_segcblist.h::rcu_segcblist",
+    "include/linux/rcu_segcblist.h::RCU_CBLIST_NSEGS",
+    "include/linux/rcu_segcblist.h::SEGCBLIST_ENABLED",
+    "include/linux/rcu_segcblist.h::RCU_SEGCBLIST_INITIALIZER"
+   ],
+   "text": "Plain list has head, tail and length; segmented list adds per-segment tails, grace values, lengths and flags."
+  },
+  {
+   "sids": [
+    "include/linux/srcutiny.h::srcu_struct",
+    "include/linux/srcutree.h::srcu_struct",
+    "include/linux/srcutree.h::srcu_data",
+    "include/linux/srcutree.h::srcu_node",
+    "include/linux/srcutree.h::srcu_usage"
+   ],
+   "text": "Tiny domain holds local depths and queues; tree header points at per-CPU counters, nodes and usage anchor."
+  },
+  {
+   "sids": [
+    "kernel/rcu/tree_stall.h::show_rcu_state",
+    "kernel/rcu/tree_stall.h::show_rcu_node",
+    "kernel/rcu/rcu.h::RCU_SCHEDULER_INACTIVE",
+    "kernel/rcu/rcu.h::RCU_SCHEDULER_RUNNING"
+   ],
+   "text": "Observed node has range, counters, masks and links; global has stamps, seqs, flags and wait; per-CPU has list and clocks."
+  },
+  {
+   "sids": [
+    "include/linux/rcu_sync.h::rcu_sync",
+    "include/linux/rcupdate_wait.h::rcu_synchronize",
+    "include/linux/rcuwait.h::__RCUWAIT_INITIALIZER",
+    "include/linux/srcu.h::init_srcu_struct"
+   ],
+   "text": "Grace coordinator holds state, count, queue and head; blocker has head, completion and seq; waiter centers on task."
+  },
+  {
+   "sids": [
+    "kernel/rcu/srcutiny.c::init_srcu_struct_fields",
+    "kernel/rcu/srcutree.c::SRCU_SIZING_AUTO",
+    "kernel/rcu/srcutree.c::SRCU_INTERVAL"
+   ],
+   "text": "Tiny SRCU holds nesting counters queues flags index and grace work; tree sizing uses coded modes with big small limits."
+  },
+  {
+   "sids": [
+    "kernel/rcu/tree_exp.h::rcu_report_exp_rnp",
+    "kernel/rcu/tree_exp.h::sync_rcu_exp_done"
+   ],
+   "text": "Expedited state holds per-CPU needs node masks blocked presence root completion and wait queue with tick release."
+  },
+  {
+   "sids": [
+    "kernel/rcu/rcutorture.c::rcu_torture_ops",
+    "kernel/rcu/rcutorture.c::rcu_torture_one_read_state",
+    "kernel/rcu/rcutorture.c::rcu_fwd"
+   ],
+   "text": "Torture ops carry flags and selector; reader state holds markers encodings segments timers; forwarder is locked counted queue."
+  },
+  {
+   "sids": [
+    "kernel/rcu/tree.h::rcu_node",
+    "kernel/rcu/tree.h::rcu_data",
+    "kernel/rcu/tree.h::rcu_state",
+    "kernel/rcu/tree.h::rcu_snap_record",
+    "kernel/rcu/tree.h::rcu_noqs"
+   ],
+   "text": "Node holds mask generations, topology, blocked lists, queues; per-CPU holds sequences, lists; global holds arrays, sequences, timing."
+  },
+  {
+   "sids": [
+    "kernel/rcu/tasks.h::rcu_tasks_percpu",
+    "kernel/rcu/tasks.h::rcu_tasks",
+    "kernel/rcu/tasks.h::DEFINE_RCU_TASKS",
+    "kernel/rcu/tiny.c::rcu_ctrlblk.alt_1",
+    "kernel/rcu/sync.c::anon_1",
+    "kernel/rcu/tasks.h::RTGS_INIT",
+    "kernel/rcu/tasks.h::rcu_tasks_gp_state_names"
+   ],
+   "text": "Task per-CPU holds lists, timers and sets; central holds guards, markers, threads and limits; tiny holds heads, tails, biased sequence."
+  },
+  {
+   "sids": [
+    "kernel/rcu/tree.c::DEFAULT_RCU_BLIMIT",
+    "kernel/rcu/tree.c::DEFAULT_RCU_QOVLD",
+    "kernel/rcu/tree.h::RCU_JIFFIES_TILL_FORCE_QS",
+    "kernel/rcu/tree_nocb.h::LAZY_FLUSH_JIFFIES",
+    "kernel/rcu/tree.h::RCU_KTHREAD_STOPPED",
+    "kernel/rcu/tree.h::RCU_GP_FLAG_INIT"
+   ],
+   "text": "ABI numbers thread states and grace flags; batch, overload, forcing and lazy constants bound work and timing."
+  },
+  {
+   "sids": [
+    "kernel/rcu/tree_stall.h::rcu_stall_chk_rdr",
+    "kernel/rcu/update.c::early_srcu_cookie",
+    "kernel/rcu/update.c::early_boot_kfree_rcu"
+   ],
+   "text": "Reader stall snapshot holds nesting level, a copy of the special unlock union and blocked-list membership; early-boot deferred release pairs an RCU callback head wrapper with a saved SRCU cookie."
+  },
+  {
+   "sids": [
+    "kernel/rcu/tree_plugin.h::RCU_NEST_PMAX",
+    "kernel/rcu/tree_plugin.h::RCU_BOOST_DELAY_JIFFIES",
+    "kernel/rcu/tree_stall.h::RCU_STALL_DELAY_DELTA.alt_1",
+    "kernel/rcu/tree_stall.h::RCU_STALL_DELAY_DELTA.alt_2",
+    "kernel/rcu/tree_stall.h::RCU_STALL_MIGHT_DIV",
+    "kernel/rcu/tree_stall.h::RCU_STALL_MIGHT_MIN"
+   ],
+   "text": "Nesting ceiling is half the largest signed value; boost start delay converts configured milliseconds to jiffies with round-up; stall compensation adds either five seconds of ticks or zero, with warning threshold at base interval divided by eight floored at two seconds of ticks."
+  },
+  {
+   "sids": [
+    "kernel/rcu/tree_stall.h::gp_state_names",
+    "kernel/rcu/update.c::CREATE_TRACE_POINTS",
+    "kernel/rcu/update.c::MODULE_PARAM_PREFIX"
+   ],
+   "text": "Grace states map nine lifecycle values from idle through waiting, done, onoff, init, wait-fqs, doing-fqs, cleanup and cleaned to name strings; tracing uses a creation marker and module parameters live under rcupdate with trailing dot."
+  }
+ ],
+ "stubs": [
+  {
+   "sid": "include/asm-generic/rwonce.h::READ_ONCE",
+   "state": "stub",
+   "target_dossier": "D03"
+  },
+  {
+   "sid": "include/asm-generic/rwonce.h::WRITE_ONCE",
+   "state": "stub",
+   "target_dossier": "D03"
+  },
+  {
+   "sid": "include/asm-generic/barrier.h::smp_mb.alt_1",
+   "state": "stub",
+   "target_dossier": "D03"
+  },
+  {
+   "sid": "include/asm-generic/barrier.h::smp_load_acquire.alt_1",
+   "state": "stub",
+   "target_dossier": "D03"
+  },
+  {
+   "sid": "include/linux/preempt.h::preempt_disable.alt_1",
+   "state": "stub",
+   "target_dossier": "D01"
+  },
+  {
+   "sid": "include/linux/percpu-defs.h::this_cpu_ptr.alt_1",
+   "state": "stub",
+   "target_dossier": "D05"
+  },
+  {
+   "sid": "include/linux/spinlock.h::raw_spin_lock_irqsave.alt_1",
+   "state": "stub",
+   "target_dossier": "D03"
+  },
+  {
+   "sid": "include/linux/mutex.h::mutex_lock",
+   "state": "stub",
+   "target_dossier": "D03"
+  },
+  {
+   "sid": "include/asm-generic/bug.h::WARN_ON_ONCE.alt_1",
+   "state": "stub",
+   "target_dossier": "D17"
+  },
+  {
+   "sid": "include/linux/printk.h::pr_info",
+   "state": "stub",
+   "target_dossier": "D13"
+  }
+ ]
+}

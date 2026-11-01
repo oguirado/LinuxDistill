@@ -1,0 +1,282 @@
+{
+ "tally": {
+  "PARTIAL": 71,
+  "SUPPORTED": 64,
+  "UNSUPPORTED": 1
+ },
+ "per": {
+  "D01-1": {
+   "counts": {
+    "PARTIAL": 1,
+    "SUPPORTED": 3
+   },
+   "overall": "Findings 2, 3, and 4 are fully supported by the cited fragments and kernel design; Finding 1 is partial due to missing NICE_TO_PRIO fragment and an extraneous calc_load citation.",
+   "bad": []
+  },
+  "D01-2": {
+   "counts": {
+    "SUPPORTED": 2,
+    "PARTIAL": 2
+   },
+   "overall": "Findings 5 and 6 are fully supported by the cited scheduler fragments; findings 7 and 8 are only partially supported due to omitted fragments beyond the sixth citation and unsubstantiated ABI framing in finding 7.",
+   "bad": []
+  },
+  "D02-1": {
+   "counts": {
+    "PARTIAL": 2,
+    "SUPPORTED": 2
+   },
+   "overall": "Findings 3 and 4 are fully supported by the cited lock and callback code; Finding 1 omits the common lock-held check and Finding 2 lacks citations for normal/expedited GP pairing.",
+   "bad": []
+  },
+  "D02-2": {
+   "counts": {
+    "SUPPORTED": 3,
+    "PARTIAL": 1
+   },
+   "overall": "3 findings fully supported; Finding 6 is partial because it misidentifies writers calling rcu_sync_enter as readers.",
+   "bad": []
+  },
+  "D03-1": {
+   "counts": {
+    "PARTIAL": 3,
+    "SUPPORTED": 1
+   },
+   "overall": "Finding 3 is fully supported; Findings 1, 2, and 4 are partial due to uncited barrier/mutex variants, missing futex teardown, repeatable hash allocation, and debug-only bitlock checks.",
+   "bad": []
+  },
+  "D03-2": {
+   "counts": {
+    "PARTIAL": 3,
+    "SUPPORTED": 1
+   },
+   "overall": "Finding 7 is fully supported by its fragments; Findings 5, 6, and 8 are partial because several claimed primitives or behaviors (release/acquire, IRQ masking in plain lock, write/try/unlock variants) are omitted from the cited fragments.",
+   "bad": []
+  },
+  "D04-1": {
+   "counts": {
+    "PARTIAL": 3,
+    "SUPPORTED": 1
+   },
+   "overall": "Finding 4 is fully supported by the cited fragments. Findings 1, 2, and 3 are partially supported due to uncited NMI/per-CPU request paths, absent placement/overrun logic, and inverted ordering description between timekeeping_forward_now and shadow commit.",
+   "bad": []
+  },
+  "D04-2": {
+   "counts": {
+    "SUPPORTED": 1,
+    "PARTIAL": 3
+   },
+   "overall": "Finding 5 is well-supported by its lock definitions and usage; Findings 6, 7, and 8 are only partially supported due to overstating struct fields or citing macro/init wrappers instead of the actual definitions and validation logic.",
+   "bad": []
+  },
+  "D05-1": {
+   "counts": {
+    "PARTIAL": 2,
+    "SUPPORTED": 2
+   },
+   "overall": "Findings 2 and 3 are fully supported by their cited fragments; Finding 1 lacks support for online types, and Finding 4 lacks any citation or fragment for NUMA spans.",
+   "bad": []
+  },
+  "D05-2": {
+   "counts": {
+    "PARTIAL": 4
+   },
+   "overall": "All four findings are PARTIAL: core mechanisms match general kernel behavior, but claims overstate or slightly misattribute struct definitions, state transition direction, and helper entry points relative to the specific symbols cited.",
+   "bad": []
+  },
+  "D06-1": {
+   "counts": {
+    "SUPPORTED": 4
+   },
+   "overall": "All four findings accurately reflect the memory management routines, page table helpers, and filemap/readahead invariants shown in the cited kernel fragments.",
+   "bad": []
+  },
+  "D06-2": {
+   "counts": {
+    "SUPPORTED": 2,
+    "PARTIAL": 2
+   },
+   "overall": "Findings 5 and 7 are well supported by the cited fragments. Findings 6 and 8 are partially supported due to missing struct definitions/fragments and claims (extents, reserve bits, no-MMU faults) not evidenced in the provided code.",
+   "bad": []
+  },
+  "D07-1": {
+   "counts": {
+    "SUPPORTED": 3,
+    "PARTIAL": 1
+   },
+   "overall": "3 findings are fully supported by the cited KVM x86/MMU/SVM fragments; Finding 3 is partial as it slightly conflates the RMAP bitlock/mmu_lock conditions and omits the unreachable-vCPU exception.",
+   "bad": []
+  },
+  "D07-2": {
+   "counts": {
+    "SUPPORTED": 4
+   },
+   "overall": "All four findings (5-8) in dossier D07 accurately summarize KVM memory slots/dirty rings, UAPI/ABI constants and structures, the vCPU guest entry/exit loop, and x86 VM/vCPU ioctl multiplexing.",
+   "bad": []
+  },
+  "D08-1": {
+   "counts": {
+    "SUPPORTED": 3,
+    "PARTIAL": 1
+   },
+   "overall": "3 findings are fully supported by the cited ARM64 KVM sys_regs, MMU, and vGIC fragments; Finding 2 is partial because kvm_timer_enabled checks enable and interrupt mask bits rather than pending state.",
+   "bad": []
+  },
+  "D08-2": {
+   "counts": {
+    "SUPPORTED": 2,
+    "PARTIAL": 2
+   },
+   "overall": "Findings 5 and 6 are fully supported by the fragments. Finding 7 overstates __gic_v3_get_lr fatality (it masks lr & 0xf before switching), and Finding 8's 'faults poison' claim is not supported by gmem_abort.",
+   "bad": []
+  },
+  "D09-1": {
+   "counts": {
+    "SUPPORTED": 1,
+    "PARTIAL": 3
+   },
+   "overall": "Finding 1 is fully supported by its fragments, whereas Findings 2-4 rely on helper functions or omitted code not fully captured by the cited symbols.",
+   "bad": []
+  },
+  "D09-2": {
+   "counts": {
+    "SUPPORTED": 1,
+    "PARTIAL": 3
+   },
+   "overall": "Finding 5 is fully supported by the cited initialization and exception routines; Findings 6, 7, and 8 are partially supported because cited fragments omit per-CPU/MSI details, retry loops, or fallback bounds.",
+   "bad": []
+  },
+  "D10-1": {
+   "counts": {
+    "SUPPORTED": 2,
+    "PARTIAL": 2
+   },
+   "overall": "Findings 1 and 3 accurately reflect the cited x86 mm/virt symbols and state transitions; Finding 2 mischaracterizes lock_cmos and omits mutex/attest functions, while Finding 4 cites only macro defines and conflates TDX_OPERAND_BUSY with invalid operands.",
+   "bad": []
+  },
+  "D10-2": {
+   "counts": {
+    "PARTIAL": 2,
+    "SUPPORTED": 2
+   },
+   "overall": "Findings 6 and 7 are fully supported by the cited implementations. Findings 5 and 8 are partially supported because their cited macro fragments omit several enumerated states/modes claimed (VMX HLT/WAIT_SIPI, Xen TSC modes, MRR_APM).",
+   "bad": []
+  },
+  "D11-1": {
+   "counts": {
+    "PARTIAL": 2,
+    "SUPPORTED": 2
+   },
+   "overall": "Findings 3 and 4 are fully supported by the cited arm64 headers and boot code; Finding 1 is partial due to an absent symbol path and permitted in-place permission updates, and Finding 2 overstates lazy PG_dcache_clean clearing and MTE tag recovery.",
+   "bad": []
+  },
+  "D11-2": {
+   "counts": {
+    "PARTIAL": 4
+   },
+   "overall": "All four findings are PARTIAL because each bundles claims that go beyond the cited fragments (firmware RNG readiness, swapper barriers, Neoverse errata entries, and __sigframe_alloc internal OOM/stack logic are absent from the shown symbols).",
+   "bad": []
+  },
+  "D12-1": {
+   "counts": {
+    "SUPPORTED": 2,
+    "PARTIAL": 2
+   },
+   "overall": "Findings 1 and 4 are fully supported by their cited fragments. Findings 2 and 3 are partially supported due to minor omissions in the cited code (pidfd combo checks in F2, and citing cgroup_root instead of file ops structures in F3).",
+   "bad": []
+  },
+  "D12-2": {
+   "counts": {
+    "PARTIAL": 4
+   },
+   "overall": "All four findings are PARTIAL: while the core mechanisms and structs shown match the claims, each finding either omits citations for claimed subsystems (SysV shm, cgroup attach) or mixes functions/unrelated entry points (init_pwq, copy_process) into the cited set.",
+   "bad": []
+  },
+  "D13-1": {
+   "counts": {
+    "SUPPORTED": 3,
+    "PARTIAL": 1
+   },
+   "overall": "3 findings are fully supported by the cited fragments and kernel semantics; Finding 3 is partial because nbcon emergency priority order is not shown in nbcon_context_try_acquire.",
+   "bad": []
+  },
+  "D13-2": {
+   "counts": {
+    "PARTIAL": 3,
+    "SUPPORTED": 1
+   },
+   "overall": "Most claims accurately reflect kernel mechanisms in the fragments, but Findings 5, 6, and 8 overstate completeness or omit conditions/symbols (MODULE_STATE_GOING, module_exit, real dma_request_chan, conditional audit_panic).",
+   "bad": []
+  },
+  "D14-1": {
+   "counts": {
+    "PARTIAL": 1,
+    "SUPPORTED": 3
+   },
+   "overall": "3 findings are supported by the cited fragments and kernel semantics; Finding 1 is partial because radix_tree_insert and rb_insert_color implement insertion rather than lookup.",
+   "bad": []
+  },
+  "D14-2": {
+   "counts": {
+    "SUPPORTED": 2,
+    "PARTIAL": 1,
+    "UNSUPPORTED": 1
+   },
+   "overall": "Findings 5 and 7 accurately summarize their respective helpers and state machines. Finding 6 falsely claims rhashtable_lookup mutates state, and Finding 8 fabricates hazard claims unrelated to the cited test code.",
+   "bad": [
+    {
+     "n": 8,
+     "verdict": "UNSUPPORTED",
+     "reason": "The fragments are bitmap and BPF test generators/tables; they contain no volatile barriers, size-validation builders, or truncation fallbacks as claimed."
+    }
+   ]
+  },
+  "D15-1": {
+   "counts": {
+    "PARTIAL": 2,
+    "SUPPORTED": 2
+   },
+   "overall": "Findings 2 and 3 are well-supported by their citations and fragments. Findings 1 and 4 overstate coverage relative to the specific functions and structs cited.",
+   "bad": []
+  },
+  "D15-2": {
+   "counts": {
+    "SUPPORTED": 3,
+    "PARTIAL": 1
+   },
+   "overall": "3 findings (5, 7, 8) are fully supported by the cited fragments; finding 6 is partial because cancel, destroy/drain, and compat narrow handlers are claimed but omitted from the cited fragments.",
+   "bad": []
+  },
+  "D16-1": {
+   "counts": {
+    "PARTIAL": 4
+   },
+   "overall": "All four findings are PARTIAL: core virtqueue, config, driver, and locking mechanics are recognizable, but claims overstate unconditional SHM failure, feature gating in virtio_cread, and omit supporting code for ethtool/datapath, device ready, and HVC drain.",
+   "bad": []
+  },
+  "D16-2": {
+   "counts": {
+    "PARTIAL": 3,
+    "SUPPORTED": 1
+   },
+   "overall": "Finding 7 is fully supported by the cited fragments. Findings 5, 6, and 8 are only partially supported because each contains sub-claims not evidenced by the provided snippets (e.g., virtio_mem_mutex usage, pl011 options probing, notify overrun/reset flush).",
+   "bad": []
+  },
+  "D17-1": {
+   "counts": {
+    "SUPPORTED": 2,
+    "PARTIAL": 2
+   },
+   "overall": "Mostly accurate UAPI symbol mappings; minor overstatements in Finding 2 (Opal ops vs descriptors) and Finding 4 (missing citations for TEE close and indefinite release).",
+   "bad": []
+  },
+  "D17-2": {
+   "counts": {
+    "PARTIAL": 1,
+    "SUPPORTED": 3
+   },
+   "overall": "Findings 6, 7, and 8 are fully supported by the cited fragments and standard kernel invariants; Finding 5 is partial because pidfd namespace query ioctls are omitted from the citations.",
+   "bad": []
+  }
+ }
+}

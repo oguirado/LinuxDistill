@@ -9,3 +9,5 @@ __pycache__/
 */router/nodes/
 */router/routes/
 */router/dist/router/*.tar.zst
+*/router/knowledge/*
+!*/router/knowledge/stats.json

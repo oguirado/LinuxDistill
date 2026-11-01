@@ -1,0 +1,1012 @@
+{
+ "dossier": "D12",
+ "entry_points": [
+  {
+   "sids": [
+    "ipc/mqueue.c::sys_mq_open",
+    "ipc/mqueue.c::sys_mq_timedsend",
+    "ipc/mqueue.c::sys_mq_timedreceive",
+    "ipc/mqueue.c::sys_mq_notify",
+    "ipc/mqueue.c::sys_mq_getsetattr"
+   ],
+   "text": "Mq open, unlink, timed send and receive, notify and attr form user surface."
+  },
+  {
+   "sids": [
+    "ipc/msg.c::sys_msgget",
+    "ipc/msg.c::sys_msgsnd",
+    "ipc/sem.c::sys_semop",
+    "ipc/syscall.c::sys_ipc"
+   ],
+   "text": "SysV msg, sem and shm calls forward to shared helpers and mux."
+  },
+  {
+   "sids": [
+    "kernel/capability.c::sys_capget",
+    "kernel/capability.c::sys_capset",
+    "kernel/acct.c::sys_acct",
+    "kernel/cgroup/cgroup.c::cgroup_init",
+    "kernel/cgroup/cgroup.c::cgroup_freeze_write"
+   ],
+   "text": "Capget, capset, acct, cgroup attach, freeze and boot init anchor lifecycle."
+  },
+  {
+   "sids": [
+    "kernel/exit.c::sys_exit",
+    "kernel/exit.c::sys_wait4",
+    "kernel/fork.c::sys_fork",
+    "kernel/fork.c::sys_clone3"
+   ],
+   "text": "Exit and group exit with low-8 code; wait4 and waitid publish status; fork and clone3 validate then create."
+  },
+  {
+   "sids": [
+    "kernel/cpu.c::target_store",
+    "kernel/entry/common.c::irqentry_enter",
+    "kernel/signal.c::sys_kill",
+    "kernel/ptrace.c::sys_ptrace"
+   ],
+   "text": "Hotplug debug target control, IRQ entry and exit tracking, kill mask handling and ptrace attach dispatch."
+  },
+  {
+   "sids": [
+    "kernel/kexec.c::sys_kexec_load",
+    "kernel/kexec_file.c::sys_kexec_file_load",
+    "kernel/seccomp.c::sys_seccomp",
+    "kernel/rseq.c::sys_rseq"
+   ],
+   "text": "Kexec load and file load staging, seccomp install path and rseq register with slice gating."
+  },
+  {
+   "sids": [
+    "kernel/nsproxy.c::sys_setns",
+    "kernel/pid.c::sys_pidfd_open",
+    "kernel/workqueue.c::destroy_workqueue",
+    "kernel/nstree.c::sys_listns"
+   ],
+   "text": "Setns staging and commit, pidfd open validation, namespace listing and workqueue terminal drain."
+  },
+  {
+   "sids": [
+    "kernel/sys.c::sys_prctl",
+    "kernel/sys.c::sys_getcpu",
+    "kernel/sys.c::do_sysinfo",
+    "kernel/sys.c::sys_sysinfo",
+    "kernel/sys.c::compat_sys_sysinfo",
+    "kernel/sys_ni.c::sys_ni_syscall"
+   ],
+   "text": "Prctl dispatches after security veto; getcpu reports CPU-node; sysinfo fills snapshot; ni reports unimplemented."
+  }
+ ],
+ "exports": [
+  {
+   "sids": [
+    "kernel/capability.c::capable",
+    "kernel/cred.c::prepare_creds",
+    "kernel/cred.c::commit_creds",
+    "kernel/pid.c::find_task_by_vpid",
+    "kernel/signal.c::send_sig_info"
+   ],
+   "text": "Capability, credential, pid and signal helpers gate privilege, publish creds and route signals."
+  },
+  {
+   "sids": [
+    "kernel/cgroup/cgroup.c::cgroup_attach_task",
+    "kernel/cgroup/cgroup.c::cgroup_migrate",
+    "kernel/cgroup/cgroup.c::cgroup_path_ns",
+    "kernel/cgroup/cgroup.c::cgroup_mkdir",
+    "include/linux/cgroup.h::cgroup_subsys_enabled"
+   ],
+   "text": "Cgroup attach, migrate, path and mkdir move tasks with staging and resolve identities."
+  },
+  {
+   "sids": [
+    "include/linux/workqueue.h::alloc_workqueue",
+    "include/linux/workqueue.h::queue_work",
+    "kernel/workqueue.c::queue_work_node",
+    "kernel/async.c::async_schedule_node_domain",
+    "kernel/irq_work.c::irq_work_queue"
+   ],
+   "text": "Workqueue, async, IRQ work and softirq submit, defer and raise execution."
+  },
+  {
+   "sids": [
+    "ipc/mqueue.c::mqueue_create",
+    "ipc/msg.c::ksys_msgget",
+    "ipc/sem.c::ksys_semget",
+    "ipc/shm.c::newseg",
+    "ipc/util.c::ipcget"
+   ],
+   "text": "POSIX mqueue and SysV msg, sem and shm create objects and resolve ids."
+  },
+  {
+   "sids": [
+    "kernel/cpu.c::cpu_hotplug_disable",
+    "kernel/cpu.c::cpu_device_up",
+    "kernel/cpu.c::freeze_secondary_cpus",
+    "kernel/cpu.c::__cpuhp_setup_state",
+    "kernel/kthread.c::kthread_create_on_node",
+    "kernel/kthread.c::kthread_stop",
+    "kernel/smp.c::smp_call_function_single",
+    "kernel/stop_machine.c::stop_machine_cpuslocked"
+   ],
+   "text": "CPU hotplug gating, device up/down, secondary freeze, state setup, kthread lifecycle and single remote call with locked stop."
+  },
+  {
+   "sids": [
+    "kernel/fork.c::kernel_clone",
+    "kernel/fork.c::mm_alloc",
+    "kernel/fork.c::__mmdrop",
+    "kernel/cred.c::copy_creds",
+    "kernel/pid.c::alloc_pid",
+    "kernel/exit.c::do_wait",
+    "kernel/fork.c::pidfd_prepare",
+    "kernel/freezer.c::thaw_process"
+   ],
+   "text": "Task creation and teardown, mm alloc/release, credential copy, pid allocation, wait collection, pidfd staging and freezer thaw."
+  },
+  {
+   "sids": [
+    "kernel/workqueue.c::queue_work_on",
+    "kernel/workqueue.c::drain_workqueue",
+    "kernel/padata.c::padata_do_parallel",
+    "kernel/padata.c::padata_do_serial",
+    "kernel/kthread.c::kthread_create_worker_on_cpu",
+    "kernel/kthread.c::kthread_destroy_worker"
+   ],
+   "text": "Workqueue queue and drain semantics, padata parallel and serial split, worker creation on CPU and delayed-work destruction."
+  },
+  {
+   "sids": [
+    "kernel/reboot.c::kernel_restart",
+    "kernel/reboot.c::register_reboot_notifier",
+    "kernel/resource.c::request_resource",
+    "kernel/resource.c::walk_mem_res",
+    "kernel/signal.c::kill_pid",
+    "kernel/signal.c::force_sig",
+    "kernel/seccomp.c::prctl_get_seccomp",
+    "kernel/smp.c::smp_call_function"
+   ],
+   "text": "Reboot notifier and restart path, resource request and walk, signal send and force, seccomp query and SMP broadcast."
+  },
+  {
+   "sids": [
+    "kernel/signal.c::do_sigaction",
+    "kernel/signal.c::sigaction_compat_abi",
+    "kernel/signal.c::signals_init",
+    "kernel/signal.c::arch_vma_name"
+   ],
+   "text": "Signal install publishes handler with ABI normalization; early init checks layout and creates caches."
+  },
+  {
+   "sids": [
+    "kernel/stop_machine.c::stop_one_cpu",
+    "kernel/stop_machine.c::stop_two_cpus",
+    "kernel/stop_machine.c::stop_one_cpu_nowait",
+    "kernel/stop_machine.c::stop_machine",
+    "kernel/stop_machine.c::stop_core_cpuslocked"
+   ],
+   "text": "Stop runs callback on one, two or all CPUs; sync forms wait, nowait returns at once."
+  },
+  {
+   "sids": [
+    "kernel/workqueue.c::alloc_workqueue_noprof",
+    "kernel/workqueue.c::alloc_workqueue_va",
+    "kernel/workqueue.c::__alloc_workqueue",
+    "kernel/workqueue.c::devm_alloc_workqueue_noprof",
+    "kernel/workqueue.c::devm_workqueue_release",
+    "kernel/workqueue.c::alloc_workqueue_lockdep_map"
+   ],
+   "text": "Alloc normalizes flags and limits, builds queues, starts rescuer; devm ties teardown."
+  },
+  {
+   "sids": [
+    "kernel/user_namespace.c::make_kprojid",
+    "kernel/user_namespace.c::from_kprojid",
+    "kernel/user_namespace.c::from_kprojid_munged",
+    "kernel/user_namespace.c::__put_user_ns",
+    "kernel/user_namespace.c::free_user_ns",
+    "kernel/ucount.c::retire_userns_sysctls"
+   ],
+   "text": "Project IDs translate both ways with munged overflow; release walks parents, retires sysctls."
+  },
+  {
+   "sids": [
+    "kernel/vhost_task.c::vhost_task_create",
+    "kernel/vhost_task.c::vhost_task_start",
+    "kernel/vhost_task.c::vhost_task_wake",
+    "kernel/vhost_task.c::vhost_task_stop"
+   ],
+   "text": "Vhost creates worker with callbacks, starts separately, wakes explicitly, stops and frees."
+  },
+  {
+   "sids": [
+    "kernel/watch_queue.c::__post_watch_notification",
+    "kernel/watch_queue.c::watch_queue_set_size",
+    "kernel/watch_queue.c::watch_queue_set_filter",
+    "kernel/watch_queue.c::add_watch_to_object",
+    "kernel/watch_queue.c::remove_watch_from_object"
+   ],
+   "text": "Watch posts filtered broadcasts, sizes once, installs filters, binds one per id, removes one or all."
+  }
+ ],
+ "extracts": [
+  "01e077f741348254b86f748b64b2f13d026998bafc22cb58d2e2a1e4f2f56477",
+  "043cc93146cf90e19e2b6f39ac4f9d0cdea5cad854e739347b13a01106285751",
+  "09ffb18d1ed6f7fe56fea801a18e2d9ecdcae212bd131b3def82ea733454d18b",
+  "0d20d8dff68605c97ae40f275e3ff5f44a36e225481bacc3ac45fec1769024cf",
+  "0eee7171e5ae7c8acdbbb3d54b054d56809bb732c4f1bdcbbf5c12163c6f5909",
+  "107fd5c384ad3ba21a9c3ff44160805774e9a55667537aa7a721aa648df36cb6",
+  "1da002a992c41344e9bcd08b004e7203b87e841e2a10c061bb172cd862cae53d",
+  "1e5068404e8cb7f5960889aa0ca782be7baeecd9dd72a484a97c857588b08deb",
+  "1e85b1112d186ecfac69bd23eee78ea94f021da78a0d73f471aeb3a98742bf0b",
+  "1f0897ac96f55b645d316023d61a31b3e7ef95ce9dd1c3c36012e82904c7964d",
+  "251c0cd999fd5102de0c7f3c7c2fd685c524b7334a04fcfc82ce6f1b689f2975",
+  "2832fd32197559e030f7728d5354229df5b818b3d77be73c95fe8407e6c5f728",
+  "2842d3186e20b9a3ebeae84e29dd1e3ae9ca4e208fee18eb56c108c51c52d57e",
+  "2f0266ab6fb23a9f239f0ed016f8c5fce9f38669054c91e43fc246db363666ae",
+  "2fa1fa2823c70f66735e5f5519af36e71d7966761ddef7c4e457b1b567d1f257",
+  "3098679e1a857fbc661479fe6c64f7c5d60d3fee30e9980f2a1d651df9b03836",
+  "336cac385e7d474f3ee1b909a8ba85593e21b24c6db16671563d73fe3b30f1aa",
+  "338112ba70e9b290b89a741fd04bde67792aa0182edabb7b4242e6cb38362611",
+  "33ce2d8420fa3727304fcac08ba004cb36470f4072645dd4b7d9c8753f838a6a",
+  "33d7f4c23288826795a129fe5b6e7510401c6b2ca87a0fcca6030e6e13aa88a4",
+  "34dcc0bf8ac6e5d913e38c01afe57e54eef915cb335cc339e4944b4f247f68e4",
+  "36a1211f0cd329c708ec6d7bf59f34c7fba7a565a508493c5498b7723da97ea2",
+  "395c05af4ae4ef52edd4995362bce74d5765da8a983c4721a7dc2be57eb5302f",
+  "396d6f9c563eaf7c20ae1d6027a31daba3f14026d6247345df1a000fb90fdef2",
+  "40a150ac9b39d01eca13884fc119870c8748cf1ecdd7f6646a3ae68b9f940f81",
+  "42dad9f4755455ad2d39e23d3e78c1b99e9eaf8ae1a887dfd7640cb2b66021ac",
+  "472902d0d4692beb647d9afbf59c011c67c051c1285315e7a7d6823931588a56",
+  "479d05d854a951105eb45e141bbd7f7c3c994bfb5670995884c7126e18d4960a",
+  "47dd669b93de9c6239afdcf4819ffd950e74d9cb809c57ca97a951faf9f19450",
+  "4b9276ec755c1970675863165470d891d2cb7dedf60c2077a234a4c9f7866c0a",
+  "4c2f508733f61a7230061ef6eb7e030dfeaf3fd93d6314363dd5c71085fddc7b",
+  "4c6f3aa5460e91ccae50bb85f2f63eaabdc11496e587e674281f834e17bca9c2",
+  "4cb2f70161d20dac8b42b9a0f0bf375063df5421ac1a473de16fa35f9d643f23",
+  "5104ae6e12bc5fe9090451515a6d2c2059dabe5d608c42a42befb4091654ea77",
+  "5385c477801e0d07e2fb15454f72cf8ac1de058ef27d1dc8af07269e40e05ea3",
+  "54b1615b02ab207adec82ef6d452b07a5870c0815aedad041ff862a91ca69c36",
+  "5999ebc34cad1498e94bcacf9f224cdc5bbea3ce7c6045ca99c7b8ded45e2be0",
+  "5a09162c0cd11f595c1b3fbdeef7aa628d79d110b2422d232cfa1c1e668379a7",
+  "5bd28db7cbc4686669cf27c25fb0f3805eac46eca078b0390cd20497b01828f2",
+  "5cd84ac596494b75f440deb85dca9b41c2289c1e03b7375e3d3c750d1dd3b143",
+  "5d440cb2af61cbc87909603346f6d7e6d55947696b7b44ebdb40c2a1eac5a1d1",
+  "5ed5e9d77e0c0561a5eff6b97c3a86cbc1eb5c44dc0e7cd4cadbda4095cbed77",
+  "60050406357fa446da4d9f01dbe44a894bdeb2cf628adfd333c24991e1159532",
+  "619a23f69d5ece9c6c7d19a8a9545a2bc0c92a8272186f9c46b8b2fb36980691",
+  "64a4c6e0c9f907bfe4d284e6ddff1df5b96f08de1ee069486f7cd9e2a1311700",
+  "64e38cabf8fed1727f2ba84dc7026b95f67ee35bb06676eca6afe77cdd18c08a",
+  "6c497381787c8862ed267d6c7f1cc5e5c966d1bf6f9973efa728b62300b4b5ab",
+  "709b3c1160b396be6c7522bceaa1d06aafff77976db4d9d57a596ced48bc2c6a",
+  "713a087a1f56793d8b04c40071506b87c4068e71227a1a254718e1f72f18d8cb",
+  "77a22aa9c9d0f5487d241f39e26a42a6b5229e11e113ac5f03f7f0a16adfbd76",
+  "78f94fe89d197fa841722e65867493c0da66607fbdd2786991a584643fe37261",
+  "7a14211cc743e5767e71634ef614b50eb29ede492819946f06345acb2ce7589f",
+  "7e4c821024f285a405f3f802bb72ebccd526660c8de08072f709e9e726bf2054",
+  "7e83fd31edeb8aab3daa0b1bdef76f739d31e884af4842e8e8fe8253e2d3fab7",
+  "807cea62d767ddb3ee8bb08e02f32db677055233b45349fba49faebc93eefcfe",
+  "813f3fe957934454a9b3ee0f082263b530a7ca154d0b01d52596b2529d905063",
+  "83e1aedcb4209180a2c527ef171073ac6ff9ad8f0617d2da0ffb7dd5a5e2a6fa",
+  "841655c848f0ed6dd4fca7b9fd98cd124c8e4749f822afdb92a5ef0e66337efb",
+  "85ca5e271e9d57375fdcac930aaadfadf88d6fe655cfd0b234a21dfa5e0a2a86",
+  "88ee28f99dbf8935538ad5e5ea9ca0fa0db39ef8d86d67be2c2e2fffb6e459fb",
+  "8f459f45fcfb701c60774913175a9cfb878ba8e9ddf310a77abcbffef54193d5",
+  "8fbe791cfc46fa6bc6033939fd2db000e4b6e19675af57443cba3b72903b211b",
+  "90a3e2b73690ccaf060e3bfdd05ca1b90b2d7c83d582091e0d8a12d29a5ab5ba",
+  "92351549089e1d9c25b9c1f7d5980216497a22b99636903d3534369c88e5a94e",
+  "9356275d9421bebf4d7bb03f461c5b946070b04528481c1e0a5603f2bcb56879",
+  "9812b3ef7c4eb5cdf8d52a62d92e7f1f4d42876393b2859e836fc8f6bc132d82",
+  "987dd615e3cfd9f9a96e6f90ef0d4b8e29e05b463858ba90cb8b000b5aa91341",
+  "98fd78c01033856391c8c092a8ca6684462e04ef3410ab4d47f28a6f43372feb",
+  "99bd472b81d0d80a0b9567551baef7351418473b831ccc09c7876ab3a444eaae",
+  "9ea625edfcef81b8aa81af1b81048c48254cace73facaeee6aa7b222e1ff66f2",
+  "9fd46f4d6c61f07e312178ccd65e34d097f8beb8561c035e251416897765f28a",
+  "a000812c38ed1eda6ae4a003f606c0150ea44ab27457c49f1b8965901cba0c63",
+  "a3304f04e8c25ddb1f7e6c525b77b4c65b5a73de190bb5e74e238b3794ffdbc0",
+  "a3e947828119618744ea871e404e6d44296040be86b3be2c36761fd783de890f",
+  "a63ae24d9cc5d2e4d87ebd737d6d9b8840c2055037a01936ddeb1a867aacedd2",
+  "a6b5c7fde6553cd21e09d6d9105d5e8b11f6b8b9ac70f1fd329c21849c21f071",
+  "ab406faa0cd8f9eeb1415badb74b3ccd30da408d107948f9e891f89d9120c20b",
+  "abb2c135be1247e360396a746814b11c3567b416249d6b184b01f8aaf56d4f31",
+  "ae6e0c69da730c66402defe612ef344974e9f849cea3ab48e90c9b15e7e4d292",
+  "b3b27ca9e5e50d036e661807f14f1a5e595d9a18e03d82890e112b6276f29762",
+  "b9ee573da1c654bce0b28384b1c765e49382d0396db63b844376a2f749df856e",
+  "badbee710d480e719b93f7288e6b240beb53a3f808df49168cd2b10c51981d4c",
+  "bcf243b64c32ee0fce1938f274934d5730736fb37722daa8c0923e77f5143bcb",
+  "bf375fa856ca76c4f83b138ec84c4c6d48e1f6aac8c920b2735cd19ec3335efe",
+  "bfc1ec381323a8dab55d40d014c59d3359ec6abf32fe9a661c0511a443415ff3",
+  "c402a1a3bc6580532e7264b3824e1380700f69761d58dd66bcc2115e4b1d44b6",
+  "cee45ffdecd468d9329b58d9ef80817b05b2fa7fa0356f29b3241229e1d661bb",
+  "d0a54a1263b055858b500dae2336833c2fc1a63f7090ab378587ea0683fc45dc",
+  "d3c1dc4bc28e55cf4c61485c03fc36ea0d85f41bfe83d2ae2ef2c503bd01550c",
+  "d45eddea71ef426e26c29a84c1be4815f7bf98cc864197aaf08cab99f0fea42c",
+  "d63a56ff827398a745285d5430e29d31e53b364edf384296a1e2fd033af61e79",
+  "d8be25c76064dc58114f9f731f621761759552b8721a7d0ff9057fc790bacb50",
+  "d95e3c4238abf4955074e4a42d6de0fa733aab4ad8dcaec5b09d0552292319b4",
+  "d96ee274a85a48bf1efe3c2784211170bc1f7b28eee6297c4b0fc22a3b68c4ee",
+  "dca4178f4a54532c0451628093941f2166a582baa1743e54999f57ed3c64f5f8",
+  "dccfcd2143942ceedb782587901f5eefce7e9bed17dca31bf41bb46e5a7e9a7a",
+  "e44694c0170adc1d028dad5c1020a40fa68f4324657aef6aec2aaa1f9b46c5a2",
+  "e6998bee937b126cd850b043c08157af34b44e6e8acbd9187a22459f2fb4017c",
+  "e7013b35a08546dec534d8544a68b381acf452eda1c16e1b9907484f13f55976",
+  "e9e51b271b67b760a9ceabfc5aea33c6f67338757d1b77fbd5785d4b48624366",
+  "eadf3df3dcc7e3f666bfb627a805858d3fe3d6d1d4fcf65e43de2c0eaecf5043",
+  "ebaf26b8ef2878a226295df95d087685d26bfbffad14b5ee80d71b671748b0b6",
+  "f06ade15c10d1cc46e48a21aaa46e93605821db81c4bfb8af0ed140dee5bba09",
+  "f36b75dd3cd4b2c5b74a9c2dbf6bfd048a74ebce4d3179adbaf8ea2a1ec81c87",
+  "f61a4b222edc41079c730b6279b9dea7f95ba0b8c17be680e120956b8d8837dd",
+  "fa71a31b5343c696024183dfecb5e527650f6693a3ed88a1d7fdaa2d7ed65a6e",
+  "fad4f946f853bee096476df28867767696aa3c35711f491a924b1c7e18172bf9",
+  "fb7e02657e45f166c50a8934049d3f8d1c93241edafd0843c47ad4c84ca621cf",
+  "fd25424aa48b3df3040c03729043016c70d15d3a8a3898e836801e2e209c9cb2",
+  "fe3740dc5393f80415110d8c2b313a2507ae29df2c2ded1b9e72c268a077d653"
+ ],
+ "gpl_spec": "PASS",
+ "hazards": [
+  {
+   "sids": [
+    "include/linux/cgroup.h::CGROUP_WEIGHT_MIN",
+    "include/linux/cgroup.h::CGROUP_WEIGHT_MAX",
+    "include/linux/capability.h::_KERNEL_CAPABILITY_VERSION",
+    "include/linux/uidgid.h::INVALID_UID"
+   ],
+   "text": "Weights bounded; version selects current; dead skipped; invalid ids all-set."
+  },
+  {
+   "sids": [
+    "include/linux/workqueue.h::flush_workqueue",
+    "kernel/workqueue.c::queue_work_node",
+    "kernel/workqueue.c::__cancel_work_sync"
+   ],
+   "text": "Flush and drain warn; cancel in BH warns; bound node submit warns."
+  },
+  {
+   "sids": [
+    "ipc/util.c::ipc_addid",
+    "ipc/msg.c::freeque",
+    "ipc/shm.c::do_shmat",
+    "kernel/cgroup/cgroup.c::cgroup_migrate_add_src"
+   ],
+   "text": "Publish only initialized objects; wakeups after unlock; migrate vets dest."
+  },
+  {
+   "sids": [
+    "kernel/smp.c::csd_lock_wait_toolong",
+    "kernel/cpu.c::__cpuhp_remove_state_cpuslocked",
+    "kernel/scftorture.c::scftorture_invoke_one",
+    "kernel/resource.c::reallocate_resource"
+   ],
+   "text": "CSD stall warns and escalates; teardown is fatal; torture placement errors split; busy reallocation fails."
+  },
+  {
+   "sids": [
+    "kernel/exit.c::make_task_dead",
+    "kernel/fork.c::__put_task_struct",
+    "kernel/exit.c::sys_waitid",
+    "kernel/signal.c::ptrace_stop"
+   ],
+   "text": "Exit from invalid context, task put with refs, wait copy faults and traced-stop races divert to warn or fault."
+  },
+  {
+   "sids": [
+    "kernel/kexec.c::do_kexec_load",
+    "kernel/kexec_core.c::kimage_map_segment",
+    "kernel/iomem.c::memremap",
+    "kernel/hung_task.c::hung_task_call_panic"
+   ],
+   "text": "Busy kexec, null segment map, mixed RAM alias and hung-task threshold breach deny, warn or panic."
+  },
+  {
+   "sids": [
+    "kernel/workqueue.c::create_worker",
+    "kernel/workqueue.c::__flush_workqueue",
+    "kernel/padata.c::__padata_set_cpumasks",
+    "kernel/seccomp.c::seccomp_run_filters"
+   ],
+   "text": "Worker bind after start, flush on busy queue, bad padata masks and filterless seccomp kill or warn."
+  },
+  {
+   "sids": [
+    "kernel/signal.c::do_sigaltstack",
+    "kernel/signal.c::do_compat_sigaltstack",
+    "kernel/signal.c::kdb_send_sig",
+    "kernel/softirq.c::handle_softirqs",
+    "kernel/softirq.c::do_softirq_post_smp_call_flush",
+    "kernel/softirq.c::__local_bh_disable_ip.alt_2",
+    "kernel/smpboot.c::smpboot_thread_fn",
+    "kernel/smpboot.c::idle_init"
+   ],
+   "text": "Alt-stack refused while on stack and when undersized; preempt mismatch, BH from hardirq and wrong-CPU warn."
+  },
+  {
+   "sids": [
+    "kernel/sys.c::sys_setdomainname",
+    "kernel/sys.c::do_prlimit",
+    "kernel/sys.c::sys_prlimit64",
+    "kernel/sys.c::check_prlimit_permission",
+    "kernel/sys.c::prctl_set_mm_map",
+    "kernel/sys.c::prctl_set_thp_disable",
+    "kernel/sys.c::prctl_set_vma",
+    "kernel/sys.c::sys_prctl",
+    "kernel/sys.c::sys_getcpu",
+    "kernel/sys.c::sys_sysinfo",
+    "kernel/sys.c::compat_sys_sysinfo"
+   ],
+   "text": "Faults fail without partial commit; bad selectors invalid; denials permission; outputs fault on bad user memory."
+  },
+  {
+   "sids": [
+    "kernel/watch_queue.c::post_one_notification",
+    "kernel/watch_queue.c::__post_watch_notification",
+    "kernel/workqueue.c::mayday_cursor_func",
+    "kernel/workqueue.c::wq_worker_sleeping",
+    "kernel/workqueue.c::__queue_delayed_work",
+    "kernel/watch_queue.c::watch_queue_set_size",
+    "kernel/watch_queue.c::watch_queue_set_filter",
+    "kernel/vhost_task.c::vhost_task_create",
+    "kernel/workqueue.c::rescuer_thread",
+    "kernel/workqueue.c::worker_thread",
+    "kernel/workqueue.c::worker_detach_from_pool"
+   ],
+   "text": "Missing slot fatal; zero dropped; mayday traps with preemption warnings; rescuer bounds batches."
+  },
+  {
+   "sids": [
+    "kernel/workqueue.c::work_cancel_flags",
+    "kernel/workqueue.c::wq_internal_consts",
+    "kernel/workqueue.c::BH_WORKER_JIFFIES",
+    "kernel/vmcore_info.c::PAGE_SLAB_MAPCOUNT_VALUE",
+    "kernel/vmcore_info.c::PAGE_BUDDY_MAPCOUNT_VALUE",
+    "kernel/vmcore_info.c::PAGE_HUGETLB_MAPCOUNT_VALUE",
+    "kernel/vmcore_info.c::PAGE_OFFLINE_MAPCOUNT_VALUE",
+    "kernel/vmcore_info.c::PAGE_UNACCEPTED_MAPCOUNT_VALUE",
+    "kernel/workqueue.c::__queue_delayed_work"
+   ],
+   "text": "Fixed cancel, pool and BH constants; page tags mark types; delayed uses unbound CPU and pending bits."
+  }
+ ],
+ "invariants": [
+  {
+   "sids": [
+    "include/linux/cgroup.h::cgroup_parent.alt_1",
+    "include/linux/cgroup.h::cgroup_is_descendant",
+    "include/linux/cgroup.h::css_is_dying",
+    "include/linux/cgroup.h::css_is_online"
+   ],
+   "text": "Parent derives hierarchy; descendant needs match; dying and online gate use."
+  },
+  {
+   "sids": [
+    "kernel/signal.c::__send_signal_locked",
+    "kernel/signal.c::sig_ignored",
+    "kernel/signal.c::wants_signal",
+    "kernel/signal.c::prepare_signal"
+   ],
+   "text": "Group signals share pending; standard coalesce; ignore honors traced and exiting."
+  },
+  {
+   "sids": [
+    "kernel/user_namespace.c::map_id_range_up",
+    "kernel/user_namespace.c::from_kuid_munged",
+    "kernel/cgroup/cgroup.c::find_css_set",
+    "kernel/cgroup/cgroup.c::compare_css_sets"
+   ],
+   "text": "IDs and css-sets match by full containment or identity hash with reuse."
+  },
+  {
+   "sids": [
+    "include/linux/workqueue.h::INIT_WORK",
+    "include/linux/workqueue.h::work_pending",
+    "kernel/async.c::__async_schedule_node_domain",
+    "kernel/async.c::lowest_in_progress"
+   ],
+   "text": "Work init records callback; pending is bit test; async cookies rise strictly."
+  },
+  {
+   "sids": [
+    "kernel/cpu.c::cpuhp_next_state",
+    "kernel/cpu.c::cpuhp_up_callbacks",
+    "kernel/cpu.c::can_rollback_cpu",
+    "kernel/cpu.c::_cpu_up",
+    "kernel/cpu.c::_cpu_down",
+    "kernel/cpu.c::cpuhp_is_atomic_state"
+   ],
+   "text": "Hotplug states stay bounded; walk advances stepwise with rollback only where declared; up and down refuse invalid targets."
+  },
+  {
+   "sids": [
+    "kernel/fork.c::copy_mm",
+    "kernel/fork.c::copy_fs",
+    "kernel/fork.c::copy_sighand",
+    "kernel/fork.c::copy_signal",
+    "kernel/fork.c::clone3_args_valid",
+    "kernel/nsproxy.c::copy_namespaces"
+   ],
+   "text": "Clone shares or duplicates VM, fs and signals consistently; exec forbids shared fs; bad namespace and pidfd combos rejected."
+  },
+  {
+   "sids": [
+    "kernel/exit.c::kernel_waitid",
+    "kernel/signal.c::do_notify_parent_cldstop",
+    "kernel/signal.c::next_signal",
+    "kernel/signal.c::sigprocmask",
+    "kernel/exit.c::find_new_reaper"
+   ],
+   "text": "Stop and continue wake tracer or leader; wait resolves ALL, PID, PGID and PIDFD; deliverable is pending minus blocked."
+  },
+  {
+   "sids": [
+    "kernel/kexec_core.c::sanity_check_segment_list",
+    "kernel/kexec_file.c::kexec_locate_mem_hole",
+    "kernel/crash_reserve.c::parse_crashkernel",
+    "kernel/crash_reserve.c::reserve_crashkernel_generic",
+    "kernel/kexec.c::kexec_load_check"
+   ],
+   "text": "Kexec segments are aligned, disjoint and in range; crash images stay in reservation; permission checks precede lockdown."
+  },
+  {
+   "sids": [
+    "kernel/workqueue.c::copy_workqueue_attrs",
+    "kernel/padata.c::padata_validate_cpumask",
+    "kernel/rseq.c::rseq_register",
+    "kernel/seccomp.c::seccomp_sync_threads",
+    "kernel/params.c::param_array",
+    "kernel/hung_task.c::check_hung_uninterruptible_tasks"
+   ],
+   "text": "Workqueue and padata masks intersect allowed CPUs; rseq needs exact triple; seccomp sync needs confined ancestor; hung scan budgets."
+  },
+  {
+   "sids": [
+    "kernel/signal.c::do_sigaction"
+   ],
+   "text": "Install rejects reserved and immutable signals, strips non-ABI flags, excludes fatal-stop, flushes queued when ignored."
+  },
+  {
+   "sids": [
+    "kernel/softirq.c::tasklet_action_common",
+    "kernel/softirq.c::tasklet_clear_sched",
+    "kernel/softirq.c::tasklet_unlock"
+   ],
+   "text": "Tasklet runs only when running-lock, enabled and scheduled-clear succeed, else requeues."
+  },
+  {
+   "sids": [
+    "kernel/sys.c::set_one_prio_perm",
+    "kernel/sys.c::set_one_prio",
+    "kernel/sys.c::__sys_setresuid",
+    "kernel/sys.c::set_user",
+    "kernel/sys.c::flag_nproc_exceeded",
+    "kernel/sys.c::sys_setpgid",
+    "kernel/sys.c::set_special_pids"
+   ],
+   "text": "Priority needs user match or caps with approval to lower; all-ones leaves fields; group moves reject leaders, need same session."
+  },
+  {
+   "sids": [
+    "kernel/user_namespace.c::m_start",
+    "kernel/user_namespace.c::mappings_overlap",
+    "kernel/user_namespace.c::insert_extent",
+    "kernel/user_namespace.c::sort_idmaps",
+    "kernel/user_namespace.c::uid_m_show",
+    "kernel/user_namespace.c::map_write",
+    "kernel/user_namespace.c::new_idmap_permitted",
+    "kernel/user_namespace.c::verify_root_map",
+    "kernel/user_namespace.c::ns_get_owner",
+    "kernel/user_namespace.c::userns_owner"
+   ],
+   "text": "Maps publish by count with barrier; overlaps reject; writes take one offset-zero set with permission and parent translation."
+  },
+  {
+   "sids": [
+    "kernel/sys.c::do_prlimit",
+    "kernel/sys.c::sys_old_getrlimit",
+    "kernel/sys.c::compat_sys_old_getrlimit",
+    "kernel/sys.c::rlim64_is_infinity",
+    "kernel/sys.c::rlim_to_rlim64",
+    "kernel/sys.c::rlim64_to_rlim",
+    "kernel/sys.c::compat_sys_setrlimit",
+    "kernel/sys.c::compat_sys_getrlimit",
+    "kernel/sys.c::check_prlimit_permission",
+    "kernel/sys.c::sys_prlimit64"
+   ],
+   "text": "Bad id, current above max or raised max without caps fails; open files capped; old saved; infinities convert, legacy clamps."
+  },
+  {
+   "sids": [
+    "kernel/workqueue.c::__queue_delayed_work",
+    "kernel/workqueue.c::send_mayday",
+    "kernel/workqueue.c::pool_mayday_timeout",
+    "kernel/workqueue.c::assign_rescuer_work"
+   ],
+   "text": "Zero delay queues at once, nonzero arms timer; mayday pins distressed queues for rescuer."
+  },
+  {
+   "sids": [
+    "kernel/sys.c::propagate_has_child_subreaper",
+    "kernel/sys.c::sys_prctl"
+   ],
+   "text": "Enabling subreaper marks and propagates state; prctl validates death signal, dumpable and timing."
+  }
+ ],
+ "locks": [
+  {
+   "sids": [
+    "kernel/cgroup/cgroup.c::cgroup_attach_lock",
+    "kernel/cgroup/cgroup.c::css_set_lock",
+    "kernel/cgroup/cgroup.c::cgroup_kn_lock_live"
+   ],
+   "text": "Global cgroup mutex serializes control; css-set spin nests in RCU; live pins."
+  },
+  {
+   "sids": [
+    "ipc/util.h::ipc_lock_object",
+    "ipc/sem.c::sem_lock",
+    "ipc/shm.c::shm_lock",
+    "ipc/mqueue.c::do_mq_timedsend"
+   ],
+   "text": "SysV spin plus RCU guards alloc and lookup; mqueue spin guards queue state."
+  },
+  {
+   "sids": [
+    "kernel/signal.c::lock_task_sighand",
+    "kernel/cgroup/cpuset.c::cpuset_full_lock",
+    "kernel/async.c::async_lock"
+   ],
+   "text": "Sighand mutex guards queue mutation; cpuset orders top, cpu and mutex."
+  },
+  {
+   "sids": [
+    "kernel/cpu.c::cpu_add_remove_lock",
+    "kernel/cpu.c::cpu_maps_update_begin",
+    "kernel/cpu.c::cpuhp_state_mutex",
+    "kernel/smp.c::csd_lock",
+    "kernel/smp.c::csd_unlock"
+   ],
+   "text": "CPU maps mutex plus state mutex order hotplug; CSD flag claim waits with stall escalation before release."
+  },
+  {
+   "sids": [
+    "kernel/fork.c::tasklist_lock",
+    "kernel/fork.c::mmap_init_lock",
+    "kernel/freezer.c::freezer_lock",
+    "kernel/signal.c::lockdep_assert_task_sighand_held",
+    "kernel/pid.c::pidmap_lock"
+   ],
+   "text": "Tasklist lock is outermost; new mm and pid map guarded; freezer and sighand locks cover frozen step and signal state."
+  },
+  {
+   "sids": [
+    "kernel/workqueue.c::apply_workqueue_attrs",
+    "kernel/kthread.c::kthread_create_lock",
+    "kernel/padata.c::padata_works_lock",
+    "kernel/kexec_core.c::__kexec_lock",
+    "kernel/params.c::kernel_param_lock"
+   ],
+   "text": "Workqueue attrs serialized; kthread create, padata work, kexec busy flag and params lock guard their state."
+  },
+  {
+   "sids": [
+    "kernel/resource.c::resource_lock",
+    "kernel/reboot.c::system_transition_mutex",
+    "kernel/seccomp.c::seccomp_assign_mode",
+    "kernel/rseq.c::rseq_syscall_enter_work",
+    "kernel/smp.c::smp_call_function_many_cond"
+   ],
+   "text": "Resource tree uses shared walk with exclusive mutate; reboot mutex, seccomp signal lock and rseq irq mask order."
+  },
+  {
+   "sids": [
+    "kernel/signal.c::sigaltstack_lock.alt_1",
+    "kernel/signal.c::sigaltstack_unlock.alt_1",
+    "kernel/signal.c::sigaltstack_lock.alt_2",
+    "kernel/signal.c::sigaltstack_unlock.alt_2"
+   ],
+   "text": "Signal updates run excluded with interrupts off; one alt-stack build shares it, other uses no lock."
+  },
+  {
+   "sids": [
+    "kernel/smpboot.c::smpboot_threads_lock",
+    "kernel/softirq.c::bh_lock_key",
+    "kernel/softirq.c::bh_lock_map",
+    "kernel/smp.c::flush_smp_call_function_queue",
+    "kernel/smp.c::smp_call_function_single_async",
+    "kernel/stop_machine.c::stop_cpus_mutex",
+    "kernel/stop_machine.c::stop_cpus_in_progress",
+    "kernel/stop_machine.c::cpu_stop_queue_two_works",
+    "kernel/stop_machine.c::cpu_stop_should_run",
+    "kernel/stop_machine.c::cpu_stopper_thread"
+   ],
+   "text": "Global stop mutex with progress flag; two-CPU queues lock stoppers in CPU order; flush saves interrupts."
+  },
+  {
+   "sids": [
+    "kernel/sys.c::sys_setpgid",
+    "kernel/sys.c::do_getpgid",
+    "kernel/sys.c::sys_getsid",
+    "kernel/sys.c::sys_getppid",
+    "kernel/sys.c::sys_setpriority",
+    "kernel/sys.c::sys_getpriority"
+   ],
+   "text": "Group changes hold tasklist exclusive with irqs off in RCU; queries use RCU only."
+  },
+  {
+   "sids": [
+    "kernel/user_namespace.c::userns_state_mutex",
+    "kernel/user_namespace.c::map_write",
+    "kernel/user_namespace.c::proc_setgroups_write",
+    "kernel/user_namespace.c::userns_get",
+    "kernel/utsname_sysctl.c::get_uts",
+    "kernel/utsname_sysctl.c::proc_do_uts_string.alt_1"
+   ],
+   "text": "Map and groups-flag mutate under one mutex; readers use barriers; UTS uses shared-exclusive semaphore."
+  },
+  {
+   "sids": [
+    "kernel/sysctl.c::proc_do_static_key",
+    "kernel/task_work.c::task_work_cancel_match"
+   ],
+   "text": "Static toggle uses private mutex; task-work cancel walks under scheduler lock with atomic exchange."
+  },
+  {
+   "sids": [
+    "kernel/vhost_task.c::vhost_task_fn",
+    "kernel/vhost_task.c::vhost_task_stop",
+    "kernel/watch_queue.c::lock_wqueue",
+    "kernel/watch_queue.c::unlock_wqueue"
+   ],
+   "text": "Exit mutex serializes stop against kill; watch lock is BH-protected and fails if detached."
+  },
+  {
+   "sids": [
+    "kernel/workqueue.c::worker_pool",
+    "kernel/workqueue.c::pool_workqueue",
+    "kernel/workqueue.c::wq_pool_mutex",
+    "kernel/workqueue.c::workqueue_struct",
+    "kernel/workqueue.c::idle_cull_fn"
+   ],
+   "text": "Pool lock covers state; global mutex guards registry; queue mutex guards colors."
+  },
+  {
+   "sids": [
+    "kernel/workqueue.c::work_busy",
+    "kernel/workqueue.c::workqueue_congested",
+    "kernel/workqueue_internal.h::worker",
+    "kernel/workqueue.c::unbind_workers",
+    "kernel/workqueue.c::rebind_workers",
+    "kernel/workqueue.c::restore_unbound_workers_cpumask"
+   ],
+   "text": "RCU guards walks; pool lock guards busy; attach mutex guards affinity and rebind."
+  }
+ ],
+ "pass": 1,
+ "phase_map": [
+  {
+   "anchor": "HB-KPAPER-001/hb-s5.p14",
+   "crown": "A",
+   "phase": "F0"
+  },
+  {
+   "anchor": "HB-KPAPER-001/hb-s5.p04",
+   "crown": "A",
+   "phase": "F1"
+  },
+  {
+   "anchor": "HB-KPAPER-001/hb-s5.p05",
+   "crown": "A",
+   "phase": "F4"
+  }
+ ],
+ "schema": "lx.dossier.v1",
+ "state_machines": [
+  {
+   "sids": [
+    "kernel/cgroup/cgroup.c::cgroup_attach_task",
+    "kernel/cgroup/cgroup.c::cgroup_migrate_finish",
+    "kernel/cgroup/cgroup.c::kill_css_sync",
+    "kernel/cgroup/cgroup.c::kill_css_finish"
+   ],
+   "text": "Migrate collects, vets, commits then cleans; css goes online then dying."
+  },
+  {
+   "sids": [
+    "ipc/mqueue.c::wq_add",
+    "ipc/mqueue.c::wq_sleep",
+    "ipc/mqueue.c::pipelined_send",
+    "ipc/mqueue.c::do_mq_timedsend"
+   ],
+   "text": "Mqueue waiters enrol by direction; send and receive use handoff or queue."
+  },
+  {
+   "sids": [
+    "ipc/msg.c::ss_add",
+    "ipc/msg.c::ss_wakeup",
+    "ipc/sem.c::perform_atomic_semop",
+    "ipc/sem.c::complexmode_enter"
+   ],
+   "text": "Sem ops are all-or-nothing with undo; senders sleep and wake by fit scan."
+  },
+  {
+   "sids": [
+    "kernel/cpu.c::cpuhp_invoke_callback",
+    "kernel/cpu.c::cpuhp_set_state",
+    "kernel/cpu.c::cpuhp_thread_fun",
+    "kernel/cpu.c::bringup_cpu",
+    "kernel/cpu.c::take_cpu_down"
+   ],
+   "text": "Hotplug invoke, set, sync, kick and thread flow drives bringup and takedown with resume and reverse on failure."
+  },
+  {
+   "sids": [
+    "kernel/exit.c::release_task",
+    "kernel/exit.c::wait_task_zombie",
+    "kernel/exit.c::exit_notify",
+    "kernel/signal.c::exit_signals",
+    "kernel/fork.c::copy_process"
+   ],
+   "text": "Release unhashes and frees; zombie and stopped election, reparent, notify, autoreap and signal exit finish termination."
+  },
+  {
+   "sids": [
+    "kernel/kthread.c::__kthread_parkme",
+    "kernel/kthread.c::kthreadd",
+    "kernel/workqueue.c::get_unbound_pool",
+    "kernel/padata.c::padata_parallel_worker",
+    "kernel/padata.c::padata_replace"
+   ],
+   "text": "Kthread park loop and daemon drain; pools create and retire; padata jobs move submit, parallel, serial and callback."
+  },
+  {
+   "sids": [
+    "kernel/reboot.c::__hw_protection_trigger",
+    "kernel/seccomp.c::seccomp_do_user_notification",
+    "kernel/resource.c::__reserve_region_with_split",
+    "kernel/task_work.c::task_work_run",
+    "kernel/signal.c::get_signal"
+   ],
+   "text": "Protection triggers once with fallback; seccomp notify cycles init, sent and replied; split reserve loops; work stolen to null."
+  },
+  {
+   "sids": [
+    "kernel/stop_machine.c::multi_stop_state",
+    "kernel/stop_machine.c::ack_state",
+    "kernel/stop_machine.c::multi_cpu_stop",
+    "kernel/stop_machine.c::stop_machine_yield",
+    "kernel/stop_machine.c::multi_stop_data"
+   ],
+   "text": "Coordinated stop advances idle, prepare, disable-irqs, run and exit with acks."
+  },
+  {
+   "sids": [
+    "kernel/softirq.c::handle_softirqs",
+    "kernel/softirq.c::ksoftirqd_should_run",
+    "kernel/softirq.c::run_ksoftirqd",
+    "kernel/softirq.c::ktimerd_should_run",
+    "kernel/softirq.c::run_ktimerd"
+   ],
+   "text": "Softirq snapshots, clears, dispatches, rechecks; loops on budget else delegates; timer threads idle."
+  }
+ ],
+ "structs": [
+  {
+   "sids": [
+    "include/linux/cred.h::cred",
+    "include/linux/user_namespace.h::user_namespace",
+    "include/linux/msg.h::msg_msg"
+   ],
+   "text": "Creds bundle ids and groups; user namespace maps extents; IPC carries refs."
+  },
+  {
+   "sids": [
+    "include/linux/cgroup-defs.h::cgroup_subsys_state",
+    "include/linux/cgroup-defs.h::css_set",
+    "include/linux/cgroup-defs.h::cgroup_root"
+   ],
+   "text": "Cgroup states hold identity; sets link groups with ancestors; files pair ops."
+  },
+  {
+   "sids": [
+    "include/linux/workqueue_types.h::work_struct",
+    "ipc/mqueue.c::mqueue_inode_info",
+    "ipc/msg.c::msg_queue",
+    "ipc/shm.c::shmid_kernel"
+   ],
+   "text": "Work holds state and callback; mqueue inode holds tree; SysV holds perms."
+  },
+  {
+   "sids": [
+    "kernel/cpu.c::cpuhp_cpu_state",
+    "kernel/cpu.c::cpuhp_step",
+    "kernel/cpu.c::cpu_bit_bitmap",
+    "kernel/cpu.c::cpuhp_cpu_attrs"
+   ],
+   "text": "Per-CPU hotplug state and step callback records with bit tables, masks and sysfs attribute groups."
+  },
+  {
+   "sids": [
+    "kernel/exit.h::wait_opts",
+    "kernel/exit.h::waitid_info",
+    "kernel/fork.c::MIN_THREADS",
+    "kernel/kexec_core.c::KIMAGE_NO_DEST",
+    "kernel/cred.c::cred_jar"
+   ],
+   "text": "Wait request and result records, thread-count and dump-filter ABI values, kexec no-destination marker and cred cache."
+  },
+  {
+   "sids": [
+    "kernel/reboot.c::sys_off_handler",
+    "kernel/resource.c::ioport_resource",
+    "kernel/seccomp.c::seccomp_filter",
+    "kernel/seccomp.c::seccomp_knotif",
+    "kernel/workqueue.c::init_pwq",
+    "kernel/padata.c::padata_work"
+   ],
+   "text": "Shutdown handler, resource roots, seccomp filter and notification records, workqueue queue links and padata jobs."
+  },
+  {
+   "sids": [
+    "kernel/signal.c::do_sigaltstack",
+    "kernel/signal.c::do_compat_sigaltstack",
+    "kernel/signal.c::sys_sigprocmask",
+    "kernel/signal.c::sys_signal",
+    "kernel/smp.c::SCF_WAIT",
+    "kernel/smp.c::SCF_RUN_LOCAL",
+    "kernel/smpboot.c::anon_1",
+    "kernel/softirq.c::softirq_to_name"
+   ],
+   "text": "ABI: alt-stack disabled, on-stack, zero with minima; mask set ops; wait 0 local 1; hotplug states; softirq names."
+  }
+ ],
+ "stubs": [
+  {
+   "sid": "include/linux/sched/task.h::get_task_struct",
+   "state": "stub",
+   "target_dossier": "D01"
+  },
+  {
+   "sid": "include/linux/rcupdate.h::rcu_read_lock",
+   "state": "stub",
+   "target_dossier": "D02"
+  },
+  {
+   "sid": "include/linux/rcupdate.h::rcu_read_unlock",
+   "state": "stub",
+   "target_dossier": "D02"
+  },
+  {
+   "sid": "include/linux/spinlock.h::spin_lock",
+   "state": "stub",
+   "target_dossier": "D03"
+  },
+  {
+   "sid": "include/linux/mutex.h::mutex_lock",
+   "state": "stub",
+   "target_dossier": "D03"
+  },
+  {
+   "sid": "include/linux/irqflags.h::local_irq_save.alt_1",
+   "state": "stub",
+   "target_dossier": "D04"
+  },
+  {
+   "sid": "include/linux/list.h::list_add_tail",
+   "state": "stub",
+   "target_dossier": "D14"
+  },
+  {
+   "sid": "include/linux/fs.h::file_inode",
+   "state": "stub",
+   "target_dossier": "D15"
+  },
+  {
+   "sid": "include/linux/uaccess.h::copy_to_user",
+   "state": "stub",
+   "target_dossier": "D17"
+  },
+  {
+   "sid": "include/linux/err.h::IS_ERR",
+   "state": "stub",
+   "target_dossier": "D17"
+  }
+ ]
+}

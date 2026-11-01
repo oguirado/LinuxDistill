@@ -1,0 +1,999 @@
+{
+ "dossier": "D05",
+ "entry_points": [
+  {
+   "sids": [
+    "include/linux/alloc_tag.h::mem_alloc_profiling_enabled.alt_1",
+    "mm/slub.c::slab_pre_alloc_hook",
+    "mm/slub.c::slab_post_alloc_hook"
+   ],
+   "text": "Profiling gated by branch sums per-CPU; pre masks injects faults post tags zeroes charges batch."
+  },
+  {
+   "sids": [
+    "include/linux/page_frag_cache.h::page_frag_alloc",
+    "include/linux/mempool.h::mempool_init",
+    "mm/page_alloc.c::__free_pages_ok",
+    "mm/page_alloc.c::zone_watermark_ok"
+   ],
+   "text": "Frag alloc pool init frozen free validate insert; watermarks deduct unusable; hopeless at retry max."
+  },
+  {
+   "sids": [
+    "mm/vmscan.c::try_to_shrink_lruvec",
+    "mm/memcontrol.c::mem_cgroup_out_of_memory",
+    "mm/swapfile.c::swap_alloc_fast"
+   ],
+   "text": "Reclaim shrinks vectors via isolation; group OOM records invokes killer; swap fast scans cluster."
+  },
+  {
+   "sids": [
+    "mm/numa_memblks.c::numa_register_meminfo",
+    "mm/percpu.c::pcpu_page_first_chunk",
+    "mm/backing-dev.c::bdi_register",
+    "mm/cma.c::cma_activate_area"
+   ],
+   "text": "Boot publishes NUMA ranges maps percpu units registers BDI ids activates CMA unwinding on failure."
+  },
+  {
+   "sids": [
+    "mm/mm_init.c::free_area_init",
+    "mm/page_alloc.c::build_all_zonelists",
+    "mm/mm_init.c::deferred_init_memmap",
+    "mm/sparse.c::sparse_init"
+   ],
+   "text": "Boot inits empty zones, builds zonelists, sets up per-cpu caches and sparse maps, with late and deferred finalize."
+  },
+  {
+   "sids": [
+    "mm/memory_hotplug.c::online_pages",
+    "mm/memory_hotplug.c::add_memory",
+    "mm/memory_hotplug.c::offline_pages",
+    "mm/memory_hotplug.c::remove_memory"
+   ],
+   "text": "Hotplug onlines pages with zone choice, adds plain and driver ranges, offlines or removes honoring signals."
+  },
+  {
+   "sids": [
+    "mm/page_alloc.c::rmqueue",
+    "mm/page_alloc.c::get_page_from_freelist",
+    "mm/page_alloc.c::alloc_pages_bulk_noprof",
+    "mm/page-writeback.c::folio_wait_writeback_killable"
+   ],
+   "text": "Allocation dispatches via rmqueue with split and fallback, plus bulk, frozen and node variants with writeback waits."
+  },
+  {
+   "sids": [
+    "mm/memcontrol.c::memory_current_read",
+    "mm/memcontrol.c::memory_stat_show",
+    "mm/memcontrol.c::memory_reclaim",
+    "mm/vmscan.c::user_proactive_reclaim"
+   ],
+   "text": "Memcg exposes usage, events, stats and OOM controls plus reclaim; proactive reclaim needs one target and runs guarded."
+  },
+  {
+   "sids": [
+    "mm/slab_common.c::kmem_cache_shrink",
+    "mm/slub.c::__kmem_cache_shutdown",
+    "mm/kmemleak.c::kmemleak_scan_thread",
+    "mm/oom_kill.c::oom_init"
+   ],
+   "text": "Slab shrink and shutdown discard empty slabs and report survivors; leak scan and OOM init give boot hooks."
+  },
+  {
+   "sids": [
+    "mm/slab_common.c::kvfree_rcu_init.alt_2",
+    "mm/slab_common.c::kfree_rcu_shrink_scan",
+    "mm/slub.c::deferred_percpu_work_fn",
+    "mm/slub.c::rcu_free_sheaf",
+    "mm/slub.c::slab_free_after_rcu_debug",
+    "mm/slub.c::kvfree_rcu_cb",
+    "mm/slub.c::slub_cpu_setup",
+    "mm/slub.c::slub_cpu_dead",
+    "mm/slub.c::slab_mem_going_offline_callback",
+    "mm/swapfile.c::sys_swapon",
+    "mm/swapfile.c::alloc_swap_info",
+    "mm/swapfile.c::claim_swapfile",
+    "mm/swapfile.c::read_swap_header",
+    "mm/swapfile.c::setup_swap_extents",
+    "mm/swapfile.c::setup_swap_clusters_info",
+    "mm/swapfile.c::sys_swapoff",
+    "mm/swapfile.c::try_to_unuse",
+    "mm/swapfile.c::reinsert_swap_info",
+    "mm/swapfile.c::wait_for_allocation",
+    "mm/swapfile.c::drain_mmlist",
+    "mm/vmscan.c::kswapd",
+    "mm/vmscan.c::kswapd_try_to_sleep",
+    "mm/vmscan.c::balance_pgdat",
+    "mm/vmscan.c::kswapd_highest_zoneidx",
+    "mm/vmscan.c::kswapd_init",
+    "mm/vmscan.c::vmscan_sysctl_table",
+    "mm/workingset.c::workingset_init",
+    "mm/zsmalloc.c::zs_init",
+    "mm/zsmalloc.c::zs_register_shrinker",
+    "mm/zswap.c::zswap_pool_current",
+    "mm/zswap.c::zswap_init",
+    "mm/zswap.c::zswap_setup"
+   ],
+   "text": "Reclaim/hotplug/swap/kswapd/init."
+  }
+ ],
+ "exports": [
+  {
+   "sids": [
+    "include/linux/gfp.h::alloc_pages",
+    "include/linux/gfp.h::folio_alloc",
+    "mm/page_alloc.h::alloc_frozen_pages"
+   ],
+   "text": "Node folio and page alloc with policy VMA single bulk nolock and frozen forms gated by watermarks."
+  },
+  {
+   "sids": [
+    "include/linux/memblock.h::memblock_alloc",
+    "mm/memblock.c::memblock_alloc_try_nid",
+    "mm/memblock.c::__memblock_find_range_bottom_up"
+   ],
+   "text": "Boot memblock iterates usable reserved free ranges with node-aware alloc ceiling retry and direction."
+  },
+  {
+   "sids": [
+    "include/linux/slab.h::kmalloc",
+    "include/linux/slab.h::kmem_cache_alloc",
+    "mm/slub.c::kmem_cache_free",
+    "include/linux/percpu.h::__alloc_percpu"
+   ],
+   "text": "Slab caches create alloc free with zeroing node bulk sheaf large realloc plus per-CPU regions."
+  },
+  {
+   "sids": [
+    "mm/shrinker.c::shrink_slab",
+    "mm/swapfile.c::folio_alloc_swap",
+    "mm/cma.c::cma_alloc",
+    "mm/page-writeback.c::global_dirty_limits"
+   ],
+   "text": "Reclaim swap CMA writeback offer shrink dispatch slot cache frozen grant dirty limits suitability probe."
+  },
+  {
+   "sids": [
+    "mm/compaction.c::compaction_zonelist_suitable",
+    "mm/compaction.c::try_to_compact_pages",
+    "mm/compaction.c::wakeup_kcompactd",
+    "mm/page_alloc.c::drain_all_pages"
+   ],
+   "text": "Check zonelist compact suitability, run direct compaction, coalesce background wakeups, drain per-cpu caches."
+  },
+  {
+   "sids": [
+    "mm/memblock.c::memblock_add_node",
+    "mm/memblock.c::__next_mem_range",
+    "mm/memblock.c::memblock_alloc_try_nid_raw",
+    "mm/memblock.c::memblock_is_reserved",
+    "mm/memblock.c::__free_pages_memory"
+   ],
+   "text": "Add boot ranges, enumerate usable ranges, allocate best-effort by node, test reservation, hand memory to buddy."
+  },
+  {
+   "sids": [
+    "mm/page_alloc.c::alloc_pages_bulk_noprof",
+    "mm/page_alloc.c::__alloc_frozen_pages_noprof",
+    "mm/page_alloc.c::alloc_pages_node_noprof",
+    "mm/page_alloc.c::free_pages",
+    "mm/page_alloc.c::alloc_contig_range_noprof"
+   ],
+   "text": "Allocate bulk, frozen, node-local and compound pages; free single, exact and contiguous ranges via isolate and migrate."
+  },
+  {
+   "sids": [
+    "mm/memcontrol.c::__memcg_kmem_charge_page",
+    "mm/memcontrol.c::__mem_cgroup_charge",
+    "mm/memcontrol.c::__mem_cgroup_try_charge_swap",
+    "mm/memcontrol.c::mem_cgroup_sk_alloc",
+    "mm/page_alloc.c::fs_reclaim_acquire",
+    "mm/page_alloc.c::fs_reclaim_release"
+   ],
+   "text": "Charge kernel, folio, huge and swap with split refs, bind sockets, bracket reclaim with acquire and release guards."
+  },
+  {
+   "sids": [
+    "mm/slab_common.c::__kmem_cache_create_args",
+    "mm/slab_common.c::kmem_cache_destroy",
+    "mm/mempool.c::mempool_create_node_noprof",
+    "mm/mempool.c::mempool_alloc_noprof",
+    "mm/percpu.c::pcpu_alloc_noprof"
+   ],
+   "text": "Create and destroy slab caches with reuse checks, manage mempool reserves, allocate percpu with rollback and zeroing."
+  },
+  {
+   "sids": [
+    "mm/memory_hotplug.c::mhp_range_allowed",
+    "mm/memory_hotplug.c::mem_hotplug_begin",
+    "mm/sparse-vmemmap.c::sparse_add_section",
+    "mm/page_alloc.c::__alloc_pages_slowpath"
+   ],
+   "text": "Query hotplug ranges and online types, bracket add, populate vmemmap sections, drive slowpath reclaim and compact."
+  },
+  {
+   "sids": [
+    "mm/slub.c::__kmalloc_large_noprof",
+    "mm/slub.c::__kmalloc_node_noprof",
+    "mm/slub.c::__kmalloc_noprof",
+    "mm/slub.c::_kmalloc_nolock_noprof",
+    "mm/slub.c::__kmalloc_node_track_caller_noprof",
+    "mm/slub.c::__kmalloc_cache_noprof",
+    "mm/slub.c::__kmalloc_cache_node_noprof",
+    "mm/slub.c::kmem_cache_prefill_sheaf",
+    "mm/slub.c::kmem_cache_return_sheaf",
+    "mm/slub.c::kmem_cache_refill_sheaf",
+    "mm/slub.c::kmem_cache_alloc_from_sheaf_noprof",
+    "mm/slub.c::kmem_cache_sheaf_size",
+    "mm/slub.c::alloc_from_pcs_bulk",
+    "mm/slub.c::kmem_cache_alloc_bulk_noprof",
+    "mm/slub.c::__kmem_cache_alloc_bulk",
+    "mm/swap_state.c::swap_cache_alloc_folio",
+    "mm/swap_state.c::free_swap_cache",
+    "mm/swap_state.c::free_folio_and_swap_cache",
+    "mm/swap_state.c::free_pages_and_swap_cache",
+    "mm/swapfile.c::folio_dup_swap",
+    "mm/swapfile.c::folio_put_swap",
+    "mm/vmscan.c::shrink_all_memory",
+    "mm/vmscan.c::check_move_unevictable_folios",
+    "mm/vmscan.c::reclaim_register_node",
+    "mm/vmscan.c::reclaim_unregister_node",
+    "mm/vmstat.c::all_vm_events",
+    "mm/vmstat.c::sum_vm_events",
+    "mm/vmstat.c::__inc_node_state",
+    "mm/vmstat.c::__dec_node_state",
+    "mm/vmstat.c::quiet_vmstat",
+    "mm/vmstat.c::vmstat_flush_workqueue",
+    "mm/vmstat.c::mm_percpu_wq",
+    "mm/vmstat.c::init_mm_internals",
+    "mm/workingset.c::workingset_activation",
+    "mm/workingset.c::shadow_nodes",
+    "mm/workingset.c::workingset_update_node",
+    "mm/zsmalloc.c::zs_lookup_class_index",
+    "mm/zsmalloc.c::zs_obj_read_begin",
+    "mm/zsmalloc.c::zs_obj_read_end",
+    "mm/zsmalloc.c::zs_huge_class_size",
+    "mm/zsmalloc.c::zs_create_pool",
+    "mm/zsmalloc.c::zs_destroy_pool",
+    "mm/zsmalloc.c::zs_compact",
+    "mm/zsmalloc.c::zs_pool_stats",
+    "mm/zswap.c::zswap_stored_pages"
+   ],
+   "text": "Sized/bulk/sheaf; swap; reclaim/pools."
+  }
+ ],
+ "extracts": [
+  "01d2c04afef62f7b0febee596dcda717db6e4d9528d84fc5e290615f906f94a6",
+  "022658b0ad48f9c5acfdc03821c3687db928af1f34386c55b99daf2ee7cd579b",
+  "03213430b2f923c5888d75a8051572148254da58d799f226a95d0e40f3106548",
+  "04c299f3eb76e660e74039f239a455090e60bae6a6fba397005e714c746605de",
+  "05027cff8833f9aebedd31208dde820a35140798f3e33166c2e392149595de4f",
+  "0a3b4812dfb615a7212708158a24d729823287ebc6a8106ae3f1b5cb5dd38f2a",
+  "149b980b60de458d236c73ee4573d7fcd96e880a7e7a5f6167251771e9769a4b",
+  "1578146df303dbcb91270d54c83d5b278345d21621d74a939b8bbc51cd16f32b",
+  "174b85f7e0e9fdb41fa9806057aac6e52ca58329b196e2b1df32114ff026d6a8",
+  "19799a8352d90f6e9c05cfc3ab8f7000d9aa423dabe839e22ea6eca058d69458",
+  "1c323c988cea5fa9e740a5cf5e33beeec6042c0f802bb3c34d2ddb34c4c83ece",
+  "1d79643f412f8c8b44f251cf667a16f79d7852087243d7b6f01ad58080023bfa",
+  "223090f2f493c981ef499f899c194ef1bd01760ceb33f4803b5d3f3cef29bebc",
+  "2417aa36d98db38a9699bba94e2bcab9357d208cb9954406ea4c7621e249889d",
+  "252d78fd9eddca36bdc9a69a14641b309a93a2246f13a1084fd1b0f56d5f76f6",
+  "262bd7745504ccb8ee74af3098a2b6a97a6c8a97cf7e8dd3efcce77ba1abaebe",
+  "26d2284176236cc7e4ddc3c426d2375518634cad41413e719272e26515b902a5",
+  "27038ae96964ec3ca48ab070ec3af8332b3589f700eceed8c1185f362f9e0182",
+  "27650700911d87b4e2be53b2faa152d5b5187659c9c6e1c8590459ad027ff483",
+  "28c9c0aed29a51fb645983184f4aa4fd7ce16caecc07e345c0da71b35be34324",
+  "2b1c3273598b6f9ee826e405995236e24f87c2d78f8903db32d761ac6e23898a",
+  "2dce750eb59feb115adf90e8b8be5034e2dcbd3fbb08fe89224d66c0200894d2",
+  "30bbe0a1eb55e1b49e14b486f6d4712ac46d7cbdabfeead6d169148f692cd26e",
+  "30ee61e557d8239b47385e06e747f99b4d95b5519f84baa1272901886e428e98",
+  "3735946565ff29f98bafe87aab497dedd11da9c77e718b63b6ddbfbba98eecc6",
+  "38bb72755691527971761a92e274bb439d5cb05ca423431a47f544a7da657b7e",
+  "3ba7bd3b1823ea287103a6699430e70114d8954e39931b631944075943e249cf",
+  "41883af91cf46b2592d2a4afaecd471e0c580599d22d38afd546a169b57634ec",
+  "468a3c07a873aacafb3c698d8f0d8f442dd75810acf71463e60e7c297b459cf1",
+  "475d2a0473bc7c0b80a5e1a832258513daeef24607b7fd99aa8a94c09f3195a5",
+  "4a643555f201941abd9fbf0c01b6e07036cfa160d55281359639dfd72c02aac7",
+  "4d66f8e125192badc43572b125e506d93a396befbee85b30502269613709331b",
+  "5161ac3358f8ed663af0cd20fe0ba51a4dbc62fc2f13acc7b6b1121930059342",
+  "5250d940d6985c788cc7d13a6f4730b33c3efa0165f038f52327e59b7abff391",
+  "52543f652be8071be779d5cd7a5b34643f8f64719a03825622c0747d945b8de2",
+  "52912e93f36aac4b3c8ecc2f26b74089fbc7fd21fa96255acdd935d733afd846",
+  "52b8fa3d2d7de102b60185f2ee4dc9a683b1c3704278b29b1c7251d08da271c9",
+  "52de96a3fd3b4e360f0b84b6dfdfd36ae83a9530d5aee405060757715d8ae856",
+  "5312bfd80a23beda2ee196b179e48214cc0995f64e358472e353ad61ffc575c7",
+  "58caba75ea964fb893e64c079ddb61723f7e3f5c75e7b2885fa01ca66350f3c1",
+  "58dcc9e77c1bd05873fb8c255591a868cff6fcb079cddfd10f7c7562bdae4d1c",
+  "5e5409e45a1a9c3a42392b87e55c0dadd3c14c33855c88ac95134e257deb9a97",
+  "6596af6cf4b100bdfde675dd6117c7faf4f5d7024d40a6ae56b67607cfc7d651",
+  "668788255bf64fe12796f39ef9bb87829c819c316f267a25480fc6546659c79f",
+  "69dbffb8f743208b48431ca66c4ce9d0e7208017f3e27ad7b227380df770f140",
+  "6aeffa5ee557c7cfe96ff526891d736756478aba688fe85ef4a332d5940a3581",
+  "6df39d754e128d55ee2a2bd85518f5e656183d7535eadce90bc7b8b2f0fddbf3",
+  "72470a0a7c43a1dc91f28e7c2e5b570888a48be74c8d36b4824690eebe25da0c",
+  "7476452d900f6495ba700831aee41fb36698b8d31acd4f968ba7fb72e1b7fcb3",
+  "7607a733ffbb8f20b9800b9d1568448006c8a59898c2b425847382f205db095e",
+  "7678aded5e52c2bd682e650b979925a3fa5b85fd0d6cd013d7fcfe5248cc2678",
+  "771d98116ffca0783eccfd684fad2949b774355e9837e001a3c9633c6e4f7add",
+  "7773a2e279afd16c2b5ac552781044ba64d93d862f8b17852c56d85db08974e7",
+  "77c021675a268a8143f571ba6946099b30653f2c6af8a3a08b83b6706c417216",
+  "7d864c24a2763045715e86de07a36a8de0dd0314f55010d34cbc981bbfe82494",
+  "7e4b781a58a6273f183b6eda4084eb8604c35c7052a897fcaaf2308ff44d0f3c",
+  "7ec0851fc44ad38a79c09085bba489dbbe8ef7fa9d7ab9fe380495f7cb4b7e4a",
+  "7fc41c32795be0dcf0351ed42ea4b0507fc1c676075f2c58fcb9051cc6bbb6de",
+  "7ff8dbe0781da26d5f9cb5924a66f6e0f755f1ab1ba841943b7ca3b4f51525ff",
+  "80490983b3de2c0cf6bf365355661f9d46300b35b606018a53a09a65942a35c2",
+  "80f88a1daf2d00f694be3e2f0be790258fbd2f4dfdaa60c8b45b0ed2ebc84698",
+  "83d6a56695054784c00722160f7768e615273f2396d1085c980f6d07bb8585da",
+  "84231ef1ec70b2c716b85d702a84a1bdca5a9c2d35ecf25bafdb70afca911e3b",
+  "88b4894de213630fe05a3f4b94ba028e365dcbfee61e264e900a02eaa8aac83c",
+  "8ae61bce2c7d1fead1722f8c64cd44548e1013eb0f942047ff1a1646b04d3a6c",
+  "92b1d4c881ba2e9988b6b873e90a323ced32e1f38c05a4837b350857de28866c",
+  "991010646a16e9c820375bb13618fd1f8c7b8d928f389b77baba8e7109e80633",
+  "a4bfcf49ceff5653cdcaf334c64ae2506cecc56d729a11217f1f0ad032e48de4",
+  "a5bed07e03d8626adb386028e84b2056a2afec6849324d852c0dc95bb716c87f",
+  "a6a2f8f65f767a891389c0d1a6ccdae99811202dea2e8ba9436d8601957325da",
+  "aa0d8ef67dfcf167c90e6a507aacd7eac6fe253102ceba5b3a50a63387f102e5",
+  "aad3805710845e265bec045d4a743a20ed3a2af5587970567821e6810ff4fb5d",
+  "ab5b0eb90091baaca04fa1704de44c9b6bc9902f3edb1b44c8cea7c6ffd0c7b2",
+  "b2627b04a8990fe5af7a530a79be015ed6cebae106a4076ee5b4309520e42fc3",
+  "b3e30c2ac8ed87590a3c934ce6b3c142fd9156f9bb5ea4df6c6d359973225e4f",
+  "b41d40ea30e54d16fdcc356aa5a1847d91cefb1c1ad9b106c288d0dd49207eb5",
+  "b60c92366e452a127863dc1ca752af6b4e150f81d7898d842455f14704e15ce6",
+  "bda072c145dc633effe75eb30f797c15ac4c7d4d238c1dfceb9277baf6eb2a6b",
+  "bee09f322e8a7a489a2d7c805420d96c2f5d79d1ac478b518fa99f028838b055",
+  "c1e311567e68f39f050f5921accb43697c812af8c7515282e59a72cd44a39edc",
+  "c2ec8f00f0a64599fbe920f53c930ecb31a0c17c7549c3ba74f401e803350f4f",
+  "c3d065c0f1f3237d331581eeac59b9638c9bb336946799fd248c11cff2ec0cce",
+  "c47b5ae03ae23c580e9e30a7bfec1a389ce7f4a06de8d0549c2152d116b5c119",
+  "c4c077a04dfeca9fd0b501f2e50d91bcb2d68619cab0f4b72ce5182682703d24",
+  "c69875fbbf7f35e2eb81d2a9b71efffb963208fe82bb29f35cbe8d27917d386f",
+  "cd5880e9a3db4512a5070300121abe21dbe43095b7d7358287083c795f87f4b0",
+  "cf661815ab6f1edb08a5544521d81e5fcbbc55c447c05327d98da42c356bd725",
+  "d16fd96f349ca2c3e01a92f5cf0566f767a7e53a427beedbd0f759f68eb7a6ac",
+  "d2286d2a1fd4242d3e2dc88bea44dc853d378404f77ca2cb8080943c61d558da",
+  "d78bcfbbb9f8bbdbcf26df6deb40829eca2d1a39cee9925384ce840a277e0864",
+  "d8a567b314ae9241fc0ccc851c71bbb96e084ac8937e489ef4561b012ff27c23",
+  "da20db7a1d4b61e59b1fc109ecb4c0dda949d915e1e78f1f712921a90c4a4924",
+  "dab61ef4958dcb1f99f04314359e47f83ab303c16583a00f06aee759b1f0f360",
+  "de2adcaa88f970fbec38e05578efdbd74c406f6339abaceb7fdf2c7bcba8bf7e",
+  "e16b710a1f8b41ea44f179f26e1de28773f1d9d9ed59d74e1f7cf6017f55ed9c",
+  "e18e0296330d43785d6805656d6450bd78ebf43dbecb31438a3e43b14094852f",
+  "e1c9c509f66954fa083c89af8301d01014a2695c98091806ce831da6b775ef21",
+  "e4c59792abb7459ccbe02afa69f99e00f4fa564ca811c5920c13ff72db972b13",
+  "e4e3d56b12ed533d3d890272d7ad24628c37211aa6a3b4a6418b062524908b8a",
+  "e54eb5071fdf7944725d3de4d68d43941f21eaf259d72f7d7ebc35b1877076e1",
+  "e7285e40c4f1ef3cd4427f83bf038a20ab49d1e2ebdf8fa55f39d518e83d9810",
+  "e953b6743477f90128df5c9b6bf84954534e0aede92aaaf7f8ce629a884b16b6",
+  "eac0b9bb8a8f973d9052f4c2589411078f6e61a0028316efb6866c0f9db43307",
+  "ec02d27b50895f6047c26abf38376ba4b22220d22a9a4a096ee7dddf2c1b60b5",
+  "ed55b10d4a8de93ebda99c513ca07e4231dd5f26f8d3ff6df18dc904dc76e7a7",
+  "f4117490132d9af968eabeaa5c7ac83daccb223076b585de1ec37f94f129e650",
+  "f44907ec4b6b9afd9420ad6be6f3de0546ff985e060142a3b914a50fdeec35bf",
+  "f6435684c58e8043840299f80c757c883889754c9b3d29d9dd9e8382746a8d8f",
+  "f68a81cdf3e50aca4471d3073b2b529ce335dd229f4217d3e12ec17e396dfbc5",
+  "f7144128f8714cc2da4ff341224b7a3ad06f76b01a853474da738fe2af05f940",
+  "fad1a7885c8efc5fe3dc0124dadbc5793d174a342ab737ced7d06b32acd1e88f",
+  "fddef396481c2c549e615470acd630576f8fdbbcbea997354d6fa17564e20137",
+  "fe786cabb77dc049513a5c0efd7eae3e80c4f0c8572d2b33c20fbd91b90b9638"
+ ],
+ "gpl_spec": "PASS",
+ "hazards": [
+  {
+   "sids": [
+    "include/linux/alloc_tag.h::alloc_tag_add_check.alt_1",
+    "include/linux/page_frag_cache.h::page_frag_alloc_align",
+    "include/linux/gfp.h::warn_if_node_offline",
+    "include/linux/page_ref.h::page_ref_unfreeze"
+   ],
+   "text": "Stale tags bad align offline-node alloc and unfreeze transitions warn; disabled builds turn checks inert."
+  },
+  {
+   "sids": [
+    "mm/page_alloc.c::bad_page",
+    "mm/slub.c::object_err",
+    "mm/slub.c::free_consistency_checks"
+   ],
+   "text": "Bad pages object errors dump taint; scans isolate corruption; bulk free withholds on guard failure."
+  },
+  {
+   "sids": [
+    "include/linux/vmstat.h::zone_page_state_snapshot",
+    "mm/memcontrol.c::mem_cgroup_iter",
+    "mm/backing-dev.c::cgwb_create",
+    "mm/cma.c::cma_range_alloc"
+   ],
+   "text": "Snapshots saturation stocks shared walkers race; tree collision favors winner; contended CMA retries."
+  },
+  {
+   "sids": [
+    "mm/memblock.c::memblock_alloc_range_nid",
+    "mm/percpu.c::pcpu_page_first_chunk",
+    "mm/numa_emulation.c::numa_emulation",
+    "mm/cma.c::cma_release"
+   ],
+   "text": "Late early calls warn to slab; partial first-chunk unwinds; bad emulation abandons; referenced return warns."
+  },
+  {
+   "sids": [
+    "mm/page_alloc.h::buddy_order_unsafe",
+    "mm/compaction.c::compact_unlock_should_abort",
+    "mm/compaction.c::kswapd_is_running"
+   ],
+   "text": "Lockless buddy sizes go stale so detachment rechecks; scans yield and abort on signal; proactive suppresses under load."
+  },
+  {
+   "sids": [
+    "mm/memory_hotplug.c::offline_pages",
+    "mm/memory_hotplug.c::memory_blocks_have_altmaps",
+    "mm/memory_hotplug.c::offline_and_remove_memory_ranges"
+   ],
+   "text": "Wrong offline order or early rebuild exposes empty nodes; partial removal fatal; ranges reject null or misaligned."
+  },
+  {
+   "sids": [
+    "mm/mempool.c::mempool_resize",
+    "mm/slab_common.c::kmem_cache_destroy",
+    "mm/slub.c::ksize"
+   ],
+   "text": "Nonpositive pool resize and reserve overflow are programming errors; destroy with live objects warns yet unlinks."
+  },
+  {
+   "sids": [
+    "mm/page_io.c::generic_swapfile_activate",
+    "mm/dmapool.c::pool_find_page",
+    "mm/memblock.c::RESERVE_MEM_MAX_ENTRIES"
+   ],
+   "text": "Misaligned swap and oversize DMA warn or error; bad free only reports; reservation overflow drops silently."
+  },
+  {
+   "sids": [
+    "mm/slub.c::slub_cpu_setup",
+    "mm/slab_common.c::kvfree_rcu_init.alt_2",
+    "mm/slub.c::alloc_from_pcs_bulk",
+    "mm/slub.c::stat_item",
+    "mm/slub.c::__do_krealloc",
+    "mm/slub.c::slab_free_after_rcu_debug",
+    "mm/slub.c::validate_slab",
+    "mm/slub.c::location",
+    "mm/swapfile.c::first_se",
+    "mm/swapfile.c::try_to_unuse",
+    "mm/swapfile.c::alloc_swap_info",
+    "mm/swapfile.c::sys_swapoff",
+    "mm/vmscan.c::folio_update_gen",
+    "mm/vmscan.c::NODE_RECLAIM_PRIORITY",
+    "mm/vmscan.c::sysctl_min_slab_ratio",
+    "mm/zsmalloc.c::zs_object_copy",
+    "mm/zsmalloc.c::get_first_obj_offset",
+    "mm/zsmalloc.c::zs_destroy_pool",
+    "mm/zswap.c::shrink_memcg_cb",
+    "mm/zswap.c::zswap_writeback_entry",
+    "mm/zswap.c::zswap_compressor_param_set"
+   ],
+   "text": "OOM/partial/aborts; races; debug caveats."
+  }
+ ],
+ "invariants": [
+  {
+   "sids": [
+    "include/linux/gfp.h::gfpflags_allow_blocking",
+    "include/linux/gfp.h::gfp_zone",
+    "include/linux/gfp.h::GFP_ZONE_TABLE"
+   ],
+   "text": "GFP splits blocking reclaim IO-FS; zone from table traps bad mixes; NUMA fallback stays strict-local."
+  },
+  {
+   "sids": [
+    "mm/page_alloc.h::page_is_buddy",
+    "mm/page_alloc.c::get_pfnblock_migratetype",
+    "mm/page_alloc.c::page_expected_state"
+   ],
+   "text": "Buddies need equal order zone via frame toggle; pageblock type in one word; freed pages stay clean."
+  },
+  {
+   "sids": [
+    "include/linux/slab.h::kmalloc_index",
+    "mm/slub.c::oo_order",
+    "mm/slab.h::alloc_flags_allow_spinning"
+   ],
+   "text": "Slab sizes index to caches to ceiling; order count share packed word; spinning excludes nolock."
+  },
+  {
+   "sids": [
+    "include/linux/memcontrol.h::mem_cgroup_protection.alt_1",
+    "mm/memcontrol.c::try_charge",
+    "mm/page_counter.c::page_counter_try_charge"
+   ],
+   "text": "Root bypasses limits; protection scales by use; charging batches stock rounds to pages unwinds on fail."
+  },
+  {
+   "sids": [
+    "mm/compaction.c::isolation_suitable.alt_2",
+    "mm/compaction.c::too_many_isolated",
+    "mm/compaction.c::suitable_migration_target",
+    "mm/compaction.c::fast_isolate_freepages"
+   ],
+   "text": "Skip marked blocks with directional cursors, filter by mobility and mode, use half LRU for pressure, prefer movable windows."
+  },
+  {
+   "sids": [
+    "mm/page_alloc.c::expand",
+    "mm/page_alloc.c::__rmqueue",
+    "mm/page_alloc.h::gfp_migratetype",
+    "mm/page_alloc.c::build_zonelists.alt_1",
+    "mm/page_alloc.c::zone_watermark_fast"
+   ],
+   "text": "Buddy splits preserve free counts with lowest fit and fixed fallback; mobility from flags; zonelists order by distance."
+  },
+  {
+   "sids": [
+    "mm/memcontrol.c::commit_charge",
+    "mm/memcontrol.c::charge_memcg",
+    "mm/memcontrol.c::memory_max_show",
+    "mm/memcontrol.c::memory_max_write",
+    "mm/memcontrol-v1.c::mem_cgroup_resize_max"
+   ],
+   "text": "Folios link only when uncharged under lock; limits show maximum text or bytes; writes install atomically; memory below swap."
+  },
+  {
+   "sids": [
+    "mm/mm_init.c::find_zone_movable_pfns_for_nodes",
+    "mm/mm_init.c::memmap_init",
+    "mm/mm_init.c::alloc_large_system_hash",
+    "mm/page_alloc.c::per_cpu_pages_init",
+    "mm/page_alloc.c::zone_batchsize"
+   ],
+   "text": "Boot keeps zone bounds and movable starts, clamps and fills memmap, sizes hashes to powers of two, tunes per-cpu caches."
+  },
+  {
+   "sids": [
+    "mm/page_isolation.c::start_isolate_page_range",
+    "mm/page_isolation.c::has_unmovable_pages",
+    "mm/page_isolation.c::test_pages_isolated",
+    "mm/page_alloc.c::pfn_range_valid_contig",
+    "mm/memory_hotplug.c::offline_pages"
+   ],
+   "text": "Isolate aligns outward and unwinds on failure; contig needs online same-zone movable frames; offline orders marks and caches."
+  },
+  {
+   "sids": [
+    "mm/slab_common.c::find_mergeable",
+    "mm/percpu.c::pcpu_find_block_fit",
+    "mm/shrinker.c::shrinker_register",
+    "mm/swapfile.c::add_swap_extent"
+   ],
+   "text": "Slab merges only on matching flags and close size; percpu searches aligned runs; shrinker ids publish via RCU; swap stays ordered."
+  },
+  {
+   "sids": [
+    "mm/slub.c::__kmem_cache_alloc_bulk",
+    "mm/slub.c::kmem_cache_alloc_bulk_noprof",
+    "mm/slub.c::__do_krealloc",
+    "mm/slub.c::kmalloc_gfp_adjust",
+    "mm/slub.c::__check_heap_object",
+    "mm/slub.c::memcg_slab_post_charge.alt_1",
+    "mm/slub.c::memcg_slab_post_charge.alt_2",
+    "mm/slub.c::count_free",
+    "mm/slub.c::__rcu_free_sheaf_prepare",
+    "mm/slub.c::__prefill_sheaf_pfmemalloc",
+    "mm/slub.c::rcu_free_slab",
+    "mm/swapfile.c::swap_extend_table_alloc",
+    "mm/swapfile.c::swap_extend_table_try_free",
+    "mm/swapfile.c::swap_retry_table_alloc",
+    "mm/swapfile.c::__swap_cluster_put_entry",
+    "mm/swapfile.c::__swap_cluster_dup_entry",
+    "mm/swapfile.c::swap_put_entries_cluster",
+    "mm/swapfile.c::swap_dup_entries_cluster",
+    "mm/vmscan.c::folio_update_gen",
+    "mm/vmscan.c::update_batch_size",
+    "mm/vmscan.c::suitable_to_scan",
+    "mm/vmscan.c::walk_update_folio",
+    "mm/vmscan.c::get_item_key",
+    "mm/vmscan.c::test_bloom_filter",
+    "mm/vmscan.c::update_bloom_filter",
+    "mm/vmscan.c::kswapd_age_node",
+    "mm/vmscan.c::kswapd_shrink_node",
+    "mm/vmscan.c::kswapd_highest_zoneidx",
+    "mm/vmscan.c::prepare_kswapd_sleep",
+    "mm/vmscan.c::clear_pgdat_congested",
+    "mm/vmscan.c::update_reclaim_active",
+    "mm/vmscan.c::set_reclaim_active",
+    "mm/vmscan.c::clear_reclaim_active",
+    "mm/vmstat.c::calculate_pressure_threshold",
+    "mm/vmstat.c::refresh_cpu_vm_stats",
+    "mm/vmstat.c::zero_zone_numa_counters",
+    "mm/vmstat.c::zero_zones_numa_counters",
+    "mm/vmstat.c::zero_global_numa_counters",
+    "mm/vmstat.c::invalid_numa_statistics",
+    "mm/zpdesc.h::ZPDESC_MATCH",
+    "mm/zpdesc.h::zpdesc_lock",
+    "mm/zsmalloc.c::obj_allocated",
+    "mm/zsmalloc.c::zspage_full",
+    "mm/zsmalloc.c::zspage_empty",
+    "mm/zsmalloc.c::zs_can_compact",
+    "mm/zsmalloc.c::calculate_zspage_chain_size",
+    "mm/zswap.c::zswap_pool_find_get",
+    "mm/zswap.c::__zswap_pool_create_fallback",
+    "mm/zswap.c::zswap_pool_create",
+    "mm/zswap.c::zswap_pool_destroy",
+    "mm/zswap.c::zswap_pool_limit_hit",
+    "mm/zswap.c::zswap_has_pool",
+    "mm/zswap.c::zswap_shrinker_scan"
+   ],
+   "text": "Atomic bulk; accounting; rollback; guards."
+  }
+ ],
+ "locks": [
+  {
+   "sids": [
+    "mm/page_alloc.c::free_one_page",
+    "mm/page_alloc.c::pcp_spin_trylock.alt_1",
+    "mm/page_alloc.c::free_pcppages_bulk"
+   ],
+   "text": "Zone lock guards buddy insert and pcp drain; pcp trylock queues overflow; CPU access pins preemption."
+  },
+  {
+   "sids": [
+    "include/linux/memcontrol.h::lruvec_lock_irq",
+    "mm/vmscan.c::isolate_lru_folios",
+    "include/linux/memory_hotplug.h::zone_span_writelock.alt_1"
+   ],
+   "text": "LRU isolation holds at most one vector IRQ lock; node above zone above seqlock; span reads optimistic."
+  },
+  {
+   "sids": [
+    "mm/slub.c::slab_lock",
+    "mm/slub.c::barn_replace_full_sheaf",
+    "mm/shrinker.c::shrink_slab",
+    "mm/swap.h::swap_cluster_lock"
+   ],
+   "text": "Slab node barn IRQ spin guards lists and sheaf exchange with lock-free freelists; shrink drops RCU."
+  },
+  {
+   "sids": [
+    "mm/compaction.c::compact_lock_irqsave",
+    "mm/compaction.c::compact_folio_lruvec_lock_irqsave",
+    "mm/page_alloc.c::__drain_all_pages"
+   ],
+   "text": "Zone lock nonblocking in async else irqsave, lruvec revalidates, drain tries global then waits per zone."
+  },
+  {
+   "sids": [
+    "mm/memcontrol.c::get_obj_cgroup_from_memcg",
+    "mm/shrinker.c::shrinker_unit_alloc",
+    "mm/memcontrol-v1.c::memcg_max_mutex",
+    "mm/memcontrol.c::folio_lruvec_lock"
+   ],
+   "text": "Racing memcg lookups use read-side refs; shrinker serializes ids under mutex; threshold mutex precedes event paths."
+  },
+  {
+   "sids": [
+    "mm/page_isolation.c::set_migratetype_isolate",
+    "mm/page_alloc.c::zone_pcp_disable",
+    "mm/memory_hotplug.c::remove_memory",
+    "mm/vmscan.c::kswapd_stop"
+   ],
+   "text": "Zone irq lock covers isolate marking and verify; batch mutex suspends caches; hotplug guards serialize removal."
+  },
+  {
+   "sids": [
+    "mm/slab_common.c::slab_mutex",
+    "mm/percpu.c::pcpu_lock",
+    "mm/percpu.c::pcpu_alloc_mutex",
+    "mm/mempool.c::mempool_alloc_from_pool"
+   ],
+   "text": "Slab mutex serializes create and destroy; percpu spin guards metadata with mutex for creation; pool spin never sleeps."
+  },
+  {
+   "sids": [
+    "mm/slub.c::barn_get_full_or_empty_sheaf",
+    "mm/slub.c::node_barn",
+    "mm/slub.c::count_partial",
+    "mm/slub.c::kmem_cache_node.alt_1",
+    "mm/slub.c::validate_slab",
+    "mm/slub.c::kmem_cache_return_sheaf",
+    "mm/slub.c::rcu_free_sheaf",
+    "mm/slub.c::slub_percpu_sheaves",
+    "mm/slub.c::alloc_from_pcs_bulk",
+    "mm/slub.c::pcs_flush_all",
+    "mm/slub.c::__pcs_flush_all_cpu",
+    "mm/slub.c::kmem_cache_prefill_sheaf",
+    "mm/swapfile.c::sys_swapoff",
+    "mm/swapfile.c::enable_swap_info",
+    "mm/swapfile.c::try_to_unuse",
+    "mm/swapfile.c::swap_start",
+    "mm/swapfile.c::swap_stop",
+    "mm/swapfile.c::arch_max_swapfile_size",
+    "mm/vmstat.c::sysctl_vm_numa_stat_handler",
+    "mm/vmstat.c::vm_numa_stat_lock",
+    "mm/vmstat.c::walk_zones_in_node",
+    "mm/vmscan.c::check_move_unevictable_folios",
+    "mm/workingset.c::shadow_lru_isolate",
+    "mm/zsmalloc.c::size_class",
+    "mm/zsmalloc.c::__free_zspage",
+    "mm/zsmalloc.c::zs_obj_read_begin",
+    "mm/zsmalloc.c::zs_obj_read_end",
+    "mm/zsmalloc.c::zs_pool",
+    "mm/zsmalloc.c::zspage_write_trylock",
+    "mm/zsmalloc.c::zspage_write_unlock",
+    "mm/zsmalloc.c::lock_zspage",
+    "mm/zsmalloc.c::__zs_compact",
+    "mm/zsmalloc.c::async_free_zspage",
+    "mm/zswap.c::__zswap_pool_empty",
+    "mm/zswap.c::zswap_pools_lock",
+    "mm/zswap.c::shrink_memcg_cb"
+   ],
+   "text": "Barn/node/percpu; swap; pool order."
+  }
+ ],
+ "pass": 1,
+ "phase_map": [
+  {
+   "anchor": "HB-KPAPER-001/hb-s5.p14",
+   "crown": "A",
+   "phase": "F0"
+  },
+  {
+   "anchor": "HB-KPAPER-001/hb-s5.p04",
+   "crown": "A",
+   "phase": "F1"
+  },
+  {
+   "anchor": "HB-KPAPER-001/hb-s5.p05",
+   "crown": "A",
+   "phase": "F3"
+  }
+ ],
+ "schema": "lx.dossier.v1",
+ "state_machines": [
+  {
+   "sids": [
+    "mm/slub.c::slab_free_hook",
+    "mm/slub.c::__slab_free",
+    "mm/slub.c::free_to_partial_list"
+   ],
+   "text": "Slab release vets hooks updates occupancy then moves full partial empty under node lock with sheaf swap."
+  },
+  {
+   "sids": [
+    "mm/page_alloc.c::__free_pages_prepare",
+    "mm/page_alloc.c::__free_one_page",
+    "mm/page_alloc.c::free_pcppages_bulk"
+   ],
+   "text": "Page free validates clears merges buddies batches RCU defer and drains pcp round-robin at high mark."
+  },
+  {
+   "sids": [
+    "mm/memcontrol.c::try_charge",
+    "mm/oom_kill.c::out_of_memory",
+    "mm/oom_kill.c::queue_oom_reaper"
+   ],
+   "text": "Charge uses stock then limits with reclaim retries then OOM or forced admission; OOM signals sharers."
+  },
+  {
+   "sids": [
+    "mm/vmscan.c::do_try_to_free_pages",
+    "mm/vmscan.c::shrink_lruvec",
+    "mm/swapfile.c::swap_alloc_slow",
+    "mm/swapfile.c::relocate_cluster"
+   ],
+   "text": "Reclaim descends priority scanning to goal retries with deactivation; swap clusters rotate with discard."
+  },
+  {
+   "sids": [
+    "mm/compaction.c::compact_finished",
+    "mm/compaction.c::kcompactd_do_work",
+    "mm/compaction.c::kcompactd"
+   ],
+   "text": "Direct tracks best zone while background balances demand against proactive with backoff; contention wins termination."
+  },
+  {
+   "sids": [
+    "mm/memcontrol.c::mem_cgroup_css_alloc",
+    "mm/memcontrol.c::mem_cgroup_css_online",
+    "mm/memcontrol.c::mem_cgroup_css_offline",
+    "mm/memcontrol.c::uncharge_batch"
+   ],
+   "text": "Memcg presets on alloc, enables on online, reparents and drains on offline, then frees; uncharge batches by group."
+  },
+  {
+   "sids": [
+    "mm/mm_init.c::free_area_init",
+    "mm/mm_init.c::page_alloc_init_late",
+    "mm/slab.h::slab_state"
+   ],
+   "text": "Boot runs limits, movable, nodes and fixups; deferred init launches chunks then disables; slab cycles down to full."
+  },
+  {
+   "sids": [
+    "mm/page_alloc.c::__alloc_pages_slowpath",
+    "mm/page-writeback.c::__folio_start_writeback",
+    "mm/page_alloc.c::alloc_contig_frozen_range_noprof"
+   ],
+   "text": "Alloc runs fast then slowpath with reclaim and retry; folios cycle clean, dirty and writeback; contig validates to release."
+  },
+  {
+   "sids": [
+    "mm/slub.c::kmem_cache_prefill_sheaf",
+    "mm/slub.c::kmem_cache_return_sheaf",
+    "mm/slub.c::kmem_cache_refill_sheaf",
+    "mm/slub.c::rcu_free_sheaf",
+    "mm/slub.c::kmem_cache_alloc_from_sheaf_noprof",
+    "mm/swap_state.c::__swap_cache_alloc",
+    "mm/swap.h::swap_cluster_flags",
+    "mm/vmscan.c::state_is_valid",
+    "mm/vmscan.c::fill_evictable",
+    "mm/vmscan.c::drain_evictable",
+    "mm/vmscan.c::lru_gen_change_state",
+    "mm/vmscan.c::balance_pgdat",
+    "mm/vmscan.c::kswapd_try_to_sleep",
+    "mm/vmstat.c::vmstat_shepherd",
+    "mm/zsmalloc.c::free_zspage",
+    "mm/zsmalloc.c::migrate_zspage",
+    "mm/zsmalloc.c::isolate_src_zspage",
+    "mm/zsmalloc.c::isolate_dst_zspage",
+    "mm/zsmalloc.c::putback_zspage",
+    "mm/zsmalloc.c::find_alloced_obj",
+    "mm/zswap.c::__zswap_pool_release"
+   ],
+   "text": "Sheaf/swap/gen; kswapd; compact."
+  }
+ ],
+ "structs": [
+  {
+   "sids": [
+    "include/linux/mmzone.h::zone",
+    "include/linux/mmzone.h::pglist_data",
+    "include/linux/mmzone.h::lruvec"
+   ],
+   "text": "Zone holds watermarks spans free areas; node holds zones lists daemon state; vector holds lists locks."
+  },
+  {
+   "sids": [
+    "include/linux/memblock.h::memblock_region",
+    "include/linux/memblock.h::memblock_type",
+    "include/linux/mmzone.h::NR_PAGE_ORDERS"
+   ],
+   "text": "Memblock region base size flags node with counted types; orders bound buddy; NUMA holds spans."
+  },
+  {
+   "sids": [
+    "include/linux/memcontrol.h::mem_cgroup",
+    "include/linux/memcontrol.h::obj_cgroup",
+    "include/linux/alloc_tag.h::alloc_tag"
+   ],
+   "text": "Memcg holds hierarchy counters stats thresholds; objcg ref bytes; tags bind site to per-CPU counts."
+  },
+  {
+   "sids": [
+    "include/linux/mmzone.h::mem_section",
+    "include/linux/backing-dev-defs.h::backing_dev_info",
+    "mm/cma.h::cma"
+   ],
+   "text": "Sections encode present mapped online; bdi writeback queues ids trees; CMA extent bitmap tallies locks."
+  },
+  {
+   "sids": [
+    "mm/compaction.c::compact_zone",
+    "mm/compaction.c::move_freelist_head"
+   ],
+   "text": "Compaction control holds zone, order, mode, cursors and lists; zone holds start, counts, lock and watermarks."
+  },
+  {
+   "sids": [
+    "mm/memblock.c::memblock_memory_init_regions",
+    "mm/mm_init.c::pgdat_init_internals",
+    "mm/mm_init.c::zone_init_internals"
+   ],
+   "text": "Boot sets track regions by base, length, flags and node; nodes hold zones, spans, stats and reclaim state."
+  },
+  {
+   "sids": [
+    "mm/memcontrol.c::mem_cgroup_alloc",
+    "mm/slab.h::kmem_cache",
+    "mm/slab.h::freelist_counters"
+   ],
+   "text": "Memcg groups hold counters, writeback and pressure with per-node vectors; slab caches hold sizing and policy."
+  },
+  {
+   "sids": [
+    "mm/percpu-internal.h::pcpu_chunk",
+    "mm/percpu-internal.h::pcpu_block_md",
+    "mm/page_alloc.h::alloc_context"
+   ],
+   "text": "Percpu chunks aggregate maps, hints and tallies with block run tracking; alloc context carries zonelist and flags."
+  },
+  {
+   "sids": [
+    "mm/slub.c::slab_sheaf",
+    "mm/slub.c::slab_sheaf.anon_1",
+    "mm/slub.c::slab_sheaf.anon_1.anon_1",
+    "mm/slub.c::slub_percpu_sheaves",
+    "mm/slub.c::node_barn",
+    "mm/slub.c::kmem_cache_node.alt_1",
+    "mm/swap.h::swap_cluster_info",
+    "mm/swap_table.h::swap_table",
+    "mm/swap_table.h::swap_memcg_table",
+    "mm/vmscan.c::scan_control",
+    "mm/vmscan.c::scan_control.anon_1",
+    "mm/vmscan.c::ctrl_pos",
+    "mm/vmscan.c::kswapd",
+    "mm/vmstat.c::set_pgdat_percpu_threshold",
+    "mm/workingset.c::WORKINGSET_SHIFT",
+    "mm/workingset.c::EVICTION_SHIFT",
+    "mm/workingset.c::EVICTION_SHIFT_ANON",
+    "mm/workingset.c::EVICTION_MASK",
+    "mm/workingset.c::bucket_order",
+    "mm/vmstat.c::nr_memmap_boot_pages",
+    "mm/vmstat.c::nr_memmap_pages",
+    "mm/zpdesc.h::zpdesc",
+    "mm/zsmalloc.c::zspage",
+    "mm/zsmalloc.c::zspage_lock",
+    "mm/zswap.c::zswap_pool",
+    "mm/zswap.c::crypto_acomp_ctx",
+    "mm/zswap.c::zswap_entry",
+    "mm/zsmalloc.c::ZSPAGE_MAGIC",
+    "mm/zsmalloc.c::ZS_ALIGN",
+    "mm/zsmalloc.c::ZS_HANDLE_SIZE",
+    "mm/zsmalloc.c::ZS_MAX_ALLOC_SIZE",
+    "mm/zsmalloc.c::ZS_MIN_ALLOC_SIZE",
+    "mm/zsmalloc.c::ZS_SIZE_CLASSES",
+    "mm/zswap.c::ZSWAP_ADDRESS_SPACE_SHIFT"
+   ],
+   "text": "Sheaf/barn; clusters; reclaim; pools."
+  }
+ ],
+ "stubs": [
+  {
+   "sid": "include/linux/spinlock.h::spin_lock",
+   "state": "stub",
+   "target_dossier": "D03"
+  },
+  {
+   "sid": "include/linux/spinlock.h::spin_lock_irqsave",
+   "state": "stub",
+   "target_dossier": "D03"
+  },
+  {
+   "sid": "include/linux/mutex.h::mutex_lock",
+   "state": "stub",
+   "target_dossier": "D03"
+  },
+  {
+   "sid": "include/linux/rcupdate.h::rcu_read_lock",
+   "state": "stub",
+   "target_dossier": "D02"
+  },
+  {
+   "sid": "include/linux/rcupdate.h::rcu_read_unlock",
+   "state": "stub",
+   "target_dossier": "D02"
+  },
+  {
+   "sid": "include/linux/mm.h::folio_nr_pages",
+   "state": "stub",
+   "target_dossier": "D06"
+  },
+  {
+   "sid": "include/linux/sched.h::cond_resched",
+   "state": "stub",
+   "target_dossier": "D01"
+  },
+  {
+   "sid": "include/linux/bitops.h::test_bit",
+   "state": "stub",
+   "target_dossier": "D14"
+  },
+  {
+   "sid": "include/asm-generic/bug.h::WARN_ON_ONCE.alt_1",
+   "state": "stub",
+   "target_dossier": "D17"
+  },
+  {
+   "sid": "include/linux/cgroup.h::css_put",
+   "state": "stub",
+   "target_dossier": "D12"
+  }
+ ]
+}

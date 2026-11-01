@@ -1,0 +1,148 @@
+{
+ "tally": {
+  "PARTIAL": 120,
+  "SUPPORTED": 49,
+  "UNSUPPORTED": 1
+ },
+ "per": {
+  "D01": {
+   "counts": {
+    "PARTIAL": 7,
+    "SUPPORTED": 3
+   },
+   "overall": "Most findings pack multiple sub-claims into a single line where only the first few match the cited symbols and fragments, leaving trailing claims (e.g., sighand locks, nice/RT cutoffs, slice lengths, ABI guarantees) uncited or unsupported by the provided excerpts.",
+   "bad": []
+  },
+  "D02": {
+   "counts": {
+    "SUPPORTED": 8,
+    "PARTIAL": 2
+   },
+   "overall": "8 of 10 findings are fully supported by the fragments and kernel RCU implementation; 2 findings (6 and 8) bundle extra claims not covered by their cited symbols.",
+   "bad": []
+  },
+  "D03": {
+   "counts": {
+    "SUPPORTED": 5,
+    "PARTIAL": 5
+   },
+   "overall": "5 findings are SUPPORTED and 5 are PARTIAL. The PARTIAL findings consistently bundle accurate kernel statements that exceed both the provided source fragments and the cited symbol list (e.g., claiming rwsem, store-release, or qrwlock write/unlock without citing them).",
+   "bad": []
+  },
+  "D04": {
+   "counts": {
+    "PARTIAL": 7,
+    "SUPPORTED": 3
+   },
+   "overall": "Claims accurately reflect Linux kernel IRQ and timekeeping mechanics and cite appropriate symbols, but most findings bundle 4+ symbols while the dossier provides only 2 fragments per finding (some truncated), leaving several sub-claims only partially evidenced by the text shown.",
+   "bad": []
+  },
+  "D05": {
+   "counts": {
+    "SUPPORTED": 6,
+    "PARTIAL": 4
+   },
+   "overall": "Most findings accurately reflect the cited Linux mm symbols and shown fragments (6 SUPPORTED, 4 PARTIAL). Minor overstatements occur around shrinker ID locking in shrinker_unit_alloc, uncited NUMA span and driver-managed hotplug symbols, and calling kmemleak_scan_thread a boot hook.",
+   "bad": []
+  },
+  "D06": {
+   "counts": {
+    "SUPPORTED": 2,
+    "PARTIAL": 8
+   },
+   "overall": "2 of 10 findings are fully SUPPORTED; 8 are PARTIAL because packed multi-clause claims include extra assertions (e.g., folded pgtable aliasing, userfault SIGBUS, commit limits, reserve bits) not present in the 4 cited symbols.",
+   "bad": []
+  },
+  "D07": {
+   "counts": {
+    "PARTIAL": 4,
+    "SUPPORTED": 6
+   },
+   "overall": "5 of 10 findings are fully supported by the cited symbols and fragments; the remaining 5 are PARTIAL because they pack extra subsystem claims (TDP zapping, APICv inhibit, huge page splitting, CPUID host-filling) not covered by the cited functions.",
+   "bad": []
+  },
+  "D08": {
+   "counts": {
+    "PARTIAL": 9,
+    "SUPPORTED": 1
+   },
+   "overall": "Core claims match the visible ARM64 KVM code closely, though 9 of 10 findings cite three or four symbols while only the first two fragments are included in the prompt data.",
+   "bad": []
+  },
+  "D09": {
+   "counts": {
+    "SUPPORTED": 6,
+    "PARTIAL": 4
+   },
+   "overall": "Most x86 early boot, entry, APIC, and microcode claims are supported by their cited symbols and fragments, with minor overstatements on unconditional temp mappings, ELCR fallback logic, and two stray citations.",
+   "bad": []
+  },
+  "D10": {
+   "counts": {
+    "PARTIAL": 9,
+    "SUPPORTED": 1
+   },
+   "overall": "Most findings bundle unrelated symbols into telegraphic summaries where half the cited fragments are omitted or only show macro definitions; Finding 1 overclaims far beyond its cited lib functions and Finding 9 mischaracterizes native_safe_halt.",
+   "bad": []
+  },
+  "D11": {
+   "counts": {
+    "PARTIAL": 9,
+    "SUPPORTED": 1
+   },
+   "overall": "Only Finding 5 is fully supported by the provided fragments; the remaining nine bundle multiple sub-claims where secondary cited fragments are omitted, un-cited mechanisms (cache maintenance, swapper barriers, Neoverse) are asserted, or error semantics are misstated.",
+   "bad": []
+  },
+  "D12": {
+   "counts": {
+    "PARTIAL": 10
+   },
+   "overall": "All 10 findings are PARTIAL: the shown fragments support the primary mechanisms claimed, but every finding omits fragments for half of its cited symbols, and findings 3, 4, 6, 8, and 9 make claims about uncited subsystems (pidfd, cftype, workqueue/padata, shm, cgroup freeze).",
+   "bad": []
+  },
+  "D13": {
+   "counts": {
+    "PARTIAL": 10
+   },
+   "overall": "All 10 findings accurately reflect general Linux kernel behavior for the cited symbols, but every entry is only partially supported by the provided excerpts due to truncated functions, omitted fragments for half the cited symbols, or unstated conditions (e.g., audit_panic mode).",
+   "bad": []
+  },
+  "D14": {
+   "counts": {
+    "PARTIAL": 3,
+    "SUPPORTED": 6,
+    "UNSUPPORTED": 1
+   },
+   "overall": "6 of 10 findings are supported by citations and kernel source; 3 are partial due to mismatched citations (radix_tree_insert for lookup, rhashtable_lookup for mutation) or truncated test arrays, and 1 hazard claim is unsupported by the test helper fragments.",
+   "bad": [
+    {
+     "n": 10,
+     "verdict": "UNSUPPORTED",
+     "reason": "Fragments show bitmap write pattern tests and BPF arithmetic test pattern generation; claims about volatile barriers, staggered validation, and truncation fallback are not supported."
+    }
+   ]
+  },
+  "D15": {
+   "counts": {
+    "PARTIAL": 10
+   },
+   "overall": "All 10 findings are accurate wrt Linux kernel semantics and cite relevant symbols, but each bundles multiple claims while only the first two cited fragments per finding are provided, rendering all verdicts PARTIAL against the shown snippets.",
+   "bad": []
+  },
+  "D16": {
+   "counts": {
+    "PARTIAL": 9,
+    "SUPPORTED": 1
+   },
+   "overall": "Most findings accurately reflect the shown fragments for their primary clauses, but systematically pack uncited claims (transports, PL011, vDPA, UART, ring barriers) into composite summaries, resulting in PARTIAL verdicts.",
+   "bad": []
+  },
+  "D17": {
+   "counts": {
+    "PARTIAL": 10
+   },
+   "overall": "All 10 findings are composite claims where only the first two cited symbols have source fragments attached; remaining cited symbols and un-cited sub-claims are AUSENTE from the excerpts, yielding PARTIAL across the board.",
+   "bad": []
+  }
+ }
+}

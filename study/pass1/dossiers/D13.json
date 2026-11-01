@@ -1,0 +1,818 @@
+{
+ "dossier": "D13",
+ "entry_points": [
+  {
+   "sids": [
+    "include/linux/dma-direct.h::translate_phys_to_dma",
+    "include/linux/dma-direct.h::phys_to_dma",
+    "include/linux/module.h::module_init.alt_1",
+    "include/linux/dmaengine.h::dma_request_chan"
+   ],
+   "text": "DMA translates phys to bus with window checks; modules init exit; channels requested."
+  },
+  {
+   "sids": [
+    "kernel/panic.c::panic",
+    "include/linux/printk.h::no_printk",
+    "include/linux/printk.h::_printk",
+    "include/linux/tracepoint.h::tracepoint_probe_register_may_exist"
+   ],
+   "text": "Panic formats fatal without return; degraded printk discards; tracepoints register probes."
+  },
+  {
+   "sids": [
+    "kernel/audit.c::audit_receive",
+    "kernel/audit.c::audit_init",
+    "kernel/printk/printk.c::console_flush_on_panic",
+    "kernel/debug/debug_core.c::kgdb_handle_exception"
+   ],
+   "text": "Audit netlink brings daemon and rules; panic flushes consoles; debugger traps enter."
+  },
+  {
+   "sids": [
+    "kernel/events/core.c::perf_ioctl",
+    "kernel/events/core.c::perf_mmap",
+    "kernel/module/main.c::sys_init_module"
+   ],
+   "text": "Ioctl runs under context lock; mmap routes by offset; load checks privilege."
+  },
+  {
+   "sids": [
+    "kernel/module/main.c::sys_finit_module",
+    "kernel/module/main.c::init_module_from_file",
+    "kernel/module/procfs.c::modules_op",
+    "kernel/module/procfs.c::m_next",
+    "kernel/module/procfs.c::modules_proc_ops",
+    "kernel/module/procfs.c::proc_modules_init"
+   ],
+   "text": "Module load validates flags; proc publishes module views."
+  }
+ ],
+ "exports": [
+  {
+   "sids": [
+    "include/linux/dma-mapping.h::dma_map_page_attrs",
+    "include/linux/dma-mapping.h::dma_alloc_attrs",
+    "include/linux/dmaengine.h::dmaengine_prep_slave_sg",
+    "include/linux/dmaengine.h::dmaengine_submit"
+   ],
+   "text": "DMA mapping fails safe without backend; engine prepares single or scatter, submits and issues."
+  },
+  {
+   "sids": [
+    "kernel/audit.c::audit_log_start",
+    "kernel/audit.c::audit_log_end",
+    "kernel/auditfilter.c::audit_filter",
+    "kernel/audit_tree.c::audit_tag_tree"
+   ],
+   "text": "Audit opens stamped buffers, ends to queue, filters ordered rules and tags trees."
+  },
+  {
+   "sids": [
+    "include/uapi/linux/perf_event.h::PERF_EVENT_IOC_ENABLE",
+    "include/linux/pm_runtime.h::DEFINE_RUNTIME_DEV_PM_OPS",
+    "kernel/printk/printk.c::register_console",
+    "kernel/dma/contiguous.c::dma_alloc_contiguous"
+   ],
+   "text": "Perf ioctl controls counting and sampling; runtime PM, console, CMA provide ops and alloc."
+  },
+  {
+   "sids": [
+    "kernel/dma/mapping.c::dma_alloc_attrs",
+    "kernel/dma/mapping.c::dma_free_attrs",
+    "kernel/dma/direct.c::dma_direct_alloc"
+   ],
+   "text": "Coherent alloc picks pool or direct with unwind; free reverses."
+  },
+  {
+   "sids": [
+    "kernel/dma/mapping.c::dma_map_sg_attrs",
+    "kernel/dma/mapping.c::dma_unmap_sg_attrs",
+    "kernel/dma/swiotlb.c::swiotlb_map"
+   ],
+   "text": "Single and scatter maps use bounce or direct with sync and unwind."
+  },
+  {
+   "sids": [
+    "kernel/events/core.c::perf_event_enable",
+    "kernel/events/core.c::perf_event_disable",
+    "kernel/events/ring_buffer.c::perf_output_begin"
+   ],
+   "text": "Enable moves toward running, disable toward off; output reserves then publishes."
+  },
+  {
+   "sids": [
+    "kernel/events/core.c::pmu_dev_attrs",
+    "kernel/events/core.c::perf_event_create_kernel_counter",
+    "kernel/events/core.c::perf_tp_event"
+   ],
+   "text": "Units publish after checks; kernel counters bypass fd; trace walks subscribers."
+  },
+  {
+   "sids": [
+    "kernel/kprobes.c::register_kprobe",
+    "kernel/kprobes.c::unregister_kprobe",
+    "kernel/module/main.c::find_symbol"
+   ],
+   "text": "Kprobes arm with rollback; removal waits grace; symbols span core and modules."
+  },
+  {
+   "sids": [
+    "kernel/module/main.c::search_module_extables",
+    "kernel/module/main.c::is_module_address",
+    "kernel/module/main.c::is_module_text_address",
+    "kernel/module/main.c::module_for_each_mod",
+    "kernel/module/main.c::print_modules",
+    "kernel/module/tracking.c::print_unloaded_tainted_modules"
+   ],
+   "text": "Map addresses to owning modules, test text membership, iterate and report taint."
+  },
+  {
+   "sids": [
+    "kernel/printk/printk_ringbuffer.c::prb_reserve_in_last",
+    "kernel/printk/printk_ringbuffer.c::prb_commit",
+    "kernel/printk/printk_ringbuffer.c::prb_reserve",
+    "kernel/printk/printk_ringbuffer.c::prb_final_commit",
+    "kernel/printk/printk_ringbuffer.c::DESCS_COUNT"
+   ],
+   "text": "Reserve ring descriptors with capacity checks, reopen last for same source, commit ordered."
+  },
+  {
+   "sids": [
+    "kernel/printk/printk.c::_printk",
+    "kernel/printk/printk.c::devkmsg_emit",
+    "kernel/printk/printk.c::printk_trigger_flush",
+    "kernel/printk/printk.c::console_device",
+    "kernel/printk/printk.c::console_suspend",
+    "kernel/printk/printk.c::console_resume",
+    "kernel/printk/printk.c::kmsg_dump_register",
+    "kernel/printk/printk.c::kmsg_dump_unregister",
+    "kernel/static_call.c::__static_call_return0"
+   ],
+   "text": "Central printk serves variadic and devkmsg with flush; consoles suspend/resume; dumps register."
+  },
+  {
+   "sids": [
+    "kernel/power/wakelock.c::pm_wake_lock",
+    "kernel/power/wakelock.c::pm_wake_unlock",
+    "kernel/power/qos.c::pm_qos_read_value",
+    "kernel/power/qos.c::pm_qos_update_target",
+    "kernel/power/qos.c::cpu_latency_qos_add_request",
+    "kernel/power/qos.c::cpu_latency_qos_remove_request",
+    "kernel/power/qos.c::freq_qos_add_request",
+    "kernel/power/qos.c::freq_qos_remove_request"
+   ],
+   "text": "Named wakelocks with timeout and recency; QoS aggregates targets with CPU/freq requests."
+  },
+  {
+   "sids": [
+    "kernel/power/swap.c::swsusp_write",
+    "kernel/power/swap.c::swsusp_close",
+    "kernel/power/snapshot.c::snapshot_read_next",
+    "kernel/power/snapshot.c::snapshot_write_finalize",
+    "kernel/power/snapshot.c::snapshot_image_loaded",
+    "kernel/power/snapshot.c::snapshot_get_image_size",
+    "kernel/power/swap.c::alloc_swapdev_block",
+    "kernel/power/swap.c::swsusp_check"
+   ],
+   "text": "Write header plus plain or compressed hibernate image via swap; cursor iterates."
+  },
+  {
+   "sids": [
+    "kernel/tracepoint.c::tracepoint_probe_register",
+    "kernel/tracepoint.c::tracepoint_probe_unregister",
+    "kernel/unwind/user.c::unwind_user",
+    "kernel/watchdog.c::touch_all_softlockup_watchdogs",
+    "kernel/printk/braille.c::_braille_console_setup",
+    "kernel/printk/printk.c::log_buf_len_get"
+   ],
+   "text": "Tracepoints manage probes; unwind validates user stacks; watchdog touches CPUs; log exposes ring."
+  },
+  {
+   "sids": [
+    "kernel/panic.c::get_taint",
+    "kernel/panic.c::print_tainted",
+    "kernel/panic.c::_print_tainted",
+    "kernel/printk/printk_safe.c::vprintk",
+    "kernel/printk/printk.c::vprintk_emit",
+    "kernel/printk/printk.c::vprintk_store"
+   ],
+   "text": "Expose taint mask and flags; timestamp, tag, parse levels and commit log records."
+  }
+ ],
+ "extracts": [
+  "046e8bddbcdcdba0fa6e54fdd0e6704dcd353b685818571563beccb826cd6edb",
+  "06481c940f47b691f3e6248d1493e38c92a093d46d715c43d9d80af1c0fe4b49",
+  "0a3cb9ff724447f0bf8666baa248c9b1d86ae6685e34fbcb64d85e64a42fcee4",
+  "0b8c053ca7b392b3c1bff46f7e82b8befe34145b11c9f6020805246c2095d19e",
+  "0c020942dc163d3ee7c0e91a9f22ed2d256f6af5afdcf922611d4da06c3a5758",
+  "0ff232ab826ab3a95355a409d46e54e75f9e84d40fe39f81209c816e4606685c",
+  "13d99d0a9751232d64b7ddf2336e83373cca0985d191190a338146742ad416fe",
+  "16be58536770ebcf07c9879a2bdefdc564bae979b49acc4d0f3a9b2d08d9f47f",
+  "1732569c21176735cd6b966d322d4f54c2efdf15518f65e5af9238fb88fd0a35",
+  "17e99ec29999ae7b18aa70a8e5078ae92f613b7b3f96545e785780c02bb2d269",
+  "18309a354247aec66ea5db83cce95eba12cc34abe53e1c50ff2b981d259a9ad2",
+  "190f38759a4c844ed1eba2909b2517eb52a879da81cd67ee6d5f682e17c14e8d",
+  "19fe94562c8d97306694960f1e6076e70554b6129d0b1d5238ec63376ca1c2f9",
+  "2140fce7f393e2aa3bfc45e3f1dbd6aad07404bb6eb512b1d5fad63f6b94ae07",
+  "26b293dcf8633da33a8356deb0250ab649ddc25308e3627527aa7fe7d73469dd",
+  "299c7fec4c348359c342716dd28d3393ee3967acb7da9409f23d91469542a780",
+  "2ef46f6179e6d335cfa69c622524b8522023a9ecbac5e06377d2fd939633864a",
+  "3997ba6d771868f0923bf14b89f16f810662c79ec851d7624cd92e8a0e09e471",
+  "3b71be4a976529cc19383bf0f041d2f5e0ad32803d8b4c1bf70abe1e2c404edd",
+  "3bbb5d2edabc526ede32dcd03c5a1deeb20fb995464866ec999b1016694ac6b8",
+  "3c4f56df2fa2ba8fc035e85dd8237dfaac41e46edb0d409ea443e9e53e3bf1ff",
+  "3e2b163a91a503d4ed441aaff7777664fa83badf46ccb47cd22251d2484f9d9d",
+  "3e62857f7254afa6488cf92c9773f9e21b5704d8da6d744d1d23e3d13d52b491",
+  "400c2c74591a856b6f15dc615f8a8d4993926a07e086d236790c14c5d334f79d",
+  "4118399350219f4f112794773c03951d79aea5a815d3d6f43782e55f517fb9d1",
+  "41b2858a1f934aa47c90f4510eae66bc6dc98db55c5742c4bab4598fe649b8b2",
+  "448673804a8e18c105b32d2a662f3e63bf5e11d0e8bcba3c82e644c76fa3c974",
+  "4a8d45f85f9d451dadc2d75dad75fd4d2a4309c03629c50075e2c5f1f3e20b09",
+  "4e6e13831ba8e8a8ff22c4ec0f2415e091d7d38f04d9e776a23b8fcb2edede88",
+  "4f475bc45eeb0a93c6b4fa0da25b6882f3ff4644a4b4ed2b6ae03d96c0e3ad47",
+  "50c6f3c54356fcb73c5be3c018f08363b7e778ed2cbde9ef02a3236a641dce9e",
+  "513364c296f3684f9c599ed3565ae9579ee9f9e88f875de6a2d72eef6b480043",
+  "53f62c95ed87948eecb7e477cf53da7e6336e0b52cbe416de1cdb7247f2b174b",
+  "55a4852090d96943274920ca10d16cc57f66d91b1b284f0a69e307a81ca5b9fd",
+  "569846a08b6e75c1be9463c254776759d5ba9f30d382e1b3a87eb013d5719183",
+  "57020ba6c88e4701965e1bd332ed46893aef9f1251adfca1ea2059de2b29a190",
+  "613a432471b2b77dc8883f89c41b72639266f8d8e485f47c969c7239b996b2c6",
+  "6146190045fb61f65376a4c120fa9d46ec82de0aa35423cd1e715139af0c7a7c",
+  "66456248fc5757ddaf4c94f3f93eff4ef1b62cc3712959999561789c03232170",
+  "69b02cb03cc5b23307bf7f683288692ccadf519052db1f5090a54035d6cd71df",
+  "6b0027bd56ca581234a3372d089802e30a412a48f6d69952b13fdf95af0485e7",
+  "6e39bf534e0962dc7c02114676d9f5b08385abf2ab3d510e8989af0a3e18d264",
+  "6ee81d29281b623dca750fb64827f75c751bd794fe038ce3d83db7e20c72f909",
+  "70365b6f903bcc5e6644ccf7a97a2bb2284efe4f64367e49bb0f9e4e8147752e",
+  "72ce2f74685813efe72c71d81303bb042035b6fe78a40ed544bcdeeafa4f2cab",
+  "72e6c1b213c96c3a13393259317c4345fe5bb501b957aa8ffc16d4a7f735fc5a",
+  "73b923311bd38fd9490a18eb23959f0165bc900923bc083de7d1db21c36cc812",
+  "77e642f47f5b95d41d44a229fe69f343c06de3c66592534f189b30ea51b31285",
+  "79c1b193915fc99937fb666392b404ae14867843a791450267917922fa33e10c",
+  "7bb2058737ec542740c8431862ab4b55153778aae0cac8bd2fd20b27350e8a98",
+  "7ff57c5ad9fb9fe174b4ae719f6e432140b21509035a3af16abd8473b73b7890",
+  "870c3691fe0263834fff0934397e4432f2fc66c811c7d50eb4cd6154d0c531a7",
+  "897368a7e42c912c4eb1e77aaf1e3c9e799892f11d104379bc29c7856a0a4c69",
+  "9001be7af7f7fb1b9f49e6e35622bf77787216b71f471fd7fa469faddf9ba84d",
+  "91ad8e105c9a2fdac34d797e63a6f8653afcadfead792b1b0f5d46cddaf25638",
+  "92aa0db3f141a734cf6ca63132afda07a55233e8ae452dc37cee98b7984e4ce3",
+  "9489cb1aab0c9691c44c013004f4f644450a8a50f8388ca38c8e029dbfd808d1",
+  "94c600a130633d5c36016fb2d14a3ac61ee667bf082f4ec83654edb98ead3562",
+  "96c8f33f0477553695795419c75b784d9b9738a1e6cad2b15e5d3ca34c82e644",
+  "9713a04ff772a5e17817df7b6cdc9a987d1bd0ea3c67e3fd17cdd3deb32feeb5",
+  "9bbb0743102937eb2470ce5bc376677c876b52ece1d8dda7ae0dd77af6903d17",
+  "9c784d9fcda20f57c0d9ce430a6cbcf569a4ef12d3cff6cfeef7d4661456ce46",
+  "9c8d42df12a1d7ecd21a8d9dbd475e40eee2b0ce2c8c37e409e09786ef764142",
+  "9d4dfc59e2bede76ffedded06180673ac1ace6315f13ba4b45708142cfd85fe9",
+  "9e4bb56ccfc7bc2050a8ac124f7177a7816f71969e7407992dc819571af7416f",
+  "9e9c9abee036d5df565407f4dcf61e1c259466c3e065dc2e79c34e457b672702",
+  "9f4d0bdeacfab62edccfa0cb71a1da900927fe5fe4ea5e5ca9157277d151ffd6",
+  "a29c1e7127e33393e59ac0fce3a19de5ce8e4c57b67183a4845f6bfa746a3b61",
+  "a40fdbdff85b3142b6b227f1b7bfb519d1937e1f7085144ac4d4ae03338d1047",
+  "a4d1cf4f024df617266c19c996a965d178e6d9dc795fb335295b1c4496e1dfba",
+  "aa97b916a8ca7b008a8896cdc866d2cf76ba78e03a943f0db1c2b0c3808ec3f5",
+  "abe5972dd8e387f900e6f87570f5b59c3b4503ee34a6fda9f35263b71ad4bbd0",
+  "ac286356b0a79343c23a378ebf19d467b6483bc80ae1a2429cc99b7876b56717",
+  "af994cd83cd66b75553421dafa40fc5fec13af4ac09c1a88ac1efb1b704feb7c",
+  "b47646bb51a235c93e66d8b223143d6e059f29e8c885871b6a5a45271da95ce8",
+  "b53214bdb32cc0bade2a788f71a7875946e0988e5da5599d8f7cd50c1b2fbee7",
+  "b8173125b69fdcc2155bdd8a18a582d01c772ca29fdccc809a55b63f3b00eaed",
+  "b878ee5f3c6da2661aa5644053e7a0f2426cddefd2b4a00b51e2b30f305a3d78",
+  "bbb8c9b0bb372a8cfd9829299006bfb64c9308e7b64b2e06403f8bbd96abbd65",
+  "bfeebc5789f422fce03b04dec1d1e029b647a4b6edd8a4c3cdf68fbd90913841",
+  "c35163d4d2351b7fcad21dd4fbd983b7f216e706adfe1ce1491e03c694d48b60",
+  "c45370a5cca2679a90ca0f107128fd8ba8b3b259ddb5481d19ae020f38c75e2a",
+  "c6662c28363994979ffbdb1a5a71b04e5027a318a0717b6c5dc5374be37f9022",
+  "cbdbf12dbc7e0b5acd75a737d895e1d464f1820f8b370be592b638558187f09c",
+  "ccecd6b83adb86d02330998e46f02cd73f0dd84fd2391ecf5663c1178a01a2e6",
+  "cd78ef74d0a1bcb478af2341836ec347ff4d7594161ae940227153f5de59d5c8",
+  "cda76060bf35e825a40ccc3e4caf5f9d6a38ac2ae46ba813b68b63fd85f66192",
+  "cdc8eb871842a9ed41a5c4b137803d7446c65aed3073dd951c169eaf65c6d293",
+  "cddd3ca8b1af99253e3f6dedf3f0bc9cd4584bcc3f7443405057195bac0dad2d",
+  "ce71d1394300051d509c2ed7e39fe04a158cf8e2d6e48205a4fa0f635153fbc5",
+  "cf8d0e164e45d9e667628551c2fb56838789fb49ead508927d2fe158d73baa13",
+  "d3a14e6ef5c972b3b51073ae091663dc92b02601bff7d055254cb1f6bf52cc3d",
+  "d46206cf82fe82bedaf739a2b8d1d4af7477135b6e0fd18389291b5d9186dcb3",
+  "d47a0db83a2f6e0b8591ef144de30f8f14e45b7e75039beb7107c5ede07d722e",
+  "d6515c2cd69f7d1b3506ed0f003ba69c9914a204d4aedb92762ad26fc563cd17",
+  "d7e343a3fc8af91b03b79cc43e384b6962b0d4ca7d2c0217f1502862a711988e",
+  "dd189a2236f04d6e4e60c842960fed76f554eea5509546626b2375f43fba74e0",
+  "df4380ff2d14d902d1f81572e3b9f2d2eb80f7a02b03a32cf25940dd4791ae06",
+  "e1ce424c1da85cb2432d01a6824b0f4977c5e0832716bef56dd0f216c5b9a782",
+  "e425277ffe8798b814a2e270a4cd628f707d4bd70ff44610300b57ead4f6fdc6",
+  "e56b8c12c8e0aa541a9e31e6f45ce81573ffc09afd6a291be4819e2602befc8a",
+  "e8f768cd97d7bb2ee19c0be8596f51be0b81f40698f61305000a2a575da3b585",
+  "ec5d1832190dc04585c1162b9ba93c2b81200e9128493413c4a2cf81ac772800",
+  "ee5d074b2e27ef187de09ac838fdc6fecf7ba67f05887df6c9affcc1c2ea3e16",
+  "ee86be10f4354a3b2839ba48ba6f03098429b61e9be5ee8b3d154ec2c55dd90c",
+  "eee1745aaca33e5809fef84c4a45d80db01383c224aab40a27d029b501431d28",
+  "ef29a96bd13fcd1e6302e7547b619d34e3e5e390c2e30f25dec3fb89d968a412",
+  "f523625224f5726c4b994cb42272454ff5711769190fc690c8928b8d9ef6ece0",
+  "f57353da7c56cb817b85e6581a44ef2c764c8ca6ebb16db7320108314cf214ab",
+  "f6b27904a9d86b1744201f3e95011b83db3f0c29d1fd6d650b95eb08dfcb6607",
+  "f9bc9392396c346b2e2cb079028319e7b9244049319fa4a55ff1027ce09276d4",
+  "fb12f9421747f45c3ef1405f78df840304710252b631d3765dbb4a4091b7a5cc",
+  "fbf6102e1e43641067d86a337d7bd05fcf26f4c2090c6d67c215a299bdc9fe67",
+  "fde924532d4dcd4f63afd0b037a09912925385ce485a79774ec5a7ddb7d9c49e",
+  "fe797dd37161677479a3bf6c60c75fb7bb8da6baf7eadc3433edd8be88f9671b"
+ ],
+ "gpl_spec": "PASS",
+ "hazards": [
+  {
+   "sids": [
+    "include/linux/dma-direct.h::dma_capable",
+    "include/linux/dma-mapping.h::dma_map_single_attrs",
+    "include/linux/dma-fence.h::dma_fence_get_rcu_safe",
+    "kernel/dma/debug.c::check_unmap"
+   ],
+   "text": "Remappable maps and bad segments warn; fence self refs fault; unmap mismatches checked."
+  },
+  {
+   "sids": [
+    "include/linux/ftrace.h::tracer_disable",
+    "include/linux/jump_label.h::STATIC_KEY_CHECK_USE",
+    "include/linux/pm_wakeup.h::__pm_stay_awake",
+    "include/linux/printk.h::nbcon_device_try_acquire"
+   ],
+   "text": "Tracing needs preempt disabled; static keys warn early; wakeup can lose events; console may deny."
+  },
+  {
+   "sids": [
+    "kernel/audit.c::audit_panic",
+    "kernel/printk/printk_ringbuffer.c::_prb_read_valid",
+    "kernel/printk/nbcon.c::nbcon_context_try_acquire_hostile",
+    "include/trace/events/signal.h::TP_STORE_SIGINFO"
+   ],
+   "text": "Halt stops system; racy ring reads retry; hostile takeover sticks; signal capture validates."
+  },
+  {
+   "sids": [
+    "kernel/dma/swiotlb.c::swiotlb_alloc",
+    "kernel/dma/pool.c::dma_alloc_from_pool",
+    "kernel/dma/swiotlb.c::swiotlb_tbl_map_single"
+   ],
+   "text": "Exhaustion and misalign warn and fail; alloc returns null on shortage."
+  },
+  {
+   "sids": [
+    "kernel/events/uprobes.c::uprobe_register",
+    "kernel/kprobes.c::__arm_kprobe.alt_1",
+    "kernel/kprobes.c::check_kprobe_address_safe"
+   ],
+   "text": "Offsets align to breakpoint size; overlap forces revert; unsafe rejected."
+  },
+  {
+   "sids": [
+    "kernel/panic.c::PANIC_TIMER_STEP",
+    "kernel/panic.c::PANIC_BLINK_SPD",
+    "kernel/panic.c::PANIC_MSG_BUFSZ",
+    "kernel/panic.c::INIT_TAINT_BUF_MAX",
+    "kernel/panic.c::no_blink",
+    "kernel/panic.c::panic_blink",
+    "kernel/panic.c::panic_timeout",
+    "kernel/panic.c::panic_force_cpu",
+    "kernel/panic.c::taint_flags"
+   ],
+   "text": "Panic step 100, blink 18, message 1024; taint letters fixed."
+  },
+  {
+   "sids": [
+    "kernel/panic.c::__stack_chk_fail",
+    "kernel/power/hibernate.c::image_size_show",
+    "kernel/power/main.c::pm_report_hw_sleep_time",
+    "kernel/power/main.c::last_failed_dev_show"
+   ],
+   "text": "Stack guard fatal without return; hw-sleep updates race without mutex."
+  },
+  {
+   "sids": [
+    "kernel/power/main.c::pm_trace_store",
+    "kernel/power/qos.c::cpu_latency_qos_write",
+    "kernel/power/qos.c::cpu_wakeup_latency_qos_write",
+    "kernel/power/snapshot.c::hibernate_map_page",
+    "kernel/power/snapshot.c::register_nosave_region",
+    "kernel/power/power.h::SF_PLATFORM_MODE",
+    "kernel/power/snapshot.c::GFP_IMAGE"
+   ],
+   "text": "Trace perturbs clocks; invalid latency inputs discarded yet reported; nosave assumes success."
+  },
+  {
+   "sids": [
+    "kernel/power/swap.c::clean_pages_on_read",
+    "kernel/power/swap.c::swsusp_header_init",
+    "kernel/power/user.c::snapshot_write",
+    "kernel/tracepoint.c::func_remove",
+    "kernel/watchdog.c::watchdog_hardlockup_check",
+    "kernel/watchdog_perf.c::watchdog_hardlockup_disable"
+   ],
+   "text": "Missing flush risks stale exec; header alloc failure halts boot; writes need frozen guards."
+  }
+ ],
+ "invariants": [
+  {
+   "sids": [
+    "include/linux/audit.h::_LINUX_AUDIT_H_",
+    "include/linux/pm.h::PMSG_IS_AUTO",
+    "include/linux/pm.h::PM_EVENT_PRETHAW",
+    "include/linux/pm.h::dpm_order"
+   ],
+   "text": "Single-inclusion guards hold; auto and thaw predicates test markers; requests ordered."
+  },
+  {
+   "sids": [
+    "include/linux/dma-mapping.h::dma_get_mask",
+    "include/linux/dma-mapping.h::dma_set_mask_and_coherent",
+    "include/linux/pm_runtime.h::pm_runtime_suspended.alt_1",
+    "include/linux/pm_runtime.h::pm_runtime_get_noresume.alt_1"
+   ],
+   "text": "DMA mask defaults 32-bit with coherent tied to streaming; runtime state follows status."
+  },
+  {
+   "sids": [
+    "include/linux/trace_recursion.h::trace_recursion_set",
+    "kernel/printk/nbcon.c::nbcon_context_try_acquire",
+    "kernel/auditfilter.c::audit_field_valid",
+    "kernel/auditsc.c::audit_in_mask"
+   ],
+   "text": "Recursion uses per-task bitset; nbcon prefers panic then emergency; rules validate bounds."
+  },
+  {
+   "sids": [
+    "kernel/dma/direct.c::dma_direct_optimal_gfp_mask",
+    "kernel/dma/swiotlb.c::swiotlb_align_offset",
+    "kernel/dma/pool.c::atomic_pool_size"
+   ],
+   "text": "Zone follows smaller nonzero mask; slots round up; pools scale with memory."
+  },
+  {
+   "sids": [
+    "kernel/events/core.c::sys_perf_event_open",
+    "kernel/events/core.c::perf_check_permission",
+    "kernel/events/core.c::perf_copy_attr"
+   ],
+   "text": "Creation validates flags; leaders need liveness and clock match; attr bounds size."
+  },
+  {
+   "sids": [
+    "kernel/events/core.c::inherit_event",
+    "kernel/events/core.c::inherit_group",
+    "kernel/events/core.c::perf_event_exit_task_context"
+   ],
+   "text": "Inherit links to ancestor and mirrors enable; teardown deschedules."
+  },
+  {
+   "sids": [
+    "kernel/module/main.c::elf_validity_ehdr",
+    "kernel/module/main.c::layout_sections",
+    "kernel/module/main.c::apply_relocations"
+   ],
+   "text": "Header must match magic; layout orders exec, ro, writable; relocs stop on fail."
+  },
+  {
+   "sids": [
+    "kernel/events/hw_breakpoint.c::hw_breakpoint_weight",
+    "kernel/jump_label.c::static_key_type",
+    "kernel/jump_label.c::addr_conflict"
+   ],
+   "text": "Breakpoint weight checked; key tracks polarity and sealing; conflict is overlap."
+  },
+  {
+   "sids": [
+    "kernel/power/wakelock.c::wakelock_lookup_add",
+    "kernel/power/wakelock.c::wakelocks_limit_exceeded.alt_1",
+    "kernel/power/wakelock.c::wakelocks_gc.alt_1",
+    "kernel/power/wakelock.c::WL_GC_COUNT_MAX",
+    "kernel/power/wakelock.c::WL_GC_TIME_SEC",
+    "kernel/power/wakelock.c::decrement_wakelocks_number.alt_1"
+   ],
+   "text": "Wakelock names match by prefix and length; GC bounds count and idle age then sweeps."
+  },
+  {
+   "sids": [
+    "kernel/power/qos.c::pm_qos_get_value",
+    "kernel/power/qos.c::pm_qos_set_value",
+    "kernel/power/qos.c::pm_qos_update_flags",
+    "kernel/power/qos.c::cpu_latency_qos_value_invalid",
+    "kernel/power/qos.c::freq_qos_read_value",
+    "kernel/power/suspend.c::pm_states"
+   ],
+   "text": "Empty QoS means no constraint; notify only on change; negatives invalid except sentinel."
+  },
+  {
+   "sids": [
+    "kernel/printk/printk.c::printk_parse_prefix",
+    "kernel/printk/printk.c::truncate_msg",
+    "kernel/printk/printk.c::printk_caller_id",
+    "kernel/printk/printk.c::printk_sprint",
+    "kernel/printk/printk.c::printk_delay",
+    "kernel/printk/printk_ringbuffer.c::get_next_lpos",
+    "kernel/printk/printk_ringbuffer.c::DATA_THIS_WRAP_START_LPOS",
+    "kernel/printk/printk_ringbuffer.c::space_used",
+    "kernel/printk/printk_ringbuffer.c::need_more_space"
+   ],
+   "text": "Log records parse levels and continuations with truncation; wrap maps to base."
+  },
+  {
+   "sids": [
+    "kernel/power/swap.c::reqd_free_pages",
+    "kernel/power/swap.c::write_page",
+    "kernel/power/swap.c::enough_swap",
+    "kernel/power/power.h::data_of",
+    "kernel/power/snapshot.c::swap_two_pages_data"
+   ],
+   "text": "Free watermark is half of low memory; batched writes stage async with retry."
+  },
+  {
+   "sids": [
+    "kernel/tracepoint.c::func_add",
+    "kernel/tracepoint.c::tracepoint_module_coming",
+    "kernel/watchdog.c::get_softlockup_thresh",
+    "kernel/unwind/deferred.c::unwind_mask",
+    "kernel/power/user.c::snapshot_ioctl",
+    "kernel/power/user.c::snapshot_open"
+   ],
+   "text": "Probes stay ordered, duplicate-free with deferred free; snapshot ioctl checks magic and rights."
+  }
+ ],
+ "locks": [
+  {
+   "sids": [
+    "include/linux/dma-buf.h::dma_buf",
+    "include/linux/dma-fence.h::dma_fence_lock_irqsave",
+    "include/linux/pm.h::dev_pm_info",
+    "include/linux/pm_wakeup.h::wakeup_source"
+   ],
+   "text": "Buffer pins under reservation; fence uses irqsave spinlock; PM and wakeup serialize fields."
+  },
+  {
+   "sids": [
+    "kernel/audit.c::audit_ctl_mutex",
+    "kernel/audit.c::auditd_conn_lock",
+    "kernel/auditfilter.c::audit_add_rule",
+    "kernel/audit_tree.c::audit_kill_trees"
+   ],
+   "text": "Audit control mutex owns daemon pointer; filter mutex spans inserts; trees retire via RCU."
+  },
+  {
+   "sids": [
+    "kernel/printk/printk.c::console_list_lock",
+    "kernel/printk/printk.c::console_srcu_read_lock",
+    "kernel/dma/debug.c::get_hash_bucket",
+    "include/linux/trace_events.h::trace_iterator"
+   ],
+   "text": "Console list needs mutex with SRCU reads; DMA debug shards buckets; iterator holds mutex."
+  },
+  {
+   "sids": [
+    "kernel/dma/swiotlb.c::swiotlb_release_slots",
+    "kernel/dma/swiotlb.c::swiotlb_search_area",
+    "kernel/dma/swiotlb.c::io_tlb_area"
+   ],
+   "text": "Reserve scans with growth and fallback; release holds area spin with IRQs saved."
+  },
+  {
+   "sids": [
+    "kernel/events/core.c::perf_ctx_lock",
+    "kernel/events/core.c::__perf_ctx_lock",
+    "kernel/events/core.c::pmus_lock"
+   ],
+   "text": "CPU lock precedes task lock with IRQs off; registry uses mutex with SRCU."
+  },
+  {
+   "sids": [
+    "kernel/kprobes.c::kprobe_mutex",
+    "kernel/module/main.c::module_mutex",
+    "kernel/kprobes.c::kprobe_sysctl_mutex"
+   ],
+   "text": "Kprobe mutex serializes register; module mutex guards list; sysctl mutex toggles."
+  },
+  {
+   "sids": [
+    "kernel/printk/printk_ringbuffer.c::data_alloc",
+    "kernel/printk/printk_ringbuffer.c::data_realloc",
+    "kernel/printk/printk_ringbuffer.c::data_push_tail",
+    "kernel/printk/printk_ringbuffer.c::desc_update_last_finalized",
+    "kernel/printk/printk_ringbuffer.c::desc_reserve",
+    "kernel/printk/printk_ringbuffer.c::desc_push_tail"
+   ],
+   "text": "Ring head, tail and state change only by CAS with retry and reclaim."
+  },
+  {
+   "sids": [
+    "kernel/power/console.c::vt_switch_mutex",
+    "kernel/power/main.c::lock_system_sleep",
+    "kernel/power/main.c::unlock_system_sleep",
+    "kernel/power/autosleep.c::pm_autosleep_lock",
+    "kernel/power/autosleep.c::pm_autosleep_unlock",
+    "include/linux/mutex.h::mutex_lock",
+    "include/linux/mutex.h::mutex_lock_interruptible",
+    "include/linux/mutex.h::mutex_trylock"
+   ],
+   "text": "Sleep, autosleep and VT serialize on dedicated mutexes across suspend."
+  },
+  {
+   "sids": [
+    "kernel/power/wakelock.c::wakelocks_lock",
+    "kernel/power/wakelock.c::__wakelocks_gc",
+    "kernel/power/user.c::snapshot_open",
+    "kernel/power/user.c::snapshot_release",
+    "kernel/power/user.c::snapshot_ioctl"
+   ],
+   "text": "Wakelock mutex guards lookup and GC; snapshot sleep lock spans open to release."
+  },
+  {
+   "sids": [
+    "kernel/printk/printk.c::console_mutex",
+    "kernel/printk/printk.c::syslog_lock",
+    "kernel/printk/printk.c::printk_cpu_sync_owner",
+    "kernel/printk/nbcon.c::nbcon_enter_unsafe",
+    "kernel/static_call_inline.c::static_call_mutex",
+    "kernel/tracepoint.c::tracepoints_mutex",
+    "kernel/watchdog.c::watchdog_mutex"
+   ],
+   "text": "Console, syslog and registration use separate mutexes; nbcon and CPU sync use atomics."
+  }
+ ],
+ "pass": 1,
+ "phase_map": [
+  {
+   "anchor": "HB-KPAPER-001/hb-s5.p14",
+   "crown": "A",
+   "phase": "F0"
+  },
+  {
+   "anchor": "HB-KPAPER-001/hb-s5.p04",
+   "crown": "A",
+   "phase": "F1"
+  },
+  {
+   "anchor": "HB-KPAPER-001/hb-s5.p05",
+   "crown": "A",
+   "phase": "F4"
+  }
+ ],
+ "schema": "lx.dossier.v1",
+ "state_machines": [
+  {
+   "sids": [
+    "include/linux/audit.h::audit_alloc",
+    "include/linux/audit.h::audit_free.alt_1",
+    "include/linux/dma-fence.h::dma_fence_is_signaled",
+    "include/linux/dma-fence.h::dma_fence_set_error"
+   ],
+   "text": "Audit alloc to record to exit and free; fence signals once and reports error status."
+  },
+  {
+   "sids": [
+    "include/linux/dmaengine.h::dmaengine_submit",
+    "include/linux/dmaengine.h::dmaengine_terminate_sync",
+    "include/linux/module.h::module_state",
+    "include/linux/pm.h::rpm_status"
+   ],
+   "text": "DMA flows prep submit issue poll terminate; modules form live going; runtime cycles states."
+  },
+  {
+   "sids": [
+    "kernel/panic.c::panic_try_start",
+    "kernel/audit.c::kauditd_thread",
+    "kernel/debug/debug_core.c::kgdb_cpu_enter",
+    "kernel/audit_tree.c::kill_rules"
+   ],
+   "text": "Panic elects one winner; kauditd drains queues then sleeps; kgdb elects master; trees prune."
+  },
+  {
+   "sids": [
+    "kernel/events/core.c::__event_disable",
+    "kernel/events/core.c::__perf_event_enable",
+    "kernel/events/core.c::perf_event_context_sched_out"
+   ],
+   "text": "Events move off, inactive, active, error, dead; active accrues until frozen."
+  },
+  {
+   "sids": [
+    "kernel/module/main.c::load_module",
+    "kernel/module/main.c::do_init_module",
+    "kernel/module/main.c::complete_formation"
+   ],
+   "text": "Reserve unformed, publish coming, run init; only live goes going."
+  },
+  {
+   "sids": [
+    "kernel/power/hibernate.c::hibernate",
+    "kernel/power/hibernate.c::hibernation_snapshot",
+    "kernel/power/hibernate.c::create_image",
+    "kernel/power/power.h::swsusp_unmark",
+    "kernel/power/power.h::suspend_devices_and_enter",
+    "kernel/power/suspend.c::s2idle_loop",
+    "kernel/power/suspend.c::valid_state",
+    "kernel/power/suspend.c::platform_suspend_begin",
+    "kernel/power/suspend.c::platform_resume_end",
+    "kernel/power/suspend.c::platform_recover",
+    "kernel/power/suspend.c::platform_suspend_again"
+   ],
+   "text": "Hibernation freezes, snapshots, writes then unwinds; suspend enters until wakeup."
+  }
+ ],
+ "structs": [
+  {
+   "sids": [
+    "include/linux/dma-direction.h::dma_data_direction",
+    "include/linux/dma-mapping.h::DMA_ATTR_WRITE_COMBINE",
+    "include/linux/dma-mapping.h::DMA_MAPPING_ERROR",
+    "include/linux/dmaengine.h::dma_cookie_t"
+   ],
+   "text": "DMA directions enumerated; attrs are single bits; error is all-ones; cookies flag errors."
+  },
+  {
+   "sids": [
+    "include/linux/module.h::module",
+    "include/linux/pm_qos.h::pm_qos_constraints",
+    "include/linux/suspend.h::platform_suspend_ops",
+    "include/linux/suspend.h::suspend_state_t"
+   ],
+   "text": "Module anchors sysfs with per-class memory; QoS aggregates values; suspend tables ordered."
+  },
+  {
+   "sids": [
+    "include/linux/tracepoint-defs.h::tracepoint",
+    "include/linux/uprobes.h::uprobe_consumer",
+    "kernel/audit.h::audit_context",
+    "kernel/auditfilter.c::audit_filter_list"
+   ],
+   "text": "Tracepoints hold name keys probe array; audit context tracks lifecycle with filter lists."
+  },
+  {
+   "sids": [
+    "kernel/dma/swiotlb.c::io_tlb_slot",
+    "kernel/dma/mapping.c::dma_devres",
+    "kernel/events/uprobes.c::xol_area"
+   ],
+   "text": "Slot holds origin and size; managed holds addrs; xol pairs queue and bitmap."
+  },
+  {
+   "sids": [
+    "kernel/printk/printk_ringbuffer.h::printk_info",
+    "kernel/printk/printk_ringbuffer.h::prb_desc",
+    "kernel/printk/printk_ringbuffer.h::printk_ringbuffer",
+    "kernel/printk/console_cmdline.h::console_cmdline",
+    "kernel/printk/internal.h::printk_message",
+    "kernel/tracepoint.c::tp_probes",
+    "kernel/watchdog.c::hrtimer_interrupts"
+   ],
+   "text": "Log info holds seq, time and caller; descs join state with positions; rings track head/tail."
+  }
+ ],
+ "stubs": [
+  {
+   "sid": "include/linux/preempt.h::preempt_disable_notrace.alt_1",
+   "state": "stub",
+   "target_dossier": "D01"
+  },
+  {
+   "sid": "include/linux/rcupdate.h::rcu_read_lock",
+   "state": "stub",
+   "target_dossier": "D02"
+  },
+  {
+   "sid": "include/linux/mutex.h::mutex_lock",
+   "state": "stub",
+   "target_dossier": "D03"
+  },
+  {
+   "sid": "include/linux/irqflags.h::local_irq_disable.alt_1",
+   "state": "stub",
+   "target_dossier": "D04"
+  },
+  {
+   "sid": "include/linux/slab.h::kmalloc",
+   "state": "stub",
+   "target_dossier": "D05"
+  },
+  {
+   "sid": "kernel/cpu.c::cpus_read_lock",
+   "state": "stub",
+   "target_dossier": "D12"
+  },
+  {
+   "sid": "include/linux/list.h::list_for_each_entry",
+   "state": "stub",
+   "target_dossier": "D14"
+  },
+  {
+   "sid": "include/linux/fs.h::get_file",
+   "state": "stub",
+   "target_dossier": "D15"
+  },
+  {
+   "sid": "include/linux/console.h::for_each_console",
+   "state": "stub",
+   "target_dossier": "D16"
+  },
+  {
+   "sid": "include/linux/err.h::IS_ERR",
+   "state": "stub",
+   "target_dossier": "D17"
+  }
+ ]
+}
