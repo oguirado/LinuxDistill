@@ -11,3 +11,4 @@ __pycache__/
 */router/dist/router/*.tar.zst
 */router/knowledge/*
 !*/router/knowledge/stats.json
+.acquire/

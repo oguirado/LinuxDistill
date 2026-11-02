@@ -1,0 +1,6 @@
+# sha256 digests in the snapshot records can match token patterns by chance.
+[extend]
+useDefault = true
+
+[allowlist]
+paths = ['''rcu-free-v3@5495317/meta/(SHA256SUMS|MANIFEST\.jsonl)$''']

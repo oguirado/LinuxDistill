@@ -12,10 +12,10 @@ sys.dont_write_bytecode = True
 TOOLS = os.path.dirname(os.path.abspath(__file__))
 X = os.path.dirname(TOOLS)                       # D/router
 D = os.path.dirname(X)                           # D = R/rcu-free-v3@5495317
-R = os.path.dirname(D)                           # R = LinuxDistill
+R = os.path.dirname(D)                           # R = repository root
 SRC = os.path.join(D, "src")
 META = os.path.join(D, "meta")
-HBTOOLS = "router/vendor/hb/tools"
+HBTOOLS = os.path.join(X, "vendor", "hb", "tools")
 sys.path.insert(0, HBTOOLS)
 import hblib2 as L          # noqa: E402  (engine, read-only)
 import schemalib as SL      # noqa: E402
@@ -27,7 +27,7 @@ CORPUS = "lx"
 IDMAX = 32 - len(CORPUS) - 1                     # 29 (D width law)
 CTAGS = "/usr/bin/ctags"
 MACROS = os.path.join(TOOLS, "lx_macros.ctags")
-MV_ROUTER = "router/vendor/mv"
+MV_ROUTER = os.path.join(X, "vendor", "mv")
 SID_RE = re.compile(r"^[A-Za-z0-9_./-]{1,160}::[A-Za-z_][A-Za-z0-9_.]{0,127}(#b[0-9]{1,3})?$")
 ENV = {"LC_ALL": "C", "TZ": "UTC", "PATH": "/usr/bin:/bin", "HOME": "/nonexistent"}
 

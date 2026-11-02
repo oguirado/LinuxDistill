@@ -12,7 +12,7 @@ Spot check by the orchestrator: IMPACT-13 gold (3 callers of `autogroup_kref_get
   Per book: inc 59,662 · x86 21,752 · kcore 14,286 · kvm 8,887 · mm 8,423 · a64 8,319 · boot 5,276 · sched 3,694 · dev 2,929 · time 1,502 · rcu 1,476 · locking 1,383 · irq 862.
 - Edges: CALLS 203,147 · INCLUDES 26,578 · PHASE 14,478 · KCONFIG 3,197 · OPS 2,924 · ARCH_PAIR 1,132 · BUILT_BY 845.
 - Unresolved: 30,757 call sites across 14,808 symbols; 488 OPS; 48 Makefile objects without a source file (kept with their coordinates). 305 symbols have fan-in > 64.
-- Index: 14 directories, 27,508,476 B. Every `index/ID` = g_lx_fresh digest `99dbddb7…6c48`.
+- Index: 14 directories, 27,508,476 B. Every `index/ID` = g_lx_fresh digest `fc102058…dba4` (recomputed for release 0.0.1, when the engine was bundled under `vendor/`; the record counts did not change).
 - Shards: 14 `.tar.zst`, 44,371,146 B. Unpack + re-query gives the same answer sha on 32/32 rows.
 - G-LX-CONF: 32 rows, all PASS (12 FIND, 6 IMPACT, 4 ARCHPAIR, 4 KCONFIG, 6 ABSENT). Gold comes from GNU grep and Makefile lines.
   Must-FAIL: constant router, stale index ID, `__anon` sid.

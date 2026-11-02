@@ -1,0 +1,42 @@
+{
+ "$schema":"https://json-schema.org/draft/2020-12/schema",
+ "$id":"hb.card.v1",
+ "title":"KERNEL micro-task card (schema v1.1)",
+ "type":"object",
+ "additionalProperties":false,
+ "required":["schema","card_id","phase","kind","section_anchor","unit","context","output","write_set","read_set","deps","gate","model_tier","retry","idempotency_key"],
+ "properties":{
+  "schema":{"const":"hb.card.v1"},
+  "card_id":{"type":"string","pattern":"^K-(R0|F[0-6])-(BOOK|NEG|CODE|TEST|REV|FIX|RTR)-[0-9]{4}$"},
+  "phase":{"enum":["R0","F0","F1","F2","F3","F4","F5","F6"]},
+  "kind":{"enum":["BOOK","NEG","CODE","TEST","REV","FIX","RTR"]},
+  "section_anchor":{"type":"string","pattern":"^(§([0-9]|1[0-6])(\\.[0-9]+)*|App ?[A-F](\\.[0-9]+)*)$"},
+  "unit":{"type":"object","additionalProperties":false,"required":["sid","lang","crown","profile"],"properties":{"sid":{"type":"string","pattern":"^[A-Za-z0-9_./-]+::[A-Za-z0-9_.#]+$","maxLength":290},"lang":{"enum":["rust","zig","c23","asm","ada_spark","lean4","datalog","python","markdown"]},"crown":{"enum":["A","B","C","D","tool"]},"profile":{"enum":["raw-span","lexical","semantic"]}}},
+  "context":{"type":"object","additionalProperties":false,"required":["queries","input_tok_cap"],"properties":{"queries":{"type":"array","minItems":1,"maxItems":3,"items":{"type":"object","additionalProperties":false,"required":["class","text"],"properties":{"class":{"enum":["FIND","IMPACT","CLAIM"]},"text":{"type":"string","minLength":8,"maxLength":300}}}},"pinned_spans":{"type":"array","maxItems":4,"items":{"type":"object","additionalProperties":false,"required":["path","start_byte","end_byte","sha256"],"properties":{"path":{"type":"string","pattern":"^(?!/)(?!.*(^|/)\\.\\.(/|$))[A-Za-z0-9_./#:-]+$","maxLength":240},"start_byte":{"type":"integer","minimum":0},"end_byte":{"type":"integer","minimum":1},"sha256":{"type":"string","pattern":"^[0-9a-f]{64}$"}}}},"input_tok_cap":{"type":"integer","minimum":1000,"maximum":9500}}},
+  "output":{"type":"object","additionalProperties":false,"required":["format","max_tok"],"properties":{"format":{"enum":["splice-json","new-file","book-slot-md","fixture-dir","review-verdict"]},"max_tok":{"type":"integer","minimum":100,"maximum":1500}}},
+  "write_set":{"type":"array","minItems":1,"maxItems":4,"uniqueItems":true,"items":{"type":"string","pattern":"^(?!/)(?!.*(^|/)\\.\\.(/|$))[A-Za-z0-9_./#:-]+$","maxLength":240}},
+  "read_set":{"type":"array","maxItems":32,"uniqueItems":true,"items":{"type":"string","pattern":"^(?!/)(?!.*(^|/)\\.\\.(/|$))[A-Za-z0-9_./#:-]+$","maxLength":240}},
+  "deps":{"type":"array","maxItems":16,"uniqueItems":true,"items":{"type":"string","pattern":"^K-(R0|F[0-6])-(BOOK|NEG|CODE|TEST|REV|FIX|RTR)-[0-9]{4}$"}},
+  "gate":{"type":"object","additionalProperties":false,"required":["gate_id","argv","runs_on","must_fail_fixture","positive_control"],"properties":{"gate_id":{"type":"string","pattern":"^(G-[A-Z0-9-]+|C-[A-Z0-9-]+|g_[a-z0-9_]+)$"},"argv":{"type":"array","minItems":1,"items":{"type":"string","minLength":1}},"runs_on":{"enum":["host-qemu","host-build","host-py"]},"must_fail_fixture":{"type":"string","minLength":1},"positive_control":{"type":"string","minLength":1}}},
+  "model_tier":{"enum":["W0-swarm","W1-review","W2-escalate"]},
+  "retry":{"type":"object","additionalProperties":false,"required":["max_repair","on_exhaust"],"properties":{"max_repair":{"type":"integer","minimum":0,"maximum":1},"on_exhaust":{"enum":["split","escalate-W2","park"]}}},
+  "idempotency_key":{"type":"string","pattern":"^[0-9a-f]{64}$"}
+ },
+ "allOf":[
+  {"if":{"properties":{"phase":{"const":"R0"}},"required":["phase"]},"then":{"properties":{"card_id":{"pattern":"^K-R0-"}}}},
+  {"if":{"properties":{"phase":{"const":"F0"}},"required":["phase"]},"then":{"properties":{"card_id":{"pattern":"^K-F0-"}}}},
+  {"if":{"properties":{"phase":{"const":"F1"}},"required":["phase"]},"then":{"properties":{"card_id":{"pattern":"^K-F1-"}}}},
+  {"if":{"properties":{"phase":{"const":"F2"}},"required":["phase"]},"then":{"properties":{"card_id":{"pattern":"^K-F2-"}}}},
+  {"if":{"properties":{"phase":{"const":"F3"}},"required":["phase"]},"then":{"properties":{"card_id":{"pattern":"^K-F3-"}}}},
+  {"if":{"properties":{"phase":{"const":"F4"}},"required":["phase"]},"then":{"properties":{"card_id":{"pattern":"^K-F4-"}}}},
+  {"if":{"properties":{"phase":{"const":"F5"}},"required":["phase"]},"then":{"properties":{"card_id":{"pattern":"^K-F5-"}}}},
+  {"if":{"properties":{"phase":{"const":"F6"}},"required":["phase"]},"then":{"properties":{"card_id":{"pattern":"^K-F6-"}}}},
+  {"if":{"properties":{"kind":{"const":"BOOK"}},"required":["kind"]},"then":{"properties":{"card_id":{"pattern":"^K-[A-Z0-9]{2}-BOOK-"}}}},
+  {"if":{"properties":{"kind":{"const":"NEG"}},"required":["kind"]},"then":{"properties":{"card_id":{"pattern":"^K-[A-Z0-9]{2}-NEG-"}}}},
+  {"if":{"properties":{"kind":{"const":"CODE"}},"required":["kind"]},"then":{"properties":{"card_id":{"pattern":"^K-[A-Z0-9]{2}-CODE-"}}}},
+  {"if":{"properties":{"kind":{"const":"TEST"}},"required":["kind"]},"then":{"properties":{"card_id":{"pattern":"^K-[A-Z0-9]{2}-TEST-"}}}},
+  {"if":{"properties":{"kind":{"const":"REV"}},"required":["kind"]},"then":{"properties":{"card_id":{"pattern":"^K-[A-Z0-9]{2}-REV-"}}}},
+  {"if":{"properties":{"kind":{"const":"FIX"}},"required":["kind"]},"then":{"properties":{"card_id":{"pattern":"^K-[A-Z0-9]{2}-FIX-"}}}},
+  {"if":{"properties":{"kind":{"const":"RTR"}},"required":["kind"]},"then":{"properties":{"card_id":{"pattern":"^K-[A-Z0-9]{2}-RTR-"}}}}
+ ]
+}

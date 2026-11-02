@@ -1,0 +1,15 @@
+LinuxDistill
+Copyright (C) 2026 oguirado
+
+This program is free software; you can redistribute it and/or modify it under the terms of the
+GNU General Public License, version 2 only (GPL-2.0-only), as published by the Free Software Foundation.
+It is distributed WITHOUT ANY WARRANTY. See the LICENSE file for details.
+
+No Linux kernel source is included. tools/bootstrap.sh fetches it from https://github.com/torvalds/linux.git
+at commit 549531755d329ec48439e3263535351ba1c5acd5. That source stays under its own licences, recorded
+per file in rcu-free-v3@5495317/meta/MANIFEST.jsonl.
+
+study/pass1/ holds model-written descriptions of that source.
+
+Linux is a registered trademark of Linus Torvalds. This project is independent, and neither the Linux project
+nor the Linux Foundation is affiliated with it or endorses it.

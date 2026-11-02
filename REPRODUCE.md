@@ -1,39 +1,55 @@
-# REPRODUCE — rebuild the exact Linux snapshot the lx router indexes
+# Reproduce
 
-This repository ships NO Linux source (GPL-2.0, study-only). It ships the exact recipe to fetch the same bytes, and gates that prove you got them.
-The router records (paths, sids, byte offsets, hashes) are valid only for this pin and this pattern set.
+This repository ships no Linux source. It ships the recipe to fetch the same bytes and the gates that prove you got them. Router records are valid only for this pin and pattern set. [README.md](README.md) explains what everything means.
+
+## One command
+
+Needs `git` 2.25 or later, `python3`, Universal Ctags at `/usr/bin/ctags`, `zstd`, network access to github.com and about 610 MB of disk.
+
+```bash
+git clone https://github.com/oguirado/LinuxDistill.git
+cd LinuxDistill
+bash tools/bootstrap.sh
+```
+
+The script stops at the first failure. The first two markers appear only on the first run, because an existing `src/` is kept and not re-verified. In order, it prints:
+
+| Marker | Meaning |
+|---|---|
+| `LX_ACQUIRE_OK` | Gates A0 to A5 passed on the fetched snapshot |
+| `SNAPSHOT_IDENTICAL` | Its `SHA256SUMS` equals the committed one, byte for byte |
+| (no marker, silent on success) | Study files match `study/pass1/SHA256SUMS` |
+| `{"summary": {"positive_pass": 11, "must_fail_as_expected": 11, "gates": 11}}` | Router gates passed |
+| `{"gate": "G-LX-KNOW", ..., "pass": true}` | Knowledge layer rebuilt identically |
+| `BOOTSTRAP_OK` | Everything passed |
+
+Then run `git status --short`. It should list at most `rcu-free-v3@5495317/router/BUILD_TIMES.json`, which holds wall times. The index id includes the sha256 of the ctags binary, so with another ctags build these files change too: `router/dist/router/SHA256SUMS`, `router/dist/router/shards.jsonl`, `router/fixtures/score_ref_lx.json` and `router/knowledge/stats.json`. Any other change needs investigation.
 
 ## What defines the snapshot
+
 | File | Meaning |
 |---|---|
-| `spec/SPARSE.patterns` | no-cone sparse patterns (gitignore syntax); sha256 recorded in `rcu-free-v3@5495317/meta/PROVENANCE.json` (`patterns_sha256`) |
-| `spec/EXPECT.paths` | the exact list of 8,182 files the snapshot must contain (measured independently from the GitHub tree API) |
-| `spec/EXPECT.json` | expected count/bytes: 8,182 files, 89,370,484 B, plus `paths_sha256` |
-| `rcu-free-v3@5495317/meta/ls-files.txt` | git blob id per file (gate A2) |
-| `rcu-free-v3@5495317/meta/SHA256SUMS`, `MANIFEST.jsonl` | sha256 per file, licence, tier |
+| `spec/SPARSE.patterns` | No-cone sparse patterns; the sha256 is in `meta/PROVENANCE.json` |
+| `spec/EXPECT.paths` | The exact list of 8,182 files, measured independently from the GitHub tree API |
+| `spec/EXPECT.json` | Expected count and bytes: 8,182 files, 89,370,484 B |
+| `rcu-free-v3@5495317/meta/ls-files.txt` | Git blob id per file (gate A2). Only checked-out entries of the sparse index are listed |
+| `rcu-free-v3@5495317/meta/SHA256SUMS`, `MANIFEST.jsonl` | sha256, licence and tier per file |
 
-Pin: repository https://github.com/torvalds/linux.git, commit `549531755d329ec48439e3263535351ba1c5acd5`, tree `e56d24e86147e65a8ade3cfe69dee2bfdac279fa`. Never clone by branch name: the branch moves.
+Pin: `https://github.com/torvalds/linux.git`, commit `549531755d329ec48439e3263535351ba1c5acd5`, tree `e56d24e86147e65a8ade3cfe69dee2bfdac279fa`. It is fetched by commit id, never by branch name.
 
-## Steps (needs git ≥ 2.25, python3, network to github.com; ~110 MB)
+## Rebuild parts
+
 ```bash
-git clone <this repo> LinuxDistill && cd LinuxDistill
-# keep the committed meta as the reference, rebuild into a fresh pin dir
-mv rcu-free-v3@5495317 reference@5495317
-sed -i "s#^ROOT=.*#ROOT=$PWD#" tools/lx_acquire.sh
-bash tools/lx_acquire.sh            # A0 patterns applied verbatim, fetch by sha, A1 commit+tree, A2 blob ids, A4 count/bytes/paths vs spec/EXPECT, A5 exclusions
-python3 -I tools/lx_a3.py rcu-free-v3@5495317    # A3 licence ruling (SPDX-less files inherit COPYING)
-diff reference@5495317/meta/SHA256SUMS rcu-free-v3@5495317/meta/SHA256SUMS && echo "IDENTICAL SNAPSHOT"
+bash rcu-free-v3@5495317/router/build.sh                      # router, about 35 s
+bash rcu-free-v3@5495317/router/gates/run_all.sh              # all router gates
+python3 -I -B rcu-free-v3@5495317/router/tools/lx_knowledge.py build
+python3 -I -B rcu-free-v3@5495317/router/tools/lx_knowledge.py check    # rebuilds, so it writes outputs
 ```
-`lx_acquire.sh` prints `LX_ACQUIRE_OK` only if every gate passes. A failed pin dir is deleted and re-acquired, never repaired in place.
 
-## Rebuild the router on the snapshot
+To re-acquire, make `src/` writable, delete it and run `tools/bootstrap.sh` again:
+
 ```bash
-cp -r reference@5495317/router rcu-free-v3@5495317/router
-bash rcu-free-v3@5495317/router/build.sh       # ~35 s; byte-identical outputs
-bash rcu-free-v3@5495317/router/gates/run_all.sh   # 11/11 positive PASS, 11/11 must-FAIL as expected
+chmod -R u+w rcu-free-v3@5495317/src
+rm -rf rcu-free-v3@5495317/src
+bash tools/bootstrap.sh
 ```
-Every `index/ID` must equal the g_lx_fresh digest in `router/REPORT.md`; any source byte that differs changes the ID, so a wrong snapshot can't pass silently.
-
-## Notes
-- DEV-LX-1: `meta/ls-files.txt` records only the checked-out (H) entries of the sparse index.
-- The VMM corpora follow the same idea in the sibling repo DistroVMM (`tools/dv_acquire.py all`, pins in its PROVENANCE files).

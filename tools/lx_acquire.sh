@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 # tools/lx_acquire.sh — BT-LX-01 (LINUX_DISTILL §3.4). A3 (SPDX) is recorded, not blocking, until the operator's exemption list exists.
 set -euo pipefail
-ROOT=LinuxDistill
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 SHA=549531755d329ec48439e3263535351ba1c5acd5
 TREE=e56d24e86147e65a8ade3cfe69dee2bfdac279fa
-D=$ROOT/rcu-free-v3@5495317
+D="${LX_PIN_DIR:-$ROOT/rcu-free-v3@5495317}"
 test ! -e "$D" || { echo "E_LX_EXISTS $D"; exit 9; }
 mkdir -p "$D/src" "$D/meta" && cd "$D/src"
 git init -q && git remote add origin https://github.com/torvalds/linux.git
@@ -31,5 +31,5 @@ set +e; python3 -I "$ROOT/tools/lx_meta.py" gates "$D" > ../meta/GATES.json; rc=
 cat ../meta/GATES.json | head -40
 [ $rc -eq 0 ] || { echo "E_LX_GATES rc=$rc"; exit $rc; }
 chmod -R a-w "$D/src"
-ln -sfn "$D" "$ROOT/CURRENT.new" && mv -T "$ROOT/CURRENT.new" "$ROOT/CURRENT"
+[ -n "${LX_PIN_DIR:-}" ] || { ln -sfn "$D" "$ROOT/CURRENT.new" && mv -T "$ROOT/CURRENT.new" "$ROOT/CURRENT"; }
 echo "LX_ACQUIRE_OK"
